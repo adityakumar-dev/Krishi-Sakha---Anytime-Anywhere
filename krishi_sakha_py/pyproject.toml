@@ -1,0 +1,28 @@
+[project]
+name = "krishi-sakha"
+version = "0.1.0"
+description = "Krishi Sakha AI assistant"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "langchain-ollama",
+    "python-dotenv",
+    "langchain",
+    "langchain-core",
+    "langchain-community",
+    "sentence-transformers",
+    "chromadb",
+    "playwright",
+    "trafilatura",
+    "beautifulsoup4",
+    "supabase>=2.0.0",
+    "google-api-python-client",
+    "google-generativeai",
+    "python-multipart",
+    "pydantic",
+    "requests",
+    "pyserial",
+    "pandas",
+    "httpx",
+    "sentencepiece"
+]

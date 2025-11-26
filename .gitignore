@@ -1,0 +1,12 @@
+
+krishi_sakha_py/.env
+.env
+krishi_sakha/.env
+krishi_sakha_py/temp/
+krishi_sakha/lib/main.dart
+Krishi-Sakha/krishi-mitra-companion/src/assets
+Krishi-Sakha/build
+Krishi-Sakha/.dart_tool
+krishi_sakha_py/.venv
+krishi_sakha_py/.pytest_cache
+

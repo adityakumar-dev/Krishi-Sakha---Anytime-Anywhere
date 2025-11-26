@@ -1,0 +1,3523 @@
+{
+  "status": "Success",
+  "statusCode": 200,
+  "errorDescription": "",
+  "error": "null",
+  "data": {
+    "summary": {
+      "total": 728,
+      "query": "",
+      "sortOptions": [
+        {
+          "id": "multiple_sort",
+          "label": "Relevance"
+        },
+        {
+          "id": "schemename-asc",
+          "label": "Scheme Name (A->Z)"
+        },
+        {
+          "id": "schemename-desc",
+          "label": "Scheme Name (Z->A)"
+        }
+      ],
+      "appliedFilters": [
+        {
+          "identifier": "schemeCategory",
+          "id": "schemeCategory_Agriculture,Rural & Environment",
+          "label": "Scheme Category",
+          "display": "ListFacet",
+          "type": "ValueSelectedFilter",
+          "value": "Agriculture,Rural & Environment"
+        }
+      ],
+      "disabledFilters": []
+    },
+    "facets": [
+      {
+        "identifier": "beneficiaryState",
+        "label": "State",
+        "display": "ComboBoxFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "Gujarat",
+            "count": 230
+          },
+          {
+            "label": "All",
+            "count": 65
+          },
+          {
+            "label": "Haryana",
+            "count": 55
+          },
+          {
+            "label": "Madhya Pradesh",
+            "count": 39
+          },
+          {
+            "label": "Tamil Nadu",
+            "count": 39
+          },
+          {
+            "label": "Uttarakhand",
+            "count": 39
+          },
+          {
+            "label": "Goa",
+            "count": 37
+          },
+          {
+            "label": "Meghalaya",
+            "count": 37
+          },
+          {
+            "label": "Puducherry",
+            "count": 32
+          },
+          {
+            "label": "Rajasthan",
+            "count": 29
+          },
+          {
+            "label": "Bihar",
+            "count": 26
+          },
+          {
+            "label": "Jharkhand",
+            "count": 16
+          },
+          {
+            "label": "Arunachal Pradesh",
+            "count": 14
+          },
+          {
+            "label": "Chhattisgarh",
+            "count": 14
+          },
+          {
+            "label": "Odisha",
+            "count": 13
+          },
+          {
+            "label": "Assam",
+            "count": 11
+          },
+          {
+            "label": "Himachal Pradesh",
+            "count": 8
+          },
+          {
+            "label": "Maharashtra",
+            "count": 8
+          },
+          {
+            "label": "West Bengal",
+            "count": 6
+          },
+          {
+            "label": "Telangana",
+            "count": 5
+          },
+          {
+            "label": "Karnataka",
+            "count": 4
+          },
+          {
+            "label": "Mizoram",
+            "count": 3
+          },
+          {
+            "label": "Uttar Pradesh",
+            "count": 3
+          },
+          {
+            "label": "Jammu and Kashmir",
+            "count": 2
+          },
+          {
+            "label": "Kerala",
+            "count": 2
+          },
+          {
+            "label": "Andhra Pradesh",
+            "count": 1
+          },
+          {
+            "label": "Manipur",
+            "count": 1
+          },
+          {
+            "label": "Nagaland",
+            "count": 1
+          },
+          {
+            "label": "Sikkim",
+            "count": 1
+          },
+          {
+            "label": "Tripura",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "identifier": "schemeCategory",
+        "label": "Scheme Category",
+        "display": "ListFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "Social welfare & Empowerment",
+            "count": 1430
+          },
+          {
+            "label": "Education & Learning",
+            "count": 1071
+          },
+          {
+            "label": "Agriculture,Rural & Environment",
+            "count": 728
+          },
+          {
+            "label": "Business & Entrepreneurship",
+            "count": 613
+          },
+          {
+            "label": "Women and Child",
+            "count": 433
+          },
+          {
+            "label": "Skills & Employment",
+            "count": 352
+          },
+          {
+            "label": "Banking,Financial Services and Insurance",
+            "count": 290
+          },
+          {
+            "label": "Sports & Culture",
+            "count": 245
+          },
+          {
+            "label": "Health & Wellness",
+            "count": 242
+          },
+          {
+            "label": "Housing & Shelter",
+            "count": 115
+          },
+          {
+            "label": "Science, IT & Communications",
+            "count": 95
+          },
+          {
+            "label": "Transport & Infrastructure",
+            "count": 73
+          },
+          {
+            "label": "Travel & Tourism",
+            "count": 65
+          },
+          {
+            "label": "Utility & Sanitation",
+            "count": 48
+          },
+          {
+            "label": "Public Safety,Law & Justice",
+            "count": 22
+          }
+        ]
+      },
+      {
+        "identifier": "gender",
+        "label": "Gender",
+        "display": "ListFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "All",
+            "count": 662
+          },
+          {
+            "label": "Female",
+            "count": 66
+          },
+          {
+            "label": "Male",
+            "count": 60
+          }
+        ]
+      },
+      {
+        "identifier": "age-general",
+        "label": "Age",
+        "display": "ComboBoxFacet",
+        "type": "RangeFacet",
+        "entries": [
+          {
+            "label": 0,
+            "count": 63
+          },
+          {
+            "label": 10,
+            "count": 643
+          },
+          {
+            "label": 20,
+            "count": 654
+          },
+          {
+            "label": 30,
+            "count": 652
+          },
+          {
+            "label": 40,
+            "count": 651
+          },
+          {
+            "label": 50,
+            "count": 648
+          },
+          {
+            "label": 60,
+            "count": 624
+          },
+          {
+            "label": 70,
+            "count": 425
+          },
+          {
+            "label": 80,
+            "count": 392
+          },
+          {
+            "label": 90,
+            "count": 365
+          },
+          {
+            "label": 100,
+            "count": 360
+          }
+        ]
+      },
+      {
+        "identifier": "caste",
+        "label": "Caste",
+        "display": "ListFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "All",
+            "count": 614
+          },
+          {
+            "label": "Scheduled Caste (SC)",
+            "count": 59
+          },
+          {
+            "label": "Scheduled Tribe (ST)",
+            "count": 57
+          },
+          {
+            "label": "General",
+            "count": 22
+          },
+          {
+            "label": "Other Backward Class (OBC)",
+            "count": 9
+          },
+          {
+            "label": "Particularly Vulnerable Tribal Group (PVTG)",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "identifier": "nodalMinistryName",
+        "label": "Ministry Name",
+        "display": "ComboBoxFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "Ministry Of Agriculture and Farmers Welfare",
+            "count": 27
+          },
+          {
+            "label": "Ministry Of Commerce And Industry",
+            "count": 16
+          },
+          {
+            "label": "Ministry of Fisheries,Animal Husbandry and Dairying",
+            "count": 12
+          },
+          {
+            "label": "Ministry Of Rural Development",
+            "count": 3
+          },
+          {
+            "label": "Ministry Of Jal Shakti",
+            "count": 2
+          },
+          {
+            "label": "Ministry Of Panchayati Raj",
+            "count": 2
+          },
+          {
+            "label": "Ministry Of Social Justice and Empowerment",
+            "count": 2
+          },
+          {
+            "label": "Ministry Of Chemicals And Fertilizers",
+            "count": 1
+          },
+          {
+            "label": "Ministry Of Environment,forests and climate change",
+            "count": 1
+          },
+          {
+            "label": "Ministry Of Home Affairs",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "identifier": "level",
+        "label": "Level",
+        "display": "ListFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "State",
+            "count": 661
+          },
+          {
+            "label": "Central",
+            "count": 67
+          }
+        ]
+      },
+      {
+        "identifier": "residence",
+        "label": "Residence",
+        "display": "ListFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "Both",
+            "count": 654
+          },
+          {
+            "label": "Rural",
+            "count": 72
+          },
+          {
+            "label": "Urban",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "identifier": "minority",
+        "label": "Minority",
+        "type": "CustomFacet",
+        "display": "SingleCheckBoxFacet",
+        "entries": [
+          {
+            "label": "No",
+            "count": 727
+          },
+          {
+            "label": "Yes",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "identifier": "disability",
+        "label": "Differently Abled",
+        "type": "CustomFacet",
+        "display": "SingleCheckBoxFacet",
+        "entries": [
+          {
+            "label": "No",
+            "count": 724
+          },
+          {
+            "label": "Yes",
+            "count": 4
+          }
+        ]
+      },
+      {
+        "identifier": "benefitTypes",
+        "label": "Benefit Type",
+        "display": "ListFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "Cash",
+            "count": 516
+          },
+          {
+            "label": "Composite",
+            "count": 109
+          },
+          {
+            "label": "In Kind",
+            "count": 103
+          }
+        ]
+      },
+      {
+        "identifier": "dbtScheme",
+        "label": "DBT Scheme",
+        "type": "CustomFacet",
+        "display": "SingleCheckBoxFacet",
+        "entries": [
+          {
+            "label": "No",
+            "count": 642
+          },
+          {
+            "label": "Yes",
+            "count": 86
+          }
+        ]
+      },
+      {
+        "identifier": "maritalStatus",
+        "label": "Marital Status",
+        "display": "ListFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "All",
+            "count": 727
+          }
+        ]
+      },
+      {
+        "identifier": "disabilityPercentage",
+        "label": "Disability Percentage",
+        "display": "ComboBoxFacet",
+        "type": "RangeFacet",
+        "entries": [
+          {
+            "label": 0,
+            "count": 0
+          },
+          {
+            "label": 10,
+            "count": 0
+          },
+          {
+            "label": 20,
+            "count": 1
+          },
+          {
+            "label": 30,
+            "count": 1
+          },
+          {
+            "label": 40,
+            "count": 2
+          },
+          {
+            "label": 50,
+            "count": 1
+          },
+          {
+            "label": 60,
+            "count": 1
+          },
+          {
+            "label": 70,
+            "count": 1
+          },
+          {
+            "label": 80,
+            "count": 1
+          },
+          {
+            "label": 90,
+            "count": 1
+          },
+          {
+            "label": 100,
+            "count": 1
+          }
+        ]
+      },
+      {
+        "identifier": "isBpl",
+        "label": "Below Poverty Line",
+        "type": "CustomFacet",
+        "display": "SingleCheckBoxFacet",
+        "entries": [
+          {
+            "label": "No",
+            "count": 723
+          },
+          {
+            "label": "Yes",
+            "count": 5
+          }
+        ]
+      },
+      {
+        "identifier": "isEconomicDistress",
+        "label": "Economic Distress",
+        "type": "CustomFacet",
+        "display": "SingleCheckBoxFacet",
+        "entries": [
+          {
+            "label": "No",
+            "count": 728
+          }
+        ]
+      },
+      {
+        "identifier": "isGovEmployee",
+        "label": "Government Employee",
+        "type": "CustomFacet",
+        "display": "SingleCheckBoxFacet",
+        "entries": [
+          {
+            "label": "No",
+            "count": 726
+          },
+          {
+            "label": "Yes",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "identifier": "employmentStatus",
+        "label": "Employment Status",
+        "display": "ListFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "All",
+            "count": 432
+          },
+          {
+            "label": "Employed",
+            "count": 183
+          },
+          {
+            "label": "Self-Employed/ Entrepreneur",
+            "count": 109
+          },
+          {
+            "label": "Unemployed",
+            "count": 4
+          }
+        ]
+      },
+      {
+        "identifier": "isStudent",
+        "label": "Student",
+        "type": "CustomFacet",
+        "display": "SingleCheckBoxFacet",
+        "entries": [
+          {
+            "label": "No",
+            "count": 728
+          }
+        ]
+      },
+      {
+        "identifier": "occupation",
+        "label": "Occupation",
+        "display": "ComboBoxFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "Farmer",
+            "count": 299
+          },
+          {
+            "label": "Fishermen",
+            "count": 91
+          },
+          {
+            "label": "All",
+            "count": 18
+          },
+          {
+            "label": "Dairy Farmer",
+            "count": 14
+          },
+          {
+            "label": "Agriculture Labour",
+            "count": 1
+          },
+          {
+            "label": "Ex Servicemen",
+            "count": 1
+          },
+          {
+            "label": "Journalist",
+            "count": 1
+          },
+          {
+            "label": "Safai Karamchari",
+            "count": 1
+          },
+          {
+            "label": "Unorganized Worker",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "identifier": "applicationMode",
+        "label": "Application Mode",
+        "display": "ListFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "Offline",
+            "count": 400
+          },
+          {
+            "label": "Online",
+            "count": 371
+          },
+          {
+            "label": "Online - via CSC",
+            "count": 40
+          }
+        ]
+      },
+      {
+        "identifier": "schemeType",
+        "label": "Scheme Type",
+        "display": "ListFacet",
+        "type": "RefinementSelectFacet",
+        "entries": [
+          {
+            "label": "Central Sector Scheme",
+            "count": 34
+          },
+          {
+            "label": "Centrally Sponsored Scheme",
+            "count": 20
+          }
+        ]
+      }
+    ],
+    "hits": {
+      "items": [
+        {
+          "id": "iKHCF5gBXu-iUKXqCXei",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "PMMSYTWIBIFV",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Pradhan Mantri Matsya Sampada Yojana: Three Wheeler with Ice Box Including E-rickshaws for Fish Vending - Haryana",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "twibierfv",
+            "briefDescription": "The scheme aims to promote hygienic and efficient fish transportation and retailing through mobile outlets. Under this scheme, financial assistance is provided to eligible beneficiaries for purchasing e-rickshaws equipped with ice boxes for selling fish directly.",
+            "tags": [
+              "Subsidy",
+              "Fish",
+              "Fishries",
+              "Three Wheeler",
+              "Ice Box"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "Dca1F5gB0AGc0F0iJDR0",
+          "fields": {
+            "beneficiaryState": [
+              "All"
+            ],
+            "schemeShortTitle": "PMKSY:PDMC",
+            "level": "Central",
+            "schemeFor": "Individual",
+            "nodalMinistryName": "Ministry Of Agriculture and Farmers Welfare",
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Pradhan Mantri Krishi Sinchayee Yojana: Per Drop More Crop",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "pmksypdmc",
+            "briefDescription": "The scheme “Pradhan Mantri Krishi Sinchayee Yojana: Per Drop More Crop” was launched by the Dept. of Agriculture & Farmers Welfare, Ministry of Agriculture & Farmers Welfare, Govt. of India on 1st July 2015. The scheme mainly focuses on water use efficiency at farm level through Micro Irrigation.",
+            "tags": [
+              "Agriculture",
+              "Crop",
+              "Farmer",
+              "Irrigation",
+              "Water Harvesting",
+              "Water Management"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "ZqHBF5gBXu-iUKXq_3ee",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "PMMSYRVHR",
+            "level": "State",
+            "schemeFor": null,
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Business & Entrepreneurship"
+            ],
+            "schemeName": "Pradhan Mantri Matsya Sampada Yojana: Refrigerated Vehicles – Haryana",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "sfrv",
+            "briefDescription": "The scheme aims to enhance cold chain infrastructure & ensure hygienic and efficient fish transportation. Under this scheme, financial assistance is provided to fishers for purchasing refrigerated vehicles to maintain the freshness & quality of fish during post-harvest handling & transportation.",
+            "tags": [
+              "Financial Assistance",
+              "Refrigerated Vehicle",
+              "Fishermen",
+              "Fish",
+              "Fish Transport"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "LRezF5gB5uF80_MGGY9Z",
+          "fields": {
+            "beneficiaryState": [
+              "All"
+            ],
+            "schemeShortTitle": "OTSDFPC",
+            "level": "Central",
+            "schemeFor": "Family",
+            "nodalMinistryName": "Ministry Of Home Affairs",
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Banking,Financial Services and Insurance",
+              "Business & Entrepreneurship",
+              "Housing & Shelter",
+              "Skills & Employment",
+              "Social welfare & Empowerment"
+            ],
+            "schemeName": "Central Assistance For One Time Settlement Of Displaced Families From PoK And Chhamb Under Prime Minister's Development Package",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "otsdfpc",
+            "briefDescription": "A relief and rehabilitation scheme by the Ministry of Home Affairs provides central assistance to the displaced families from PoK And Chhamb and settled in the state of Jammu & Kashmir. The amount of Central Assistance of Rs. 5,49,692/- per family will be distributed through Direct Benefit Transfer.",
+            "tags": [
+              "Rehabilitation",
+              "Displaced",
+              "Business",
+              "Farming",
+              "Jammu",
+              "Kashmir",
+              "Family"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "KxezF5gB5uF80_MGGY8t",
+          "fields": {
+            "beneficiaryState": [
+              "All"
+            ],
+            "schemeShortTitle": "PMGSY",
+            "level": "Central",
+            "schemeFor": "Infra",
+            "nodalMinistryName": "Ministry Of Rural Development",
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Transport & Infrastructure"
+            ],
+            "schemeName": "Pradhan Mantri Gram Sadak Yojana",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "pmgsy",
+            "briefDescription": "With the objective of providing rural connectivity, the Government of India launched the Pradhan Mantri Gram Sadak Yojana (referred to as PMGSY-I hereinafter) on 25th December 2000 to provide all-weather access to eligible unconnected habitations.",
+            "tags": [
+              "Road",
+              "Rural"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "lsbCF5gB0AGc0F0iCTbZ",
+          "fields": {
+            "beneficiaryState": [
+              "All"
+            ],
+            "schemeShortTitle": "PMMKSSY-1B",
+            "level": "Central",
+            "schemeFor": "Individual",
+            "nodalMinistryName": "Ministry of Fisheries,Animal Husbandry and Dairying",
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Banking,Financial Services and Insurance"
+            ],
+            "schemeName": "Pradhan Mantri Matsya Kisan Samridhi Sah-yojana (PM-MKSSY): COMPONENT 1B: One-Time Incentive for the Adoption of Aquaculture Insurance",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "pmmkssy-1b",
+            "briefDescription": "The Component 1B of PM-MKSSY provides a one-time incentive to eligible applicants who have availed institutional credit for fisheries-related activities. The objective is to encourage formal credit adoption and support the repayment capacity of fisheries microenterprises.",
+            "tags": [
+              "Incentive",
+              "Aquaculture",
+              "Insurance",
+              "Fisheries",
+              "Credit"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "aaHCF5gBXu-iUKXqAHdl",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "PMMSY-EBMRASUHR",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Pradhan Mantri Matsya Sampada Yojana: Establishment of Backyard mini RAS Units - Haryana",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "ebmrasuhr",
+            "briefDescription": "Under this scheme, financial assistance in the form of subsidies is provided to eligible beneficiaries for establishing these units. Various surface and groundwater sources such as canals, rivers, springs, open wells, and tube wells can be utilized for operating RAS units.",
+            "tags": [
+              "Fisheries",
+              "Subsidy",
+              "Backyards",
+              "Water Source",
+              "Fish Farmer",
+              "Fish"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "fqHCF5gBXu-iUKXqB3fn",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "PMMSYMCIBHR",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Business & Entrepreneurship"
+            ],
+            "schemeName": "Pradhan Mantri Matsya Sampada Yojana: Motor Cycle with Ice Box - Haryana",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "mcwibs",
+            "briefDescription": "The scheme aims to strengthen fish transportation infrastructure and ensure the freshness and quality of fish during transit. Under this scheme, financial assistance is provided to fishers for purchasing motorcycles equipped with ice boxes, ensuring efficient and hygienic fish transport.",
+            "tags": [
+              "Subsidy",
+              "Fishermen",
+              "Motorcycle",
+              "Fish",
+              "Ice Box",
+              "Fisheries"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "gcbCF5gB0AGc0F0iADac",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "PMMSYMFFMPC8TDS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Pradhan Mantri Matsya Sampada Yojana: Medium Fish Feed Mill of Production Capacity of 8 Ton/Day",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "mffmpc8tds",
+            "briefDescription": "The scheme aims to promote fish feed self-sufficiency and affordability among fish farmers. Under this scheme, financial assistance is provided for setting up medium-sized fish feed mills with a production capacity of 8 tons per day, benefiting entrepreneurs and fish farmers.",
+            "tags": [
+              "Subsidy",
+              "Fish Farmer",
+              "Entrepreneurs",
+              "Fish Production",
+              "Fish",
+              "Fish Feed",
+              "Mill"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "gRfCF5gB5uF80_MGBZKB",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "PMMSYMFFMPC2TD",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Pradhan Mantri Matsya Sampada Yojana: Mini Fish Feed Mills of Production Capacity of 2 Ton /Day",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "mffmpc2td",
+            "briefDescription": "Under this scheme, financial assistance, in form of subsidy, is provided to individuals for setting up mini feed mills, ensuring the local availability of quality fish feed at affordable prices for fishers and fish farmers.",
+            "tags": [
+              "Fish",
+              "Fish Farmer",
+              "Fish Production",
+              "Entrepreneur",
+              "Mini Fish Feed Mill"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "y6G0F5gBXu-iUKXqEXRb",
+          "fields": {
+            "beneficiaryState": [
+              "All"
+            ],
+            "schemeShortTitle": "PMFBY",
+            "level": "Central",
+            "schemeFor": "Individual",
+            "nodalMinistryName": "Ministry Of Agriculture and Farmers Welfare",
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Banking,Financial Services and Insurance"
+            ],
+            "schemeName": "Pradhan Mantri Fasal Bima Yojna (PMFBY)",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "pmfby",
+            "briefDescription": "Pradhan Mantri Fasal Bima Yojana was launched in  2016 with the aim to support farmers by providing an affordable comprehensive risk cover for crops.",
+            "tags": [
+              "Crop",
+              "Farmer",
+              "Insurance",
+              "Agriculture",
+              "Premium"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "98a0F5gB0AGc0F0iFTNh",
+          "fields": {
+            "beneficiaryState": [
+              "All"
+            ],
+            "schemeShortTitle": "PMMSY",
+            "level": "Central",
+            "schemeFor": "Infra",
+            "nodalMinistryName": "Ministry of Fisheries,Animal Husbandry and Dairying",
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Pradhan Mantri Matsya Sampada Yojana",
+            "schemeCloseDate": null,
+            "priority": 0,
+            "slug": "pmmsy",
+            "briefDescription": "Introduced by the Department of Fisheries, Pradhan Mantri Matsya Sampada Yojana (PMMSY) is a scheme to bring about ecologically healthy, economically viable, and socially inclusive development of the fisheries sector of India.",
+            "tags": [
+              "Fisheries",
+              "Agriculture",
+              "Farming"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "p6G4F5gBXu-iUKXqM3U3",
+          "fields": {
+            "beneficiaryState": [
+              "Goa"
+            ],
+            "schemeShortTitle": "FAPLLF",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Financial Assistance for the Purchase of Lifejackets and Lifebuoys for Fishermen",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "fapllf",
+            "briefDescription": "“Financial Assistance for the Purchase of Lifejackets and Lifebuoys for Fishermen” is a scheme by the Dept. of Fisheries, Govt. of Goa. Through this scheme, financial assistance amounting to ₹50% is provided by the Government to eligible fishermen for the Purchase of Lifejackets and Lifebuoys.",
+            "tags": [
+              "Fish",
+              "Fishermen",
+              "Financial Assistance",
+              "Fisheries"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "maG4F5gBXu-iUKXqLnXF",
+          "fields": {
+            "beneficiaryState": [
+              "Goa"
+            ],
+            "schemeShortTitle": "FAPCNFCLT26FFIW",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Financial Assistance to Purchase/Construct New Fishing Craft less than 26 feet for Fishing in Inland Waters of Goa",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "fapcnfclt26ffiw",
+            "briefDescription": "The scheme has been introduced to uplift the sizeable community of traditional Fishermen, by providing them financial help in the form of subsidy on the construction/ purchase of Fishing Craft less than 26 feet for fishing in inland waters of Goa. The applications are accepted only in offline mode.",
+            "tags": [
+              "Fishermen",
+              "Fish",
+              "Subsidy",
+              "Financial Assistance"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "z8a4F5gB0AGc0F0iMzQT",
+          "fields": {
+            "beneficiaryState": [
+              "Goa"
+            ],
+            "schemeShortTitle": "SIB",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Supply of Insulated Boxes",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "sib",
+            "briefDescription": "A subsidy to the extent of 75% of the cost for the purchase of an insulated box of at least 50 liters capacity. Only the fisherman engaged in selling and marketing fish, fishing at sea with a canoe, and fishing at sea with a mechanized fishing vessel with upto 6-cylinder engines are eligible.",
+            "tags": [
+              "Fishermen",
+              "Fish",
+              "Marketing",
+              "Financial Assistance",
+              "Subsidy"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "PBe3F5gB5uF80_MGrpD7",
+          "fields": {
+            "beneficiaryState": [
+              "Puducherry"
+            ],
+            "schemeShortTitle": "ASCFISCMPA",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Assistance to Scheduled Caste Farmers for Installation of Submersible / Centrifugal Motor Pumpsets With Accessories",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "ascfiscmpa",
+            "briefDescription": "Through this scheme, the farmers from the Scheduled Caste Category are provided with a grant of 90% subsidy towards the installation of suitable Submersible / Centrifugal motor pump sets with accessories, subject to a maximum of ₹60,000/‐ per tubewell per individual.",
+            "tags": [
+              "Motor",
+              "Pump",
+              "Subsidy",
+              "Farmer",
+              "Agriculture",
+              "Scheduled Caste"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "Qhe3F5gB5uF80_MGr5C1",
+          "fields": {
+            "beneficiaryState": [
+              "Meghalaya"
+            ],
+            "schemeShortTitle": "MHH",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Maintenance of Horti Hubs",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "mhh",
+            "briefDescription": "The objective of the scheme is to procure good quality disease-free and commercially accepted varieties of the identified flowers and multiply and, to serve as a demonstration cum training ground for those who are interested in Floriculture and who intend to make this as their means of livelihood.",
+            "tags": [
+              "Farmer",
+              "Agriculture",
+              "Floriculture",
+              "Flower"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "jaG4F5gBXu-iUKXqLHWe",
+          "fields": {
+            "beneficiaryState": [
+              "Goa"
+            ],
+            "schemeShortTitle": "FAPSNSRNA",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Financial Assistance To Purchase Singel Net / Small Rampon Net & Its Accessories",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "fapsnsrna",
+            "briefDescription": "The scheme “Financial Assistance To Purchase Singel Net / Small Rampon Net & Its Accessories” is a scheme by the Department of Fisheries, Government of Goa. Through this scheme, a 50% subsidy is provided to the fishermen of Goa for the purchase of Singel Net/ Small Rampon Net and its accessories.",
+            "tags": [
+              "Fishermen",
+              "Fish",
+              "Subsidy",
+              "Financial Assistance",
+              "Marine"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "Asb-F5gB0AGc0F0iVDhq",
+          "fields": {
+            "beneficiaryState": [
+              "Puducherry"
+            ],
+            "schemeShortTitle": "SPWFRPSMB-FAASCDMF",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Subsidy for the Purchase of Wooden/Fiber Reinforced Plastic/Steel Mechanised Boats",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "spwfrpsmb-faascdmf",
+            "briefDescription": "The scheme \"Subsidy for the Purchase of Wooden/Fiber Reinforced Plastic/Steel Mechanised Boats\" is introduced by the Government of Puducherry with the objective of increasing marine fish production by extending subsidies for the procurement of wooden/fiber-reinforced plastic/steel mechanized boats.",
+            "tags": [
+              "Boat",
+              "Subsidy",
+              "Fisherman",
+              "Fisheries",
+              "Financial Assistance"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "bRe4F5gB5uF80_MGMpDN",
+          "fields": {
+            "beneficiaryState": [
+              "All"
+            ],
+            "schemeShortTitle": "CDPNER:QUC:DY",
+            "level": "Central",
+            "schemeFor": "Individual",
+            "nodalMinistryName": "Ministry Of Commerce And Industry",
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Coffee Development Programme in North Eastern Region: Quality Upgradation / Certification: Drying Yards",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "cdpnerqucdy",
+            "briefDescription": "The scheme \"Quality Upgradation / Certification: Drying Yards\" aims to facilitate the improvement of the quality of coffee produced by growers by encouraging them to establish infrastructure for quality enhancement and obtain certification for their coffees, enabling them to earn better returns. ",
+            "tags": [
+              "Agriculture",
+              "Farmer",
+              "Subsidy",
+              "DBT"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "y8a4F5gB0AGc0F0iMjRJ",
+          "fields": {
+            "beneficiaryState": [
+              "All"
+            ],
+            "schemeShortTitle": "CDPNER:QUC:SBP",
+            "level": "Central",
+            "schemeFor": "Individual",
+            "nodalMinistryName": "Ministry Of Commerce And Industry",
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Coffee Development Programme in North Eastern Region: Quality Upgradation / Certification: Supply of Baby Pulpers",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "cdpnerqucsbp",
+            "briefDescription": "The scheme \"Supply of Baby Pulpers\" aims to facilitate the improvement of the quality of coffee produced by growers by encouraging them to establish infrastructure for quality enhancement and obtain certification for their coffees, enabling them to earn better returns.",
+            "tags": [
+              "Agriculture",
+              "Farmer",
+              "Subsidy",
+              "DBT"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "RxfkF5gB5uF80_MGSJMn",
+          "fields": {
+            "beneficiaryState": [
+              "Puducherry"
+            ],
+            "schemeShortTitle": "GSPV",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Grant of Subsidy for Procurement of Vehicle",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "gspv",
+            "briefDescription": "\"Grant of Subsidy for Procurement of Vehicle\" aims to facilitate the quick transportation of fish catches from landing centers to marketing places, thereby preventing/minimizing spoilage of fish. It provides a 50% subsidy for the procurement of specified vehicles.",
+            "tags": [
+              "Subsidy",
+              "Procurement",
+              "Vehicle",
+              "Fisheries",
+              "Fisherman",
+              "Financial Asisstance"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "18bVF5gB0AGc0F0ipzaa",
+          "fields": {
+            "beneficiaryState": [
+              "Madhya Pradesh"
+            ],
+            "schemeShortTitle": "MMKUY",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Banking,Financial Services and Insurance",
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Mukhya mantri Krishak Udyami Yojana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "mkuy",
+            "briefDescription": "The objective of this scheme is to provide financial assistance to the sons and daughters of farmers to establish their businesses. the government of Madhya Pradesh provided loans to the bank for all citizens of the state.",
+            "tags": [
+              "Farming",
+              "Farmer",
+              "Financial",
+              "Loan",
+              "Bank"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "jqG4F5gBXu-iUKXqLHXM",
+          "fields": {
+            "beneficiaryState": [
+              "Goa"
+            ],
+            "schemeShortTitle": "FAPSNA",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Financial Assistance for Purchase of Stake Net and its Accessories",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "fapsna",
+            "briefDescription": "“Financial Assistance for Purchase of Stake Net and its Accessories” is a scheme by the Dept. of Fisheries, Govt. of Goa. Under this scheme, financial assistance is provided in the form of a subsidy on the purchase of stake nets and accessories for the fishermen.",
+            "tags": [
+              "Fishermen",
+              "Fish",
+              "Subsidy",
+              "Financial Assistance"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "08a4F5gB0AGc0F0iMzTp",
+          "fields": {
+            "beneficiaryState": [
+              "Goa"
+            ],
+            "schemeShortTitle": "FAFVRDFPARFV",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Financial Assistance to the Fish Vendors Registered with the Directorate of Fisheries to Purchase the Accessories Required for Fish Vending",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "fafvrdfparfv",
+            "briefDescription": "Under this scheme, Financial Assistance is provided to the fish vendors for the purchase of Crates, Weighing Balance, Insulated Box, Gloves, Stools, Platforms to keep Fish/ Shed/ Umbrella, Choppers, and Other Equipment, so that the fish can reach the people in hygienic conditions.",
+            "tags": [
+              "Fish",
+              "Vendor",
+              "Business",
+              "Financial Assistance",
+              "Subsidy"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "xca4F5gB0AGc0F0iLjT-",
+          "fields": {
+            "beneficiaryState": [
+              "Goa"
+            ],
+            "schemeShortTitle": "FATPOMO2T5FFTTFC",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Financial Assistance to Purchase Outboard Motor of 2HP to 5 HP for Fitting to the Fishing Canoe",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "fatpomo2t5ffttfc",
+            "briefDescription": "“Financial Assistance to Purchase Outboard Motor of 2HP to 5 HP for Fitting to the Fishing Canoe” is a scheme by the Department of Fisheries, Government of Goa. This Scheme has been introduced to grant financial assistance in the form of a subsidy on the purchase of an outboard motor of 2HP to 5HP.",
+            "tags": [
+              "Fishermen",
+              "Fish",
+              "Financial Assistance",
+              "Subsidy"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "WcbgF5gB0AGc0F0i6zcE",
+          "fields": {
+            "beneficiaryState": [
+              "Sikkim"
+            ],
+            "schemeShortTitle": "SYSS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Business & Entrepreneurship",
+              "Agriculture,Rural & Environment",
+              "Skills & Employment"
+            ],
+            "schemeName": "Skilled Youth Startup Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "syss",
+            "briefDescription": "Sikkim Skilled Youth Startup Scheme was launched in 2020 and is implemented by the Department of Commerce & Industries which aims at assisting the educated unemployed youth in setting up a myriad of enterprises through loans with back-ended financial subsidy assistance. ",
+            "tags": [
+              "Business",
+              "StartUp",
+              "Employment",
+              "Entrepreneurship",
+              "Youth"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "3cb9F5gB0AGc0F0ibTfh",
+          "fields": {
+            "beneficiaryState": [
+              "Himachal Pradesh"
+            ],
+            "schemeShortTitle": "KBPYY",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Skills & Employment"
+            ],
+            "schemeName": "Krishak Bakri Palan Yojna",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "kbpyy",
+            "briefDescription": "The Department of Animal Husbandry, Government of Himachal Pradesh has introduced a scheme named \"Krishak Bakri Palan Yojna\" with the aim to increase income generation opportunities for economically weaker segments of the society as well as to increase meat production.",
+            "tags": [
+              "Goat Farming Scheme",
+              "Animal Husbandry",
+              "Financial Assistance",
+              "Rural Development"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "Fca1F5gB0AGc0F0iJTTs",
+          "fields": {
+            "beneficiaryState": [
+              "Himachal Pradesh"
+            ],
+            "schemeShortTitle": "UPPY",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Uttam Pashu Puraskar Yojana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "uppy",
+            "briefDescription": "The scheme “Uttam Pashu Puraskar Yojana” was launched by the Department of Animal Husbandry, Government of Himachal Pradesh to provide incentives and encouragement to livestock Owners for rearing good quality high yielding animals.",
+            "tags": [
+              "Livestock",
+              "Cattle",
+              "Buffaloes",
+              "Cash Prize",
+              "Milk"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "qaGzF5gBXu-iUKXqi3TB",
+          "fields": {
+            "beneficiaryState": [
+              "Assam"
+            ],
+            "schemeShortTitle": "MMKSSY-ASSAM",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Mukhya Mantri Krishi Sa Sajuli Yozana - Assam",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "mmkssy-assam",
+            "briefDescription": "The scheme “Mukhya Mantri Krishi Sa Sajuli Yojana” is a State Owned Priority Development (SOPD) scheme for farmers launched by the Assam government in FY 2018-19.  The main purpose of launching this scheme for farmers is their holistic development by implementing several farm mechanization schemes.",
+            "tags": [
+              "Farmer",
+              "Agriculture",
+              "Direct Benefit Transfer",
+              "Financial Assistance",
+              "Farm Tools"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "RKG2F5gBXu-iUKXqIHUr",
+          "fields": {
+            "beneficiaryState": [
+              "Assam"
+            ],
+            "schemeShortTitle": "CCTOFP",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Community Canning & Training On Fruit Preservation",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "cctofp",
+            "briefDescription": "The office of the Deputy Director of Agriculture (Fruit Preservation) Assam was\ncreated in 1978, under the Directorate of Agriculture and in 2008 it was transferred to the Directorate of Horticulture and Food Processing.",
+            "tags": [
+              "Fruit Preservation",
+              "Community Canning",
+              "Training"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "3KH9F5gBXu-iUKXquHh7",
+          "fields": {
+            "beneficiaryState": [
+              "All"
+            ],
+            "schemeShortTitle": "IPWCCB",
+            "level": "Central",
+            "schemeFor": "Individual",
+            "nodalMinistryName": "Ministry Of Environment,forests and climate change",
+            "schemeCategory": [
+              "Education & Learning",
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Internship Programme Of The Wildlife Crime Control Bureau (MoEFCC)",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "ipwccb",
+            "briefDescription": "Internship at Wildlife Crime Control Bureau (WCCB) provides an excellent opportunity for students/researchers to familiarize themselves with various issues related to wildlife & the functioning of WCCB. The intern shall have an orientation session and would be assigned specific areas of work.",
+            "tags": [
+              "Internship",
+              "Wildlife",
+              "Crime",
+              "Student",
+              "Environment"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "36G1F5gBXu-iUKXqInRL",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "SSE25KRBUST",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Business & Entrepreneurship"
+            ],
+            "schemeName": "Subsidy Scheme On Establishment Of - 25 Kadaknath/R.I.R. Birds Unit To Scheduled Tribes",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "sse25krbust",
+            "briefDescription": "The scheme “Subsidy Scheme on Establishment of - 25 Kadaknath/R.I.R. Birds Unit to Scheduled Tribes” was launched by the Dept. of Agriculture, Farmers Welfare & Co-operation, Govt. of Gujarat to provide employment, nutritious diet and to raise the income of Scheduled Tribe People of Gujarat State.",
+            "tags": [
+              "Poultry Farming",
+              "Scheduled Tribe",
+              "Subsidy",
+              "Kadaknath",
+              "Financial Assistance",
+              "Rhode Island Red (RIR)"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "K6G2F5gBXu-iUKXqHHXH",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "IOAIBFCPBIC",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Incentive To Owners Of Artificial Insemination Born Female Calf Through Pure Breeding In Indigenous Cow",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "ioaibfcpbic",
+            "briefDescription": "The scheme “Incentive to Owners of Artificial Insemination Born Female Calf through Pure Breeding in Indigenous Cow” was started by the Department of Agriculture, Farmers Welfare & Co-operation, Government of Gujarat.",
+            "tags": [
+              "Incentive",
+              "Artificial Insemination",
+              "Indigenous Cow",
+              "Livestock"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "yBe1F5gB5uF80_MGKY_q",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "SSIEEMAF",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Scheme For Subsidy On Interest For Establishment Of 1 To 20 Milch Animal Farm",
+            "schemeCloseDate": "2023-06-15",
+            "priority": 1,
+            "slug": "ssieemaf",
+            "briefDescription": "The scheme “Scheme for Subsidy on Interest for Establishment of 1 to 20 Milch Animal Farm for the State Cattle Breeders” was started by the Dept. of Agriculture, Farmers Welfare & Co-operation, Government of Gujarat.",
+            "tags": [
+              "Animal Husbandry",
+              "Subsidy",
+              "Farmer",
+              "Cattle Farming",
+              "Loan"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "wcbTF5gB0AGc0F0iQDbX",
+          "fields": {
+            "beneficiaryState": [
+              "Rajasthan"
+            ],
+            "schemeShortTitle": "ITG",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Women and Child"
+            ],
+            "schemeName": "Incentive To Girls",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "itg",
+            "briefDescription": "Rajasthan State started a scheme \"Incentive for Girls\" for state students.",
+            "tags": [
+              "Financial Assistance",
+              "Girl Education",
+              "Empowerment",
+              "Higher Education"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "_xe2F5gB5uF80_MGHY-3",
+          "fields": {
+            "beneficiaryState": [
+              "Karnataka"
+            ],
+            "schemeShortTitle": "Madilu",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Madilu Kit",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "madilu",
+            "briefDescription": "The Madilu Programme is a government initiative focused on empowering rural communities through skill development and entrepreneurship opportunities.\nIt aims to create sustainable livelihoods, reduce poverty, and enhance social and economic well-being in rural areas.",
+            "tags": [
+              "Skill Development",
+              "Entrepreneurship",
+              "Livelihoods",
+              "Poverty Reduction"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "1xe1F5gB5uF80_MGnY8M",
+          "fields": {
+            "beneficiaryState": [
+              "All"
+            ],
+            "schemeShortTitle": "NFSMCSS",
+            "level": "Central",
+            "schemeFor": "Individual",
+            "nodalMinistryName": "Ministry Of Agriculture and Farmers Welfare",
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "National Food Security Mission NFSM",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "nfsmcss",
+            "briefDescription": "National Food Security Mission was launched in 2007-08 to increase the production of rice, wheat and pulses. Later, coarse cereals, nutri cereals, commercial crops (sugarcane, jute, and cotton) were also added to the mission.",
+            "tags": [
+              "Demonstration",
+              "Seed Distribution",
+              "Seed Hub",
+              "Seed Production",
+              "Pulses",
+              "Rice",
+              "Wheat",
+              "Nutri Cereals",
+              "Millets"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "fhe5F5gB5uF80_MGSZBc",
+          "fields": {
+            "beneficiaryState": [
+              "Meghalaya"
+            ],
+            "schemeShortTitle": "SAMS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Supply of Agriculture Machineries Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "sams",
+            "briefDescription": "The objective of the scheme is to distribute and sale of agricultural machinery such as Power Tillers, etc. to farmers at subsidized rates.",
+            "tags": [
+              "Farmer",
+              "Agriculture Machineries",
+              "Subsidy"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "0aG5F5gBXu-iUKXqVHXa",
+          "fields": {
+            "beneficiaryState": [
+              "Meghalaya"
+            ],
+            "schemeShortTitle": "OMS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Organic Manure Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "oms",
+            "briefDescription": "The objective of the scheme is to provide hands on training at the village level on production of organic compost inputs such as compost for plant health management for sustainable agriculture.",
+            "tags": [
+              "Organic Manure",
+              "Farmer",
+              "Agriculture",
+              "Training"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "ohe5F5gB5uF80_MGXZDL",
+          "fields": {
+            "beneficiaryState": [
+              "Meghalaya"
+            ],
+            "schemeShortTitle": "ARSLS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Agriculture Research Stations and Laboratories Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "arsls",
+            "briefDescription": "The objective of the scheme is to conduct adaptive research trials on different crops in the Research Farms and in Farmers' Field for adaptability and use of bio pesticides/bio agents.",
+            "tags": [
+              "Agriculture",
+              "Research Station",
+              "Laboratory",
+              "Farmer",
+              "Bio Pesticide",
+              "Bio Agent"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "vaG5F5gBXu-iUKXqSnVK",
+          "fields": {
+            "beneficiaryState": [
+              "Meghalaya"
+            ],
+            "schemeShortTitle": "PHMS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Post Harvest Marketing Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "phms",
+            "briefDescription": "The “Post Harvest Marketing Scheme” was launched by the Department of Agriculture & Farmers’ Welfare, Government of Meghalaya for the creation of post harvest marketing infrastructure. ",
+            "tags": [
+              "Post Harvest",
+              "Marketing",
+              "Infrastructure",
+              "Farmer",
+              "SHG Farmers",
+              "Co-Operative Societies",
+              "FIG",
+              "FPO",
+              "Horticulture"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "7cbXF5gB0AGc0F0iNzbP",
+          "fields": {
+            "beneficiaryState": [
+              "Rajasthan"
+            ],
+            "schemeShortTitle": "ABN",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Anti Bird Net",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "abn",
+            "briefDescription": "Under the Anti Bird Net Birds will never leave your garden if they are used to pecking on certain trees and plants, but if you install anti-bird nets at the appropriate places, you can prevent them from coming again to peck your plants.",
+            "tags": [
+              "Farmer",
+              "Anti Bird Net",
+              "Farming",
+              "Agriculture"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "AqHXF5gBXu-iUKXqx3hN",
+          "fields": {
+            "beneficiaryState": [
+              "Rajasthan"
+            ],
+            "schemeShortTitle": "WIT",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Walk In Tunnel",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "wit",
+            "briefDescription": "Under the Walk-In Tunnel, the Rajasthan government provides the benefit of a subsidy to the farmers with affordable and efficient structures that offer protection from adverse weather conditions, pests, and diseases.",
+            "tags": [
+              "Walk In Tunnel",
+              "Crops",
+              "Agriculture"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "EsbXF5gB0AGc0F0i5jfT",
+          "fields": {
+            "beneficiaryState": [
+              "Meghalaya"
+            ],
+            "schemeShortTitle": "MARVS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Meghalaya Agriculture Response Vehicle Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "marvs",
+            "briefDescription": "The scheme “Meghalaya Agriculture Response Vehicle Scheme” was launched by the Department of Agriculture & Farmers’ Welfare, Government of Meghalaya to provide Small Commercial Vehicles and pickups at each CD Block across Meghalaya with 50% financial aid from the Government of Meghalaya.",
+            "tags": [
+              "Agriculture",
+              "Response Vehicle",
+              "Farmer",
+              "Financial Aid",
+              "Farmers Associations",
+              "Entrepreneur"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "C6ExGJgBXu-iUKXq7Xme",
+          "fields": {
+            "beneficiaryState": [
+              "Rajasthan"
+            ],
+            "schemeShortTitle": "KY",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Krishi Yantra",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "ky",
+            "briefDescription": "In the Krishi Yantra scheme, the farmer purchases farming-related equipment from an authorized dealer, then the state government gives a subsidy to the farmers.",
+            "tags": [
+              "Farming",
+              "Farmer",
+              "Equipment",
+              "Development"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "5aG5F5gBXu-iUKXqw3UP",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "APDCCSIFDS(GC)",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Assistance for Power Driven Chaff Cutter Scheme under Integrated Fodder Development Scheme (General Category)",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "apdccsifdsgc",
+            "briefDescription": "The scheme provides financial assistance to dairy farmers belonging to General Caste category on purchase of electric powered chaff cutters. By using power driven chaff cutter, dairy farmers can reduce wastage of green & dry fodder which is economically important for their profitable dairy farming.",
+            "tags": [
+              "Chaff Cutter",
+              "Animal Husbandry",
+              "Dairy Farmer",
+              "Financial Assistance"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "-ca5F5gB0AGc0F0iwTQ_",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "CSSSSCSP(SCC)",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Cattle Shed Subsidy Scheme under Scheduled Castes Sub Plan (SC Category) ",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "csssscspscc",
+            "briefDescription": "The scheme “Cattle Shed Subsidy Scheme under Scheduled Castes Sub Plan (SCSP)” is implemented by the Directorate of Animal Husbandry, Government of Gujarat. Under this scheme, the financial assistance is given to Scheduled Caste beneficiaries for construction of Cattle Shed for 2 animals.",
+            "tags": [
+              "Cattle Shed",
+              "Subsidy",
+              "Scheduled Caste",
+              "Animal Husbandry",
+              "Farmer",
+              "Financial Assistance"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "fqHmF5gBXu-iUKXq3njF",
+          "fields": {
+            "beneficiaryState": [
+              "Odisha"
+            ],
+            "schemeShortTitle": "BEDS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Buffalo Entrepreneurship Development Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "beds",
+            "briefDescription": "The \"Buffalo Entrepreneurship Development Scheme\" aims to enhance livestock productivity, especially among marginalized farmers in Odisha. This scheme seeks to address protein deficiency, boost nutritional status, & promote livelihood through dairy farming. ",
+            "tags": [
+              "Farmers",
+              "Milk Production",
+              "Subsidy",
+              "Opportunity"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "K8bZF5gB0AGc0F0i0TfE",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "AAPD",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Business & Entrepreneurship"
+            ],
+            "schemeName": "Agricultural Activities for Persons with Disabilities",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "aapd",
+            "briefDescription": "This scheme provides loans up to ₹10,00,000/- to the persons with disabilities for agricultural production, irrigation, horticulture, sericulture, the purchase of agricultural machinery and equipment for agricultural services, and the marketing of agricultural products etc.",
+            "tags": [
+              "Agricultural Activities",
+              "PwD",
+              "Loan",
+              "Disabled Person"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "GcbZF5gB0AGc0F0iUDcR",
+          "fields": {
+            "beneficiaryState": [
+              "Bihar"
+            ],
+            "schemeShortTitle": "NTKJKY",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Niji Talabon Ka Jirnoddhar Ki Yojana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "ntkjky",
+            "briefDescription": "The government of Bihar launched the \"Niji Talabon Ka Jirnoddhar Ki Yojana\" scheme aims to enhance the water holding capacity of private ponds to boost fish productivity & production as well as provide benefits to private fish farmers through the expansion/renovation of their ponds.",
+            "tags": [
+              "Fish Farmer",
+              "Productivity",
+              "Pond"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "eqG9F5gBXu-iUKXqYnZk",
+          "fields": {
+            "beneficiaryState": [
+              "Tamil Nadu"
+            ],
+            "schemeShortTitle": "DOCSOS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Distribution of Certified Seeds-Oil Seeds",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "docsos",
+            "briefDescription": "The \"Distribution of Certified Seeds-Oil Seeds\" scheme offers subsidies to farmers for purchasing certified oil seeds, helping them improve their crop yield and quality.\n\n",
+            "tags": [
+              "Agriculture",
+              "Farmer",
+              "Seed Distribution",
+              "Oil Seeds",
+              "Subsidy"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "-sa-F5gB0AGc0F0iaTUQ",
+          "fields": {
+            "beneficiaryState": [
+              "Tamil Nadu"
+            ],
+            "schemeShortTitle": "ASPIE",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Skills & Employment",
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Afforestation Schemes Providing Incentives And Employment To Tribals In Forest",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "aspie",
+            "briefDescription": "This scheme offers grants to unemployed tribals for afforestation work, providing them with incentives and employment opportunities in forest operations.",
+            "tags": [
+              "Tribal Welfare",
+              "Afforestation",
+              "Incentives",
+              "Employment"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "0xe-F5gB5uF80_MGZZFD",
+          "fields": {
+            "beneficiaryState": [
+              "Tamil Nadu"
+            ],
+            "schemeShortTitle": "AHTN",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Animal Husbandry",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "ahtn",
+            "briefDescription": "This scheme provides subsidies on the distribution of sheep units, milch animals, and calves, as well as health coverage and artificial insemination for the animals. It is targeted at Tribal communities to improve their livelihood through animal husbandry.\n",
+            "tags": [
+              "Tribal Welfare",
+              "Animal Husbandry",
+              "Animals Health Cover",
+              "Artificial Insemination",
+              "Distribution Of Sheep Units"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "o8a9F5gB0AGc0F0iYzWT",
+          "fields": {
+            "beneficiaryState": [
+              "Tamil Nadu"
+            ],
+            "schemeShortTitle": "POCS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Production Of Certified Seeds",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "pocs",
+            "briefDescription": "The \"Production of Certified Seeds\" scheme, offers a subsidy to farmers for producing certified seeds of Pulses.\n",
+            "tags": [
+              "Agriculture",
+              "Farmer",
+              "Certified Seeds",
+              "Production Of Seeds"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "h6G9F5gBXu-iUKXqZnZz",
+          "fields": {
+            "beneficiaryState": [
+              "Tamil Nadu"
+            ],
+            "schemeShortTitle": "OBDOPMTIG",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Organizing Block Demonstration on Polythene Mulch Technology in Groundnut",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "obdopmtig",
+            "briefDescription": "The scheme provides financial assistance to farmers for adopting polythene mulch technology in groundnut cultivation to improve productivity.\n",
+            "tags": [
+              "Agriculture",
+              "Farmer",
+              "Block Demonstration",
+              "Polythene Mulch Technology",
+              "Groundnut"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "lKG9F5gBXu-iUKXqbHaM",
+          "fields": {
+            "beneficiaryState": [
+              "Tamil Nadu"
+            ],
+            "schemeShortTitle": "DOR",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Distribution of Rhizobium",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "dor",
+            "briefDescription": "The “Distribution of Rhizobium” scheme offers a subsidy on the cost of Rhizobium, to farmers raising seed farms with Pulses crops in Tamil Nadu.\n\n",
+            "tags": [
+              "Agriculture",
+              "Farmer",
+              "Rhizobium",
+              "Subsidy"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "OqHbF5gBXu-iUKXq3Xh-",
+          "fields": {
+            "beneficiaryState": [
+              "Madhya Pradesh"
+            ],
+            "schemeShortTitle": "TWS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Tap Water Scheme (Nal Jal Yojana)",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "tws",
+            "briefDescription": "\"Tap Water Scheme\" (नल जल योजना) by the Panchayat and Rural Development Department, Government of Madhya Pradesh aims to provide clean water in Gram Panchayat areas in an accessible manner. The application has to be made to the concerned Gram Panchayat.",
+            "tags": [
+              "Water",
+              "Agriculture",
+              "Panchayat",
+              "Development",
+              "Rural"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "9hc7GJgB5uF80_MGJJNZ",
+          "fields": {
+            "beneficiaryState": [
+              "Bihar"
+            ],
+            "schemeShortTitle": "MVYB",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Makhana Vikas Yojana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "mvyb",
+            "briefDescription": "The scheme aims to boost Makhana cultivation by providing training to farmers and financial support for traditional equipment.",
+            "tags": [
+              "Agriculture",
+              "Subsidy",
+              "Seed Supply",
+              "Financial Assistance",
+              "Makhana Development"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "HsY7GJgB0AGc0F0iJTiQ",
+          "fields": {
+            "beneficiaryState": [
+              "Bihar"
+            ],
+            "schemeShortTitle": "MBYDFVY",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Mukhyamantri Bagwani Mission: Dragon Fruit Vikas Yojana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "mbydfvy",
+            "briefDescription": "The scheme aims to expand dragon fruit cultivation in 21 districts of the state, providing financial assistance to ryot farmers for establishing and maintaining dragon fruit plantations.\n",
+            "tags": [
+              "Agriculture",
+              "Subsidy",
+              "Plant Supply",
+              "Financial Assistance",
+              "Dragon Fruit Development"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "osbpF5gB0AGc0F0iZTeo",
+          "fields": {
+            "beneficiaryState": [
+              "Jharkhand"
+            ],
+            "schemeShortTitle": "V-VHCS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Housing & Shelter",
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Ved-Vyas Housing Construction Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "v-vhcs",
+            "briefDescription": "The \"Ved Vyas Housing Construction Scheme\" provides financial assistance to active and traditional fish farmers in Simdega district for building houses. The scheme prioritizes individuals particularly those living in kutcha or thatched houses. ",
+            "tags": [
+              "Housing",
+              "Fish Farmer",
+              "Disabled",
+              "BPL"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "cBfpF5gB5uF80_MGY5NQ",
+          "fields": {
+            "beneficiaryState": [
+              "Tamil Nadu"
+            ],
+            "schemeShortTitle": "PCARDSIA",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Banking,Financial Services and Insurance"
+            ],
+            "schemeName": "Primary Cooperative Agriculture and Rural Development Bank: For Sericulture In Irrigated Area",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "pcardsia",
+            "briefDescription": "The scheme provides loans to farmers for sericulture activities in irrigated areas, with a loan amount ranging from ₹49,000/- to ₹79,000/- per acre, and interest rates from 11% to 12.75%.",
+            "tags": [
+              "Sericulture",
+              "Loan",
+              "Farmer",
+              "Agriculture And Rural Development Bank",
+              "Irrigated Area"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "mhe9F5gB5uF80_MG35Ef",
+          "fields": {
+            "beneficiaryState": [
+              "Madhya Pradesh"
+            ],
+            "schemeShortTitle": "GTIAR",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Skills & Employment"
+            ],
+            "schemeName": "Gausevak Training (Initial and Refresher)",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "gtiar",
+            "briefDescription": "The scheme \"Gausevak Training (Initial and Refresher)\" aims to empower educated unemployed rural youth with self-employment opportunities and the skills to provide primary veterinary services in remote rural areas. A 100% stipend of ₹6,000 for initial training and ₹500 for refresher training.",
+            "tags": [
+              "Educated",
+              "Unemployed",
+              "Youth",
+              "Training"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "P6E9GJgBXu-iUKXqB3lt",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "ICS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Intensive Castration Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "ics",
+            "briefDescription": "The \"Intensive Castration Scheme\" introduced by the Agriculture, Farmers Welfare and Cooperation Department, Gujarat, aims to control the stray animal population by castrating male calves and helps in reducing accidents caused by stray male animals in rural and urban areas.\n\n",
+            "tags": [
+              "Animal Husbandry",
+              "Cow",
+              "Low Genetic Animal"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "RaE9GJgBXu-iUKXqCHkv",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "EOTMAF",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Establishment of 1 to 20 Milch Animal Farm",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "eotmaf",
+            "briefDescription": "The \"Establishment of 1 to 20 Milch Animal Farm\" scheme introduced by the Agriculture, Farmers Welfare and Cooperation Department, Gujarat, provides financial assistance in the form of an interest subsidy to livestock farmers to take up animal husbandry as a sustainable business.",
+            "tags": [
+              "Animal Husbandry",
+              "Rural Employment",
+              "Animal Farm"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "Hxc9GJgB5uF80_MGCJRL",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "KPYG",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Kisan Parivahan Yojana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "kpyg",
+            "briefDescription": "This scheme has been introduced by the Agriculture, Farmers Welfare and Cooperation Department, Gujarat. It aims to provide financial assistance to farmers for purchasing medium-sized goods vehicles to facilitate the transportation of agricultural produce.",
+            "tags": [
+              "Agriculture",
+              "Farmer",
+              "Heavy Farm Equipment",
+              "Goods Vehicles"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "WqE9GJgBXu-iUKXqEHkF",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "ACFPAGC",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Assistance of Concentrate Feed for Pregnant Animals (General Category)",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "acfpagc",
+            "briefDescription": "This scheme provides free BIS type II concentrate feed to pregnant cattle owned by General Category livestock owners in Gujarat to ensure their good health, boost immunity, prevent metabolic diseases, and enhance milk production.\n\n",
+            "tags": [
+              "Animal Husbandry",
+              "Pregnant Cattle",
+              "Milk Production"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "p6HqF5gBXu-iUKXq-3hy",
+          "fields": {
+            "beneficiaryState": [
+              "Goa"
+            ],
+            "schemeShortTitle": "SPEBJ",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Transport & Infrastructure",
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Subsidy to Purchase E-Bike for Journalists",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "spebj",
+            "briefDescription": "The scheme aims to provide financial assistance to journalists in Goa for purchasing e-bikes at a subsidised rate. The benefits include making it more convenient for journalists to gather and disseminate news, with the intended beneficiaries being eligible Goa-based journalists.",
+            "tags": [
+              "Subsidy",
+              "Transport",
+              "Journalist",
+              "Environment",
+              "Pollution",
+              "Road"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "CRc9GJgB5uF80_MGBJSg",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "DVRSF",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Diesel VAT Relief Scheme for Fishermen",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "dvrsf",
+            "briefDescription": "The \"Diesel VAT Relief Scheme for Fishermen\" introduced by the Agriculture, Farmers Welfare and Cooperation Department, Gujarat, aims to provide financial assistance by subsidizing the VAT levied on high-speed diesel used in fishing boats. ",
+            "tags": [
+              "Agriculture",
+              "Fishing Activities",
+              "Fishermen"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "Chc9GJgB5uF80_MGBJTK",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "BVBY",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Bhavantar Bharpai Yojana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "bvby",
+            "briefDescription": "The scheme is implemented by the Department of Horticulture, Government of Haryana, aims to protect horticultural farmers from market price fluctuations and compensate them if they receive low prices for their produce in the market.",
+            "tags": [
+              "Horticulture",
+              "Farmer",
+              "Agriculture",
+              "Vegetable Grower",
+              "Fruits",
+              "Vegetables",
+              "Incentive"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "Cxc9GJgB5uF80_MGBJTh",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "SPFASAE",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Scheme to Provide Financial Assistance to Farmers for Purchasing Sanedo Agricultural Equipment",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "spfasae",
+            "briefDescription": "This scheme has been introduced by the Agriculture, Farmers Welfare and Cooperation Department, Gujarat. It aims to provide financial assistance to farmers for purchasing Sanedo (Mini Tractor) equipment, which enhances efficiency and reduces labor dependency in farming operations.",
+            "tags": [
+              "Agriculture",
+              "Farmer",
+              "Sanedo Equipment"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "Ehc9GJgB5uF80_MGBZTu",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "SAPSF",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Scheme for Assistance on Purchase of Smartphone by the Farmers",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "sapsf",
+            "briefDescription": "This scheme has been introduced by the Agriculture, Farmers Welfare and Cooperation Dept., Gujarat. It aims to provide financial assistance to farmers for purchasing smartphones, enabling them to access agricultural technology, weather updates, pest control techniques, and government assistance.",
+            "tags": [
+              "Agriculture",
+              "Farmer",
+              "Smartphone"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "VsY9GJgB0AGc0F0iFDjG",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "ACFAPSC",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Assistance of Concentrate Feed After Parturition (Scheduled Caste Category)",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "acfapsc",
+            "briefDescription": "The scheme \"Assistance of Concentrate Feed After Parturition (Scheduled Caste Category)\" provides 150 kg of BIS Type II concentrate feed to Scheduled Caste Category livestock owners after parturition to support cattle health, increase milk production, and enhance calf development.\n\n",
+            "tags": [
+              "Animal Husbandry",
+              "Cattle Development",
+              "Milk Production",
+              "Concentrate Feeds"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "BKG_F5gBXu-iUKXq7nfS",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "SPLFOM",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Scheme on Promotion of Use of Liquid Fermented Organic Manure (LFOM) for Increasing Organic Carbon in Soil",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "splfom",
+            "briefDescription": "The \"Scheme on Promotion of Use of Liquid Fermented Organic Manure (LFOM) for Increasing Organic Carbon in Soil\" offers financial assistance to promote the use of Liquid Fermented Organic Manure (LFOM) and enhance organic carbon levels in soil.\n\n",
+            "tags": [
+              "Agriculture",
+              "Organic Farming",
+              "Liquid Manure",
+              "Soil Health"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "jsbCF5gB0AGc0F0iCTY0",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "LFVCS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "PMMSY: Live Fish Vending Centres Scheme - Haryana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "lfvcs",
+            "briefDescription": "The scheme aims to support fishers by providing financial assistance for live fish vending centers. A subsidy per unit is provided under PMMSY.",
+            "tags": [
+              "Financial Assistance",
+              "Fish Farmer",
+              "Transportation",
+              "Subsidy",
+              "Marketing"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "ksbCF5gB0AGc0F0iCTZo",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "FFPPC",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Business & Entrepreneurship",
+              "Social welfare & Empowerment"
+            ],
+            "schemeName": "PMMSY: Fish Feed Plants of Production Capacity of at least 100 Ton/Day - Haryana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "sffppc",
+            "briefDescription": "This scheme provides capital subsidy for setting up fish feed plants with a minimum production capacity of 100 tons per day, under the Pradhan Mantri Matsya Sampada Yojana (PMMSY) to general , schedule caste and women beneficiaries .",
+            "tags": [
+              "Fish",
+              "Affordable Feed",
+              "Capital Subsidy",
+              "FFPO"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "Osa_F5gB0AGc0F0i9Db2",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "MMAMS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Mukhya Mantri Agricultural Mechanization Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "mmams",
+            "briefDescription": "The \"Mukhya Mantri Agricultural Mechanization Scheme\" launched by the Agriculture, Farmers Welfare and Cooperation Department, offers financial assistance ranging from ₹1,200/- to ₹11,00,000/- to farmers in Gujarat for purchasing agricultural machinery and farm equipment.\n\n",
+            "tags": [
+              "Agriculture",
+              "Machine",
+              "Subsidy"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "CKG_F5gBXu-iUKXq73dW",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "CWSDI",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Construction of Water Storage Tanks for Drip Irrigation",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "cwsdi",
+            "briefDescription": "The scheme provides financial assistance to farmers across Gujarat for constructing water storage tanks to support drip irrigation, with cost-sharing benefits based on farmer category.",
+            "tags": [
+              "Agriculture",
+              "Drip Irrigation",
+              "Farmer",
+              "Water Tank"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "f8bCF5gB0AGc0F0iADZn",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "ENFFHR",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "PMMSY: Establishment of New Freshwater Fin Fish Hatcheries-Haryana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "enffhr",
+            "briefDescription": "The scheme aims to support the establishment of new freshwater finfish hatcheries. Through this scheme, financial assistance in the form of subsidies is provided to beneficiaries for setting up these hatcheries.",
+            "tags": [
+              "Financial Assistance",
+              "Subsidy",
+              "Setting Up",
+              "Hatcheries"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "jaHCF5gBXu-iUKXqe3cf",
+          "fields": {
+            "beneficiaryState": [
+              "Haryana"
+            ],
+            "schemeShortTitle": "SWSCFFSSAANW",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Scheme for the Welfare of Schedule Caste Families in Fisheries Sector: Subsidy on Annual Auction of Notified Waters",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "faotaaonw",
+            "briefDescription": "The objective of the scheme is to provide full-time employment to individuals from Scheduled Caste families in the fisheries sector and uplift their socio-economic status by promoting fish farming through subsidization of fishing contract costs in designated water bodies. ",
+            "tags": [
+              "Financial Assistance",
+              "Subsidy",
+              "Auction",
+              "Waters",
+              "Fish Culture"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "bqHcJ5gBXu-iUKXq_3lV",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "PPYGSKVN",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Banking,Financial Services and Insurance"
+            ],
+            "schemeName": "Pashu Palan Yojana (GSKVN)",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "ahsgskvn",
+            "briefDescription": "Under this scheme, loans of up to ₹1,00,000 are provided to sanitation workers and their dependents at an interest rate of 6% for self-employment in animal husbandry or related activities.",
+            "tags": [
+              "Loan",
+              "Animal Husbandry",
+              "Sanitation Worker",
+              "Self-employment",
+              "Scavenger"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "OBf3HJgB5uF80_MG55QH",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "APVCRRM",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Assistance for Planting Vegetable Crops for Raw and Ripe Mandap",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "apvcrrm",
+            "briefDescription": "The scheme provides financial assistance to farmers in Gujarat for setting up vegetable trellises (Mandap) for raw, semi-ripe, and ripe vegetables, with varying support for General, SC, and ST farmers.\n\n",
+            "tags": [
+              "Vegetable Crops",
+              "Farmer",
+              "Raw And Ripe Mandap"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "YMYEJ5gB0AGc0F0iFzh4",
+          "fields": {
+            "beneficiaryState": [
+              "Assam"
+            ],
+            "schemeShortTitle": "AITH-ATISIS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Banking,Financial Services and Insurance",
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "\"Agricultural Income Tax Holiday\" under the \"Assam Tea Industries Special Incentives Scheme\"",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "aith-atisis",
+            "briefDescription": "The scheme aims to ensure long-term financial sustainability of the Tea industry and to incentivize manufacturers to move from Crush, Tear, Curl tea to Orthodox tea production. The scheme is implemented by the Finance Department and the Industries & Commerce Department, Government of Assam.",
+            "tags": [
+              "Holiday",
+              "Tea",
+              "Income Tax",
+              "Incentive",
+              "Industry"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "Y6HlHJgBXu-iUKXqDXko",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "SFUGP",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Scheme for Upgradation of Gaushala/ Panjrapole",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "sfugp",
+            "briefDescription": "The \"Scheme for Upgradation of Gaushala/ Panjrapole\"  aims to promote indigenous cow breeds and make cow rearing economically viable.\n\n",
+            "tags": [
+              "Agriculture",
+              "Animal Husbandry",
+              "Cattle Development"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "PhfhJ5gB5uF80_MGQZTE",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "PASHUPALANGBCDC",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Banking,Financial Services and Insurance"
+            ],
+            "schemeName": "Pashupalan (GBCDC)",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "pashupalangbcdc",
+            "briefDescription": "The scheme aims to provide an amount for animal husbandry activities. Low-interest loans are provided to Pashu Palaks.",
+            "tags": [
+              "Cow",
+              "Buffalo",
+              "Agriculture Activities",
+              "Loan"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "j6HkXpgBXu-iUKXqUXlK",
+          "fields": {
+            "beneficiaryState": [
+              "Bihar"
+            ],
+            "schemeShortTitle": "KIAY",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Krishi Input Anudan Yojana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "kiay",
+            "briefDescription": "The scheme aims to provide agricultural input subsidies in affected areas due to the rise in water levels of rivers like Ganga and Kosi and flood-related crop damage from heavy rainfall.\n\n",
+            "tags": [
+              "Agriculture",
+              "Subsidy",
+              "Crops Damage",
+              "Financial Assistance",
+              "Crop Insurance"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "cBfIeZgB5uF80_MGPpRz",
+          "fields": {
+            "beneficiaryState": [
+              "Uttarakhand"
+            ],
+            "schemeShortTitle": "MRKVY",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Mukhyamantri Rajya Krishi Vikas Yojana",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "mrkvy",
+            "briefDescription": "The scheme aims to enhance sugarcane cultivation through grants for seed production, machinery, pest control, and training. Through this scheme, various financial grants and support services are provided to sugarcane farmers and related agricultural entities.",
+            "tags": [
+              "Sugarcane",
+              "Seed Production",
+              "Seed Transportation",
+              "Bio Fertilizers",
+              "Micronutrients",
+              "Agricultural Mechinery",
+              "Pest Control"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "dxfYmJgB5uF80_MGjpRM",
+          "fields": {
+            "beneficiaryState": [
+              "Uttarakhand"
+            ],
+            "schemeShortTitle": "MSBCCFS",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment",
+              "Business & Entrepreneurship"
+            ],
+            "schemeName": "Madho Singh Bhandari Cooperative Collective Farming Scheme",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "msbccfs",
+            "briefDescription": "The scheme aims to uplift the living standards of the cooperative society and committee members by enabling large-scale production, storage, and release of finished products. Through this scheme, integrated farming models, increased production, and livelihood opportunities are provided.",
+            "tags": [
+              "Cooperative Society",
+              "Committee Members",
+              "Farmers",
+              "Production",
+              "Store"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "cxdDf5gB5uF80_MGjpSw",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "PMMSYCNGPGUJ",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Pradhan Mantri Matsya Sampada Yojana (PMMSY-Inland): Construction of New Grow-out Pond - Gujarat",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "pmmsycngpguj",
+            "briefDescription": "The scheme aims to enhance fish production and provide employment through inland fisheries. It offers financial support to construct new grow-out ponds for eligible beneficiaries.",
+            "tags": [
+              "Fish Farming",
+              "Construction",
+              "Ponds",
+              "Freshwater Hatcheries"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "iRcso5gB5uF80_MG0JTI",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "SFIDFH",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Scheme for Integrated Development for Horticulture (HRT-2)",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "sfidfh",
+            "briefDescription": "The scheme \"Scheme for Integrated Development for Horticulture (HRT-2)\" aims to promote holistic horticultural growth through financial assistance for production, processing, marketing, and infrastructure support to farmers across Gujarat.",
+            "tags": [
+              "Horticulture",
+              "Farm Mechanization",
+              "Greenhouse Subsidy",
+              "Crop Protection",
+              "Post Harvest Management"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "wMar25gB0AGc0F0iwTj3",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "NMOEPPM",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "National Mission on Edible Oil–Oil Palm: Planting Materials",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "nmoeppm",
+            "briefDescription": "The scheme component \"Planting Materials\" launched under the \"National Mission on Edible Oil–Oil Palm\" scheme aims to increase oil palm production in the state and reduce dependency on imports through financial assistance to farmers for procuring planting materials.",
+            "tags": [
+              "Edible Oil",
+              "Oil Palm",
+              "Planting Materials",
+              "Imported Plant",
+              "Seedlings",
+              "Subsidy"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "kRdVu5gB5uF80_MGJJSn",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "ATMFCVC",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Assistance in Trellise Mandap for Cultivation of Vegetable Crops",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "atmfcvc",
+            "briefDescription": "The scheme \"Assistance in Trellise Mandap for Cultivation of Vegetable Crops\" aims to promote structured vegetable farming through the provision of financial assistance for constructing kachha/semi-pucca/pucca trellis mandaps to all farmers across the state.",
+            "tags": [
+              "Agriculture",
+              "Vegetable Farming",
+              "Trellis Mandap",
+              "Farming Infrastructure"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "wsat25gB0AGc0F0idDjf",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "NMOEN",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "National Mission on Edible Oil- Oil Palm: Nursery",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "nmoen",
+            "briefDescription": "The scheme component \"Nursery\" launched under the \"National Mission on Edible Oil–Oil Palm\" scheme aims to increase the production of oil palm in the state and reduce dependence on imports through providing subsidy assistance for setting up nurseries for farmers.\n\n",
+            "tags": [
+              "Edible Oil",
+              "Nursery",
+              "Farmer",
+              "Subsidy"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "lRdX1ZgB5uF80_MG05QW",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "IHDPTAF",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Integrated Horticulture Development Program for Tribal Area Farmers (TASP) HRT-3",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "ihdptaf",
+            "briefDescription": "The scheme \"Integrated Horticulture Development Program for Tribal Area Farmers (TASP) HRT-3\" by the Agriculture and Co-operation Department, Government of Gujarat, aims to enhance the horticulture sector through financial assistance and subsidies to tribal area farmers across the state.",
+            "tags": [
+              "Horticulture",
+              "Tribal Farmers",
+              "Farm Mechanization",
+              "Post Harvest Management",
+              "Subsidy"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "rhcO9ZgB5uF80_MGcZQU",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "PMMSYC2GUJ",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "PMMSY: Construction of  Plant/Storage of Minimum 20 Tonne Capacity - Gujarat",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "pmmsyc2guj",
+            "briefDescription": "The scheme aims to provide financial support for the construction of 20-tonne capacity ice plant/storage units, ensuring hygienic fish storage and improving the income of beneficiaries.",
+            "tags": [
+              "Construction Of Plant",
+              "Storage",
+              "Fish",
+              "Fishermen",
+              "Fish Sellers",
+              "20 Tonne"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "rxcS9ZgB5uF80_MGm5Rd",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "PMMSYCP3GUJ",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "PMMSY: Construction of  Plant/Storage of Minimum 30 Tonne Capacity - Gujarat ",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "pmmsycp3guj",
+            "briefDescription": "The scheme aims to strengthen fish storage infrastructure for hygienic preservation. Through this scheme, beneficiaries receive financial assistance for constructing 30-tonne capacity plants or storage units.",
+            "tags": [
+              "Construction Of Plant",
+              "Storage",
+              "Fishermen",
+              "Fish Sellers"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "0KHf9JgBXu-iUKXqmnmR",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "DSMPHSFCCLOMUK",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Distribution of Seeds of more productions varieties/ Hybrids varieties Seeds and fertilizer at subsidies etc. to Adivasi farmers in Tribal Area: Castor cake/Neem cake/ Liquid Fermented Organic Manure / Green manure seed (For mix in the soil) Gujarat",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "dsmphsfcclomuk",
+            "briefDescription": "The scheme aims to help tribal farmers improve their livelihood by increasing agricultural crop production. Through this scheme, subsidies are provided on high-yield and hybrid seeds, fertilizers, and other agricultural inputs to Scheduled Tribe farmers.",
+            "tags": [
+              "Adivasi Farmers",
+              "Crop Production",
+              "Livelihood",
+              "Castor Cake",
+              "Fertilizer",
+              "Subsidies"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "txdt_pgB5uF80_MGl5TD",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "DSPVSFWCPLGUJ",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Distribution of Seeds of more productions varieties/ Hybrids varieties Seeds and fertilizer at subsidies etc. to Adivasi farmers in Tribal Area: Water Carrying Pipe Line (TASP & OTASP) Gujarat",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "dspvsfwcplguj",
+            "briefDescription": "The scheme aims to improve the agricultural productivity of Scheduled Tribe farmers through subsidized seeds, fertilizers, and equipment. It provides direct support to tribal farmers for enhancing crop production and livelihood.",
+            "tags": [
+              "Adivasi Farmers",
+              "Crop Production",
+              "Livelihood",
+              "Fertilizer",
+              "Subsidies",
+              "Water Carrying Pipeline"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "16Ft_pgBXu-iUKXqY3k0",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "DSMPVHVSTGUJ",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "Distribution of Seeds of more productions varieties/ Hybrids varieties Seeds and fertilizer at subsidies etc. to Adivasi farmers in Tribal Area: Tarpaulin Gujarat",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "dsmpvhvstguj",
+            "briefDescription": "The scheme aims to enhance crop production and livelihood. It provides subsidies on seeds, fertilizers, tarpaulins, and other agricultural inputs to Scheduled Tribe farmers.",
+            "tags": [
+              "Adivasi Farmers",
+              "Crop Production",
+              "Livelihood",
+              "Seeds",
+              "Fertilizer",
+              "Subsidies",
+              "Tarpaulin"
+            ]
+          },
+          "highlight": {}
+        },
+        {
+          "id": "-catLpkB0AGc0F0ihzjj",
+          "fields": {
+            "beneficiaryState": [
+              "Gujarat"
+            ],
+            "schemeShortTitle": "PMMSYFVGUJ",
+            "level": "State",
+            "schemeFor": "Individual",
+            "nodalMinistryName": null,
+            "schemeCategory": [
+              "Agriculture,Rural & Environment"
+            ],
+            "schemeName": "PMMSY: Three wheeler with Ice Box including e-rickshaws for fish vending - Gujarat ",
+            "schemeCloseDate": null,
+            "priority": 1,
+            "slug": "pmmsyfvguj",
+            "briefDescription": "The scheme aims to strengthen fish storage infrastructure for hygienic preservation. Through this scheme, beneficiaries receive financial assistance for a three-wheeler with an Ice Box, including e-rickshaws for fish vending.",
+            "tags": [
+              "Construction Of Plant",
+              "Storage",
+              "Fishermen",
+              "Fish Sellers"
+            ]
+          },
+          "highlight": {}
+        }
+      ],
+      "page": {
+        "total": 728,
+        "totalPages": 8,
+        "pageNumber": 0.03,
+        "from": 3,
+        "size": 100
+      }
+    },
+    "sortedBy": "multiple_sort"
+  }
+}

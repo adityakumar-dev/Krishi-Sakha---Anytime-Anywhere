@@ -1,0 +1,564 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2025-01-28T12:00:00.000Z",
+  
+  "appTitle": "Krishi Sakha",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  
+  "home": "Home",
+  "@home": {
+    "description": "Home screen label"
+  },
+  
+  "chat": "Chat",
+  "@chat": {
+    "description": "Chat screen label"
+  },
+  
+  "aiSearch": "AI Search",
+  "@aiSearch": {
+    "description": "AI Search screen label"
+  },
+  
+  "weather": "Weather",
+  "@weather": {
+    "description": "Weather screen label"
+  },
+  
+  "voiceChat": "Voice Chat",
+  "@voiceChat": {
+    "description": "Voice Chat screen label"
+  },
+  
+  "helloUser": "Hello, {userName} 👋",
+  "@helloUser": {
+    "description": "Greeting message for user",
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  
+  "goodMorning": "Good Morning!",
+  "@goodMorning": {
+    "description": "Morning greeting"
+  },
+  
+  "goodAfternoon": "Good Afternoon!",
+  "@goodAfternoon": {
+    "description": "Afternoon greeting"
+  },
+  
+  "goodEvening": "Good Evening!",
+  "@goodEvening": {
+    "description": "Evening greeting"
+  },
+  
+  "readyToStartDay": "Ready to start your day?",
+  "@readyToStartDay": {
+    "description": "Morning motivation message"
+  },
+  
+  "howsFarmingGoing": "How's your farming going?",
+  "@howsFarmingGoing": {
+    "description": "Afternoon check-in message"
+  },
+  
+  "timeToReviewProgress": "Time to review today's progress",
+  "@timeToReviewProgress": {
+    "description": "Evening review message"
+  },
+  
+  "aiPoweredFarming": "AI-Powered Farming",
+  "@aiPoweredFarming": {
+    "description": "AI farming section title"
+  },
+  
+  "intelligentInsights": "Get intelligent insights for better crops",
+  "@intelligentInsights": {
+    "description": "AI farming description"
+  },
+  
+  "farmTools": "Farm Tools",
+  "@farmTools": {
+    "description": "Farm tools section title"
+  },
+  
+  "smartSearch": "Smart search",
+  "@smartSearch": {
+    "description": "AI search subtitle"
+  },
+  
+  "forecasts": "Forecasts",
+  "@forecasts": {
+    "description": "Weather subtitle"
+  },
+  
+  "localChat": "Local Chat",
+  "@localChat": {
+    "description": "Local chat title"
+  },
+  
+  "offlineChat": "Offline chat",
+  "@offlineChat": {
+    "description": "Local chat subtitle"
+  },
+  
+  "chatWithVoice": "Chat with Voice",
+  "@chatWithVoice": {
+    "description": "Voice chat subtitle"
+  },
+  
+  "quickStats": "Quick Stats",
+  "@quickStats": {
+    "description": "Statistics section title"
+  },
+  
+  "activeCrops": "Active Crops",
+  "@activeCrops": {
+    "description": "Active crops stat title"
+  },
+  
+  "growingWell": "Growing well",
+  "@growingWell": {
+    "description": "Crops status"
+  },
+  
+  "aiConsultations": "AI Consultations",
+  "@aiConsultations": {
+    "description": "AI consultations stat title"
+  },
+  
+  "thisMonth": "This month",
+  "@thisMonth": {
+    "description": "Time period indicator"
+  },
+  
+  "yieldImprovement": "Yield Improvement",
+  "@yieldImprovement": {
+    "description": "Yield improvement stat title"
+  },
+  
+  "fromLastSeason": "From last season",
+  "@fromLastSeason": {
+    "description": "Comparison period"
+  },
+  
+  "startConversation": "Start your conversation",
+  "@startConversation": {
+    "description": "Chat start message"
+  },
+  
+  "askAnythingFarming": "Ask anything related to farming, crops, weather, and more.",
+  "@askAnythingFarming": {
+    "description": "Chat description"
+  },
+  
+  "thinking": "Thinking…",
+  "@thinking": {
+    "description": "AI thinking indicator"
+  },
+  
+  "typeYourMessage": "Type your message…",
+  "@typeYourMessage": {
+    "description": "Message input placeholder"
+  },
+  
+  "sendMessage": "Send message",
+  "@sendMessage": {
+    "description": "Send button tooltip"
+  },
+  
+  "imageSelected": "Image Selected",
+  "@imageSelected": {
+    "description": "Image selection confirmation"
+  },
+  
+  "noImageSelected": "No image selected",
+  "@noImageSelected": {
+    "description": "No image selection message"
+  },
+  
+  "dismiss": "Dismiss",
+  "@dismiss": {
+    "description": "Dismiss button"
+  },
+  
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button"
+  },
+  
+  "youtubeVideos": "YouTube Videos",
+  "@youtubeVideos": {
+    "description": "YouTube videos section title"
+  },
+  
+  "welcomeToAiSearch": "Welcome to AI Search",
+  "@welcomeToAiSearch": {
+    "description": "AI Search welcome message"
+  },
+  
+  "aiSearchDescription": "Get instant answers with sources from across the web. Ask anything about farming, agriculture, or any topic you're curious about.",
+  "@aiSearchDescription": {
+    "description": "AI Search description"
+  },
+  
+  "askAnythingFarmingDots": "Ask anything about farming...",
+  "@askAnythingFarmingDots": {
+    "description": "AI Search input placeholder"
+  },
+  
+  "trySearchingFor": "Try searching for:",
+  "@trySearchingFor": {
+    "description": "Search suggestions title"
+  },
+  
+  "bestCropsMonsoon": "🌾 Best crops for monsoon season",
+  "@bestCropsMonsoon": {
+    "description": "Search suggestion 1"
+  },
+  
+  "modernFarmingTechniques": "🚜 Modern farming techniques",
+  "@modernFarmingTechniques": {
+    "description": "Search suggestion 2"
+  },
+  
+  "organicFertilizerMethods": "🌱 Organic fertilizer methods",
+  "@organicFertilizerMethods": {
+    "description": "Search suggestion 3"
+  },
+  
+  "waterConservationAgriculture": "💧 Water conservation in agriculture",
+  "@waterConservationAgriculture": {
+    "description": "Search suggestion 4"
+  },
+  
+  "naturalPestControl": "🐛 Natural pest control solutions",
+  "@naturalPestControl": {
+    "description": "Search suggestion 5"
+  },
+  
+  "agriculturalMarketTrends": "📈 Agricultural market trends",
+  "@agriculturalMarketTrends": {
+    "description": "Search suggestion 6"
+  },
+  
+  "searchError": "Search Error",
+  "@searchError": {
+    "description": "Search error title"
+  },
+  
+  "retrySearch": "Retry Search",
+  "@retrySearch": {
+    "description": "Retry search button"
+  },
+  
+  "yourSearch": "Your Search",
+  "@yourSearch": {
+    "description": "User search section title"
+  },
+  
+  "aiAnswer": "AI Answer",
+  "@aiAnswer": {
+    "description": "AI answer section title"
+  },
+  
+  "somethingWentWrong": "Something went wrong. Please try again.",
+  "@somethingWentWrong": {
+    "description": "Error message"
+  },
+  
+  "tryAgain": "Try Again",
+  "@tryAgain": {
+    "description": "Try again button"
+  },
+  
+  "initializingSpeechRecognition": "Initializing speech recognition...",
+  "@initializingSpeechRecognition": {
+    "description": "Speech initialization message"
+  },
+  
+  "listening": "Listening...",
+  "@listening": {
+    "description": "Voice listening indicator"
+  },
+  
+  "holdAndSpeak": "Hold and speak to get started.",
+  "@holdAndSpeak": {
+    "description": "Voice instruction message"
+  },
+  
+  "localAssistants": "Local Assistants",
+  "@localAssistants": {
+    "description": "Local assistants screen title"
+  },
+  
+  "testApis": "Test Apis",
+  "@testApis": {
+    "description": "Test APIs button"
+  },
+  
+  "askMeAnything": "Ask Me Anything",
+  "@askMeAnything": {
+    "description": "Local chat welcome title"
+  },
+  
+  "startConversationWithAi": "Start a conversation with AI",
+  "@startConversationWithAi": {
+    "description": "Local chat welcome subtitle"
+  },
+  
+  "aiIsTyping": "AI is typing...",
+  "@aiIsTyping": {
+    "description": "AI typing indicator"
+  },
+  
+  "typeMessage": "Type a message...",
+  "@typeMessage": {
+    "description": "Message input placeholder"
+  },
+  
+  "initializingAiModel": "Initializing AI model...",
+  "@initializingAiModel": {
+    "description": "AI initialization message"
+  },
+  
+  "stopGeneration": "Stop generation",
+  "@stopGeneration": {
+    "description": "Stop generation tooltip"
+  },
+  
+  "clearChat": "Clear chat",
+  "@clearChat": {
+    "description": "Clear chat tooltip"
+  },
+  
+  "ready": "Ready",
+  "@ready": {
+    "description": "Ready status"
+  },
+  
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading status"
+  },
+  
+  "generatingResponse": "Generating response...",
+  "@generatingResponse": {
+    "description": "Response generation status"
+  },
+  
+  "errorOccurred": "Error occurred",
+  "@errorOccurred": {
+    "description": "Error status"
+  },
+  
+  "humidity": "Humidity",
+  "@humidity": {
+    "description": "Humidity label"
+  },
+  
+  "dewPoint": "Dew Point",
+  "@dewPoint": {
+    "description": "Dew point label"
+  },
+  
+  "pressure": "Pressure",
+  "@pressure": {
+    "description": "Pressure label"
+  },
+  
+  "windSpeed": "Wind Speed",
+  "@windSpeed": {
+    "description": "Wind speed label"
+  },
+  
+  "uvIndex": "UV Index",
+  "@uvIndex": {
+    "description": "UV index label"
+  },
+  
+  "uvMax": "UV Max",
+  "@uvMax": {
+    "description": "UV max label"
+  },
+  
+  "sunrise": "Sunrise",
+  "@sunrise": {
+    "description": "Sunrise label"
+  },
+  
+  "sunset": "Sunset",
+  "@sunset": {
+    "description": "Sunset label"
+  },
+  
+  "rain": "Rain",
+  "@rain": {
+    "description": "Rain label"
+  },
+  
+  "outdated": "Outdated",
+  "@outdated": {
+    "description": "Outdated data indicator"
+  },
+  
+  "welcomeTo": "Welcome to",
+  "@welcomeTo": {
+    "description": "Welcome message prefix"
+  },
+  
+  "krishiSakha": "Krishi Sakha",
+  "@krishiSakha": {
+    "description": "App name"
+  },
+  
+  "search": "Search",
+  "@search": {
+    "description": "Search action"
+  },
+  
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel action"
+  },
+  
+  "save": "Save",
+  "@save": {
+    "description": "Save action"
+  },
+  
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete action"
+  },
+  
+  "edit": "Edit",
+  "@edit": {
+    "description": "Edit action"
+  },
+  
+  "share": "Share",
+  "@share": {
+    "description": "Share action"
+  },
+  
+  "copy": "Copy",
+  "@copy": {
+    "description": "Copy action"
+  },
+  
+  "paste": "Paste",
+  "@paste": {
+    "description": "Paste action"
+  },
+  
+  "refresh": "Refresh",
+  "@refresh": {
+    "description": "Refresh action"
+  },
+  
+  "back": "Back",
+  "@back": {
+    "description": "Back action"
+  },
+  
+  "next": "Next",
+  "@next": {
+    "description": "Next action"
+  },
+  
+  "done": "Done",
+  "@done": {
+    "description": "Done action"
+  },
+  
+  "close": "Close",
+  "@close": {
+    "description": "Close action"
+  },
+  
+  "changeLanguage": "Change Language",
+  "@changeLanguage": {
+    "description": "Language switcher button"
+  },
+  
+  "selectLanguage": "Select Language",
+  "@selectLanguage": {
+    "description": "Language selection dialog title"
+  },
+  
+  "english": "English",
+  "@english": {
+    "description": "English language label"
+  },
+  
+  "hindi": "हिंदी",
+  "@hindi": {
+    "description": "Hindi language label"
+  },
+  
+  "languageChanged": "Language changed",
+  "@languageChanged": {
+    "description": "Language change confirmation message"
+  },
+  
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings menu"
+  },
+  
+  "language": "Language",
+  "@language": {
+    "description": "Language settings section"
+  },
+  
+  "appInfo": "App Information",
+  "@appInfo": {
+    "description": "App information section"
+  },
+  
+  "version": "Version",
+  "@version": {
+    "description": "App version label"
+  },
+  
+  "developer": "Developer",
+  "@developer": {
+    "description": "Developer information"
+  },
+  
+  "support": "Support",
+  "@support": {
+    "description": "Support section"
+  },
+  
+  "feedback": "Feedback",
+  "@feedback": {
+    "description": "Feedback option"
+  },
+  
+  "contactUs": "Contact Us",
+  "@contactUs": {
+    "description": "Contact us option"
+  },
+  
+  "comingSoon": "Coming Soon",
+  "@comingSoon": {
+    "description": "Coming soon message"
+  },
+  
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Settings card title"
+  },
+  
+  "settingsSubtitle": "App preferences",
+  "@settingsSubtitle": {
+    "description": "Settings card subtitle"
+  }
+}

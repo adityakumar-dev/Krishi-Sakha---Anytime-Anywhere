@@ -1,0 +1,20 @@
+TFLite Model Evaluation Summary
+================================================================================
+
+Model: /home/linmar/Desktop/Krishi-Sakha/notebook/trained_model_cnn.tflite
+Model Size: 0.78 MB
+Total Images Evaluated: 10000
+Overall Accuracy: 61.23%
+Mean Confidence: 0.5154
+
+Per-Class Accuracy:
+  Tomato___Bacterial_spot                 :  92.60% (1000)
+  Tomato___Early_blight                   :  30.10% (1000)
+  Tomato___Late_blight                    :  58.00% (1000)
+  Tomato___Leaf_Mold                      :  55.40% (1000)
+  Tomato___Septoria_leaf_spot             :  58.00% (1000)
+  Tomato___Spider_mites Two-spotted_spider_mite:  63.00% (1000)
+  Tomato___Target_Spot                    :  58.70% (1000)
+  Tomato___Tomato_Yellow_Leaf_Curl_Virus  :  89.80% (1000)
+  Tomato___Tomato_mosaic_virus            :  73.00% (1000)
+  Tomato___healthy                        :  33.70% (1000)
