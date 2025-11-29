@@ -287,6 +287,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.posts),
               ),
+
+               _buildFeatureCard(
+                title: 'MyScheme',
+                subtitle: 'Government Schemes',
+                icon: Icons.forum,
+                color: const Color(0xFFD4A259),
+                onTap: () => context.push(AppRoutes.schemes),
+              ),
               // _buildFeatureCard(
               //   title: 'Experts',
               //   subtitle: 'Experts post',

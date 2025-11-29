@@ -98,6 +98,7 @@ class VoiceProvider extends ChangeNotifier {
       
       debugPrint('🎤 [VoiceProvider] Calling _speech.initialize()...');
       _isInitialized = await _speech.initialize(
+        
         onError: (error) {
           debugPrint('❌ [VoiceProvider] Speech onError callback during init: error=$error');
           if (!_isInitialized && !_hasError) {

@@ -18,6 +18,7 @@ import 'package:krishi_sakha/screens/sattelite_view/sattelite_view_screen.dart';
 import 'package:krishi_sakha/screens/leaderboard/leaderboard_screen.dart';
 import 'package:krishi_sakha/screens/search/ai_search_screen.dart';
 import 'package:krishi_sakha/screens/settings/settings_screen.dart';
+import 'package:krishi_sakha/screens/schemes/schemes_screen.dart';
 import 'package:krishi_sakha/screens/splash/splash_screen.dart';
 import 'package:krishi_sakha/screens/voice/voice_screen.dart';
 import 'package:krishi_sakha/screens/weather/weather_screen.dart';
@@ -48,6 +49,7 @@ class AppRoutes {
   static const String expertPosts = "/expert-posts";
   static const String savedPosts = "/saved-posts";
   static const String leaderboard = "/leaderboard";
+  static const String schemes = "/schemes";
   
 }
 
@@ -71,6 +73,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(path: AppRoutes.profile, name: 'profile', builder: (context, state) => const ProfileScreen()),
     GoRoute(path: AppRoutes.savedPosts, name: 'savedPosts', builder: (context, state) => const SavedPostsScreen()),
     GoRoute(path: AppRoutes.leaderboard, name: 'leaderboard', builder: (context, state) => const LeaderboardScreen()),
+    GoRoute(path: AppRoutes.schemes, name: 'schemes', builder: (context, state) => const SchemesScreen()),
     // Onboarding route
     GoRoute(
       path: AppRoutes.onboarding,

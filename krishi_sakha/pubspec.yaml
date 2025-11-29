@@ -52,6 +52,10 @@ dependencies:
   animate_do: ^3.3.4
   shimmer: ^3.0.0
   flutter_sound: ^9.29.4
+  firebase_core: ^4.2.1
+  flutter_local_notifications: ^19.5.0
+  firebase_messaging: ^16.0.4
+  google_mlkit_translation: ^0.13.0
 
 dev_dependencies:
   flutter_test:

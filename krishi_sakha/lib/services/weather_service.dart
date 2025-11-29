@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:krishi_sakha/models/weather_model.dart';
 import 'package:krishi_sakha/services/app_logger.dart';
 import 'package:logger/logger.dart';
 
 class WeatherService {
   static const String _openMeteoBaseUrl = 'https://api.open-meteo.com/v1';
-  static const String _locationIqApiKey = 'YOUR_LOCATIONIQ_API_KEY';
+  static String get _locationIqApiKey => dotenv.env['LOCATIONIQ_API_KEY'] ?? '';
   
   final Logger _logger = Logger();
   final http.Client _httpClient = http.Client();
