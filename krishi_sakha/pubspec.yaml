@@ -55,7 +55,7 @@ dependencies:
   firebase_core: ^4.2.1
   flutter_local_notifications: ^19.5.0
   firebase_messaging: ^16.0.4
-  google_mlkit_translation: ^0.13.0
+  onnx_translation: ^0.1.2
 
 dev_dependencies:
   flutter_test:
@@ -75,4 +75,5 @@ flutter:
     - assets/images/
     - assets/
     - assets/model/tamato/
+    - assets/model/en_ml/
     - .env
