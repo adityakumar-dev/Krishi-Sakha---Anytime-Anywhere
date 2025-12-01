@@ -333,6 +333,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.satteliteView),
               ),
+              _buildFeatureCard(
+                title: 'Test Translation',
+                subtitle: 'offline ML',
+                icon: Icons.translate,
+                color: const Color(0xFFD4A259),
+                onTap: () => context.push(AppRoutes.test_translation),
+              ),
+                _buildFeatureCard(
+                title: 'Translation',
+                subtitle: 'All Languages',
+                icon: Icons.translate,
+                color: const Color(0xFFD4A259),
+                onTap: () => context.push(AppRoutes.test_offline_translation),
+              ),
+              
             ],
           ),
         ],

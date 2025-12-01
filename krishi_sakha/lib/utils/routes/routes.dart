@@ -20,6 +20,7 @@ import 'package:krishi_sakha/screens/search/ai_search_screen.dart';
 import 'package:krishi_sakha/screens/settings/settings_screen.dart';
 import 'package:krishi_sakha/screens/schemes/schemes_screen.dart';
 import 'package:krishi_sakha/screens/splash/splash_screen.dart';
+import 'package:krishi_sakha/screens/translation/test_offline_translation.dart';
 import 'package:krishi_sakha/screens/translation/test_translation.dart';
 import 'package:krishi_sakha/screens/voice/voice_screen.dart';
 import 'package:krishi_sakha/screens/weather/weather_screen.dart';
@@ -52,16 +53,19 @@ class AppRoutes {
   static const String leaderboard = "/leaderboard";
   static const String schemes = "/schemes";
   static const String test_translation = "/test-translation";
+  static const String test_offline_translation = "/test-offline-translation";
   
 }
 
 // GoRouter configuration
 final GoRouter appRouter = GoRouter(
 
-  initialLocation: AppRoutes.test_translation,
+  initialLocation: AppRoutes.splash,
   navigatorKey:  AppGlobal.navigatorKey,
   routes: [
+
     GoRoute(path: AppRoutes.test_translation, name: 'test_translation', builder: (context, state) => const TestTranslationScreen()),
+    GoRoute(path: AppRoutes.test_offline_translation, name: 'test_offline_translation', builder: (context, state) => const TestOfflineTranslationScreen()),
     GoRoute(path: AppRoutes.satteliteView, name: 'satteliteView', builder: (context, state) => const SatteliteViewScreen()),
 
     GoRoute(path: AppRoutes.plantDisease, name: 'plantDisease', builder: (context, state) => const PlantDiseaseScreen()),

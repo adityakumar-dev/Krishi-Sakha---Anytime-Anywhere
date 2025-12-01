@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
 import 'package:krishi_sakha/screens/login/helpers/auth_service.dart';
+import 'package:krishi_sakha/screens/settings/model_download_screen.dart';
 import 'package:krishi_sakha/utils/routes/routes.dart';
 import 'package:krishi_sakha/utils/theme/colors.dart';
 import 'package:provider/provider.dart';
@@ -269,6 +270,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 16),
+
+                      // Settings section
+                      _buildSectionCard(
+                        title: 'Settings',
+                        icon: Icons.settings_outlined,
+                        children: [
+                          _buildSettingsTile(
+                            title: 'Translation Models',
+                            subtitle: 'Download languages for offline translation',
+                            icon: Icons.translate,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ModelDownloadScreen(),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                       const SizedBox(height: 24),
 
                       // Action buttons
@@ -513,6 +536,66 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   String _formatDate(DateTime date) {
     return '${date.day}/${date.month}/${date.year}';
+  }
+
+  Widget _buildSettingsTile({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+          decoration: BoxDecoration(
+            color: Colors.grey[50],
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey[200]!),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2D5016).withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(icon, color: const Color(0xFF2D5016), size: 22),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.chevron_right, color: Colors.grey[400]),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
