@@ -103,9 +103,10 @@ async def get_mandi_prices(
 
 # Quick test function
 async def test_today(state_name: str = "KERALA"):
-    result = await get_mandi_prices("2025-11-24", "2025-11-30", state_name=state_name)
+
+    result = await get_mandi_prices("2025-11-29", "2025-11-30", state_name=state_name)
     print(result)
 
 # Run it
 if __name__ == "__main__":
-    asyncio.run(test_today("UTTAR PRADESH"))
+    asyncio.run(test_today("KERALA"))

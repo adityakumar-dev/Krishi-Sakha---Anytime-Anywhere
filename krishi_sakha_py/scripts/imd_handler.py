@@ -1,6 +1,125 @@
 import requests
 from typing import Dict, Any, List
-from datetime import datetime
+from datetime import datetime, timedelta
+
+
+def get_imd_stations() -> Dict[str, Any]:
+    """
+    Fetch list of all IMD weather stations organized by state
+    
+    Returns:
+        Dictionary with states and their stations
+    """
+    url = "https://city.imd.gov.in/citywx/responsive/api"
+    
+    response = requests.get(url)
+    response.raise_for_status()
+    
+    raw_data = response.json()
+    
+    # Parse and format station list for frontend
+    return parse_station_list(raw_data)
+
+
+def parse_station_list(raw_data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Parse IMD station list and format with readable structure
+    
+    Args:
+        raw_data: Raw JSON response from IMD stations API
+    
+    Returns:
+        Formatted dictionary with organized station data
+    """
+    if not raw_data or "data" not in raw_data:
+        return {"error": "No stations data received from IMD"}
+    
+    stations_by_state = raw_data.get("data", {})
+    
+    # Transform into a more usable format
+    formatted_stations = {}
+    
+    for state, stations in stations_by_state.items():
+        if isinstance(stations, dict):
+            formatted_stations[state] = [
+                {
+                    "station_id": station_id,
+                    "station_name": station_name.strip(),
+                }
+                for station_id, station_name in stations.items()
+            ]
+    
+    return {
+        "success": True,
+        "status": raw_data.get("status"),
+        "message": raw_data.get("message"),
+        "total_states": len(formatted_stations),
+        "total_stations": sum(len(stations) for stations in formatted_stations.values()),
+        "data": formatted_stations
+    }
+
+
+def get_stations_by_state(state_name: str) -> Dict[str, Any]:
+    """
+    Get all stations for a specific state
+    
+    Args:
+        state_name: Name of the state (e.g., 'Kerala', 'Tamil Nadu')
+    
+    Returns:
+        List of stations for that state
+    """
+    stations_data = get_imd_stations()
+    
+    if "error" in stations_data:
+        return stations_data
+    
+    # Find matching state (case-insensitive)
+    for state, stations in stations_data.get("data", {}).items():
+        if state.lower() == state_name.lower():
+            return {
+                "success": True,
+                "state": state,
+                "total_stations": len(stations),
+                "stations": stations
+            }
+    
+    return {
+        "success": False,
+        "error": f"State '{state_name}' not found"
+    }
+
+
+def get_station_by_name(station_name: str) -> Dict[str, Any]:
+    """
+    Search for a station by name across all states
+    
+    Args:
+        station_name: Name of the station to search for
+    
+    Returns:
+        Station info with station_id and state
+    """
+    stations_data = get_imd_stations()
+    
+    if "error" in stations_data:
+        return stations_data
+    
+    # Search for matching station
+    for state, stations in stations_data.get("data", {}).items():
+        for station in stations:
+            if station["station_name"].lower() == station_name.lower():
+                return {
+                    "success": True,
+                    "state": state,
+                    "station_id": station["station_id"],
+                    "station_name": station["station_name"]
+                }
+    
+    return {
+        "success": False,
+        "error": f"Station '{station_name}' not found"
+    }
 
 
 def get_imd_weather(station_id: str) -> Dict[str, Any]:
@@ -25,62 +144,106 @@ def get_imd_weather(station_id: str) -> Dict[str, Any]:
     return parse_imd_response(raw_data, station_id)
 
 
-def parse_imd_response(raw_data: List[Dict], station_id: str) -> Dict[str, Any]:
+def parse_imd_response(raw_data: List[Dict], station_id: str = None) -> Dict[str, Any]:
     """
-    Parse and transform IMD response with readable field names
-    
-    Args:
-        raw_data: Raw JSON response from IMD
-        station_id: Station ID for reference
-    
-    Returns:
-        Formatted dictionary with readable field names
+    Parse IMD city weather JSON and return clean, structured data
+    with all forecast days in one array (including humidity & warnings per day)
     """
-    if not raw_data or len(raw_data) < 1:
+    if not raw_data or len(raw_data) == 0:
         return {"error": "No data received from IMD"}
-    
+
     current_weather = raw_data[0]
-    historical_data = raw_data[1] if len(raw_data) > 1 else {}
-    
-    # Parse current weather
-    current = {
-        "station_id": current_weather.get("station_id"),
-        "station_name": current_weather.get("station"),
-        "date": current_weather.get("dat"),
-        "update_time": current_weather.get("updat"),
-        "latitude": current_weather.get("lat"),
-        "longitude": current_weather.get("lon"),
-        
-        # Current observations
-        "current": {
-            "max_temp": f"{current_weather.get('max')}°C",
-            "min_temp": f"{current_weather.get('min')}°C",
-            "max_temp_departure": current_weather.get("maxdep", "NA"),
-            "min_temp_departure": current_weather.get("mindep", "NA"),
-            "rainfall": f"{current_weather.get('rainfall')} mm",
-            "humidity_0830": f"{current_weather.get('rh0830')}%",
-            "humidity_1730": current_weather.get("rh1730"),
-            "sunrise": current_weather.get("sunrise"),
-            "sunset": current_weather.get("sunset"),
-            "moonrise": current_weather.get("moonrise"),
-            "moonset": current_weather.get("moonset"),
-        },
-        
-        # 7-day forecast
-        "forecast": parse_forecast(current_weather),
-        
-        # Alerts/Warnings
-        "alerts": parse_warnings(current_weather),
-        
-        # Historical data (past 14 days)
-        "historical": parse_historical(historical_data),
+
+    def _float(v):
+        if v is None or v == "" or v == "NA":
+            return None
+        try:
+            return float(v)
+        except:
+            return None
+
+    def _int(v):
+        if v is None or v == "" or v == "NA":
+            return None
+        try:
+            return int(float(v))
+        except:
+            return None
+
+    # Base date from the forecast
+    base_date_str = current_weather.get("dat", datetime.now().strftime("%Y-%m-%d"))
+    try:
+        base_date = datetime.strptime(base_date_str, "%Y-%m-%d")
+    except:
+        base_date = datetime.now()
+
+    # Station info
+    station_name = current_weather.get("station", "Unknown Station")
+    lat = _float(current_weather.get("lat"))
+    lon = _float(current_weather.get("lon"))
+
+    # Sunrise/Sunset (today only)
+    sunrise = current_weather.get("sunrise")
+    sunset = current_weather.get("sunset")
+    moonrise = current_weather.get("moonrise")
+    moonset = current_weather.get("moonset")
+
+    # Prefer summarized arrays (more reliable)
+    ffc   = current_weather.get("ffc") or []
+    fimg  = current_weather.get("fimg") or []
+    fmax  = current_weather.get("fmax") or []
+    fmin  = current_weather.get("fmin") or []
+    rh0830d = current_weather.get("rh0830d") or []
+    rh1730d = current_weather.get("rh1730d") or []
+    wText   = current_weather.get("wText") or []
+    wColor  = current_weather.get("wColor") or []
+
+    forecast_period = []
+
+    for day_offset in range(6):  # IMD gives 6 days (today + 5)
+        if day_offset >= len(ffc):
+            break
+
+        forecast_date = (base_date + timedelta(days=day_offset)).strftime("%Y-%m-%d")
+
+        desc = ffc[day_offset] if day_offset < len(ffc) else None
+        img  = fimg[day_offset] if day_offset < len(fimg) else None
+        max_temp = _float(fmax[day_offset]) if day_offset < len(fmax) else None
+        min_temp = _float(fmin[day_offset]) if day_offset < len(fmin) else None
+
+        rh_morning = _int(rh0830d[day_offset]) if day_offset < len(rh0830d) else None
+        rh_evening = _int(rh1730d[day_offset]) if day_offset < len(rh1730d) else None
+
+        warning_text = wText[day_offset] if day_offset < len(wText) else "No warning"
+        warning_color = wColor[day_offset] if day_offset < len(wColor) else "green"
+
+        forecast_period.append({
+            "date_offset": day_offset,
+            "date": forecast_date,
+            "max": max_temp,
+            "min": min_temp,
+            "desc": desc or "Mainly Clear sky",
+            "img": img or "2",
+            "rh_0830": rh_morning,
+            "rh_1730": rh_evening,
+            "warning": warning_text,
+            "warning_color": warning_color.lower() if warning_color else "green"
+        })
+
+    # Final clean output
+    result = {
+        "station": station_name,
+        "lat": lat,
+        "lon": lon,
+        "sunrise": sunrise,
+        "sunset": sunset,
+        "moonrise": moonrise,
+        "moonset": moonset,
+        "forecast_period": forecast_period,
+        "last_updated": current_weather.get("updat") or datetime.now().isoformat()
     }
-    
-    return {
-        "success": True,
-        "status": current_weather.get("status"),
-        "data": current
-    }
+
+    return result
 
 
 def parse_forecast(weather_data: Dict) -> List[Dict[str, Any]]:
@@ -173,8 +336,40 @@ def get_imd_by_location(location_name: str) -> Dict[str, Any]:
     
     return get_imd_weather(station_id)
 
+def search_stationList(query: str) -> List[Dict[str, str]]:
+    """
+    Search for IMD stations by name substring
+    
+    Args:
+        query: Substring to search in station names
+    
+    Returns:
+        List of matching stations with their IDs
+    """
+    stations_data = get_imd_stations()
+    
+    if "error" in stations_data:
+        return []
+    
+    results = []
+    query_lower = query.lower()
+    
+    for state, stations in stations_data.get("data", {}).items():
+        for station in stations:
+            if query_lower in station["station_name"].lower():
+                results.append({
+                    "state": state,
+                    "station_id": station["station_id"],
+                    "station_name": station["station_name"]
+                })
+    
+    return results
+
 
 if __name__ == "__main__":
     # Test with PATTAMBI station
-    result = get_imd_weather("99462")
-    print(result)
+    # result = get_imd_weather("99462")
+    # print(result)
+
+    # print(get_stations_by_state("Uttrakhand"))
+    print(get_imd_weather("99952"))

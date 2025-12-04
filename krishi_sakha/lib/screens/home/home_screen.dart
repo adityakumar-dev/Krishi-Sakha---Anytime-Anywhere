@@ -295,13 +295,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.schemes),
               ),
-              // _buildFeatureCard(
-              //   title: 'Experts',
-              //   subtitle: 'Experts post',
-              //   icon: Icons.support_agent,
-              //   color: const Color(0xFFD4A259),
-              //   onTap: () => context.push(AppRoutes.expertPosts),
-              // ),
+              _buildFeatureCard(
+                title: 'IMD',
+                subtitle: 'Weather Forecasts',
+                icon: Icons.support_agent,
+                color: const Color(0xFFD4A259),
+                onTap: () => context.push(AppRoutes.imdWeather),
+              ),
 
 
               _buildFeatureCard(
@@ -346,6 +346,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icons.translate,
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.test_offline_translation),
+              ),
+               _buildFeatureCard(
+                title: 'Mandi Prices',
+                subtitle: 'Price',
+                icon: Icons.currency_rupee,
+                color: const Color(0xFFD4A259),
+                onTap: () => context.push(AppRoutes.mandiPrice),
               ),
               
             ],

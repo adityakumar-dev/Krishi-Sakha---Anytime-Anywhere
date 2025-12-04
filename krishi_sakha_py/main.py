@@ -4,7 +4,7 @@ load_dotenv(find_dotenv())
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from langchain_ollama import ChatOllama
-from routes import search, test, chat, voice, language, post , user
+from routes import search, test, chat, voice, language, post , user,mandi
 app = FastAPI()
 
 
@@ -21,3 +21,4 @@ app.include_router(search.router)
 app.include_router(language.router)
 app.include_router(post.router)
 app.include_router(user.router)
+app.include_router(mandi.router)

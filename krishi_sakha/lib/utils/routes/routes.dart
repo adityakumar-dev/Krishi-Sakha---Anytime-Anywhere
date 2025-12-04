@@ -3,7 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:krishi_sakha/apis/app_global.dart';
 import 'package:krishi_sakha/screens/chat/server/select_chat.dart';
 import 'package:krishi_sakha/screens/home/home_screen.dart';
+import 'package:krishi_sakha/screens/imd/imd_weather_screen.dart';
+import 'package:krishi_sakha/screens/imd/state_list_screen.dart';
+import 'package:krishi_sakha/screens/imd/station_list_screen.dart';
 import 'package:krishi_sakha/screens/login/login_screen.dart';
+import 'package:krishi_sakha/screens/mandi/mandi_price_screen.dart';
+import 'package:krishi_sakha/screens/mandi/mandi_state_select_screen.dart';
 import 'package:krishi_sakha/screens/models/model_list_screen.dart';
 import 'package:krishi_sakha/screens/onboarding/onboarding.dart';
 import 'package:krishi_sakha/screens/onboarding/profile_onboard_screen.dart';
@@ -54,7 +59,11 @@ class AppRoutes {
   static const String schemes = "/schemes";
   static const String test_translation = "/test-translation";
   static const String test_offline_translation = "/test-offline-translation";
-  
+  static const String imdWeather = "/imd-weather";
+  static const String imdStateList = "/imd-state-list";
+  static const String imdStationList = "/imd-station-list";
+  static const String mandiStateSelect = "/mandi-state-select";
+  static const String mandiPrice = "/mandi-price";
 }
 
 // GoRouter configuration
@@ -63,7 +72,32 @@ final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.splash,
   navigatorKey:  AppGlobal.navigatorKey,
   routes: [
+    GoRoute(path: AppRoutes.imdStationList, name: 'imdStationList', builder: (context, state){
+      final stateName = state.extra;
+      return StationListScreen(stateName: stateName as String);
+    }),
 
+    GoRoute(path: AppRoutes.imdStateList, name: 'imdStateList', builder: (context, state){
+
+      return StateListScreen();
+
+    }),
+
+    GoRoute(path: AppRoutes.imdWeather, name: 'imdWeather', builder: (context, state){
+
+      return ImdWeatherScreen();
+
+    }),
+
+    GoRoute(path: AppRoutes.mandiStateSelect, name: 'mandiStateSelect', builder: (context, state){
+      return const MandiStateSelectScreen();
+    }),
+
+    GoRoute(path: AppRoutes.mandiPrice, name: 'mandiPrice', builder: (context, state){
+      return const MandiPriceScreen();
+    }),
+    
+    
     GoRoute(path: AppRoutes.test_translation, name: 'test_translation', builder: (context, state) => const TestTranslationScreen()),
     GoRoute(path: AppRoutes.test_offline_translation, name: 'test_offline_translation', builder: (context, state) => const TestOfflineTranslationScreen()),
     GoRoute(path: AppRoutes.satteliteView, name: 'satteliteView', builder: (context, state) => const SatteliteViewScreen()),

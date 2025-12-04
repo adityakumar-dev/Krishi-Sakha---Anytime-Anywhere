@@ -5,14 +5,7 @@ from fastapi.params import Depends
 from routes.middlewares.auth_middleware import supabase_jwt_middleware
 from scripts.enam_mandi import all_states_mandi_details, mandi_details, mandi_list, request_districts
 from scripts.enam_price import all_states_mandi_price
-from scripts.imd_handler import (
-    get_imd_weather, 
-    get_imd_by_location,
-    get_imd_stations,
-    get_stations_by_state,
-    get_station_by_name,
-    search_stationList
-)
+from scripts.imd_handler import get_imd_weather, get_imd_by_location
 
 router = APIRouter()
 
@@ -48,51 +41,6 @@ async def get_trade_data(state_name: str, from_date: str, to_date: str, user=Dep
     return {"success": True, "data": result}
 
 # ---------------------- GET WEATHER DATA (IMD) ----------------------
-@router.get("/weather/stations")
-async def get_all_stations(user=Depends(supabase_jwt_middleware)) -> Dict[str, Any]:
-    """
-    Get list of all IMD weather stations organized by state
-    
-    Returns all stations with their IDs and state information
-    """
-    result = get_imd_stations()
-    return result
-
-@router.get("/weather/stations/{state_name}")
-async def get_stations_for_state(state_name: str, user=Depends(supabase_jwt_middleware)) -> Dict[str, Any]:
-    """
-    Get all stations for a specific state
-    
-    Example: /weather/stations/Kerala
-    """
-    result = get_stations_by_state(state_name)
-    return result
-
-@router.get("/weather/station-search/{station_name}")
-async def search_station(station_name: str, user=Depends(supabase_jwt_middleware)) -> Dict[str, Any]:
-    """
-    Search for a specific station by name
-    
-    Example: /weather/station-search/PATTAMBI
-    """
-    result = get_station_by_name(station_name)
-    return result
-
-@router.get("/weather/station-query")
-async def query_stations(query: str, user=Depends(supabase_jwt_middleware)) -> Dict[str, Any]:
-    """
-    Search for stations by name substring
-    
-    Example: /weather/station-query?query=pattambi
-    """
-    results = search_stationList(query)
-    return {
-        "success": True,
-        "query": query,
-        "found": len(results),
-        "results": results
-    }
-
 @router.get("/weather/{station_id}")
 async def get_weather_by_station(station_id: str, user=Depends(supabase_jwt_middleware)) -> Dict[str, Any]:
     """

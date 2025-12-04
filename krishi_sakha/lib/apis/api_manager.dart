@@ -19,4 +19,11 @@ class ApiManager {
   static const String postCreateUrl = "/post";
   static const String postUser = "/post/user";
   static String postLike(String postId) => "/post/$postId/like";
+
+  // IMD Weather
+  static String imdStationsUrl(String stateName) => "$baseUrl/weather/stations/$stateName";
+  static String imdWeatherUrl(String stationId) => "$baseUrl/weather/$stationId";
+
+  // enam mandi 
+  static String mandiTradeDataUrl(String stateName, String fromDate, String toDate) => "$baseUrl/mandi/trade_data/$stateName/$fromDate/$toDate";
 }
