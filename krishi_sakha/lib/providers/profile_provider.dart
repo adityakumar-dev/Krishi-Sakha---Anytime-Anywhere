@@ -190,6 +190,7 @@ class ProfileProvider extends ChangeNotifier{
     status = newStatus;
     notifyListeners();
   }
+  
 
   // Logout method to clear all user data
   Future<void> logout() async{

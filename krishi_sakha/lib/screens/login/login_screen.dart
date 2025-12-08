@@ -363,7 +363,7 @@ if(result.isSuccess){
       if (mounted) {
         if(profileProvider.userProfile != null) {
           AppLogger.debug("Profile exists, navigating to home.");
-          context.go(AppRoutes.home);
+          profileProvider.userProfile?.preferedStateName == null ? context.go(AppRoutes.locationOnBoard) : context.go(AppRoutes.home);
         } else {
           AppLogger.debug("No profile found, navigating to onboarding.");
           context.go(AppRoutes.profileOnboard);

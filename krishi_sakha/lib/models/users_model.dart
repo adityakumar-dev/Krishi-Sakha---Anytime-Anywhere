@@ -31,9 +31,15 @@ class UsersModel {
   @HiveField(8)
   final String? locationiqPlaceId;
 
+
   @HiveField(9)
   final DateTime? createdAt;
 
+  @HiveField(10)
+  final String? preferedStateName;
+  
+  @HiveField(11)
+  final String? preferredWeatherStationId;
   UsersModel({
     required this.id,
     this.name,
@@ -45,6 +51,8 @@ class UsersModel {
     this.longitude,
     this.locationiqPlaceId,
     this.createdAt,
+    this.preferedStateName,
+    this.preferredWeatherStationId,
   });
 
   // Factory constructor for creating from JSON (if needed)
@@ -62,6 +70,8 @@ class UsersModel {
       createdAt: json['created_at'] != null
           ? DateTime.parse(json['created_at'] as String)
           : null,
+      preferedStateName: json['prefered_state_name'] as String?,
+      preferredWeatherStationId: json['preferred_weather_station_id'] as String?,
     );
   }
 
@@ -78,6 +88,8 @@ class UsersModel {
       'longitude': longitude,
       'locationiq_place_id': locationiqPlaceId,
       'created_at': createdAt?.toIso8601String(),
+      'prefered_state_name': preferedStateName,
+      'preferred_weather_station_id': preferredWeatherStationId,
     };
   }
 
@@ -93,6 +105,8 @@ class UsersModel {
     double? longitude,
     String? locationiqPlaceId,
     DateTime? createdAt,
+    String? preferedStateName,
+    String? preferredWeatherStationId,
   }) {
     return UsersModel(
       id: id ?? this.id,
@@ -105,6 +119,8 @@ class UsersModel {
       longitude: longitude ?? this.longitude,
       locationiqPlaceId: locationiqPlaceId ?? this.locationiqPlaceId,
       createdAt: createdAt ?? this.createdAt,
+      preferedStateName: preferedStateName ?? this.preferedStateName,
+      preferredWeatherStationId: preferredWeatherStationId ?? this.preferredWeatherStationId,
     );
   }
 

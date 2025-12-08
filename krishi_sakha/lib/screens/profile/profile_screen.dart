@@ -34,7 +34,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _cityController =
         TextEditingController(text: profileProvider.userProfile?.cityName ?? '');
     _stateController =
-        TextEditingController(text: profileProvider.userProfile?.stateName ?? '');
+        TextEditingController(text: profileProvider.userProfile?.preferedStateName ?? '');
+    
   }
 
   @override

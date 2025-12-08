@@ -17,28 +17,31 @@ from configs.model_config import FARMER_QUERY_PROCESS_SYSTEM_MESSAGE
 import time
 
 # Use the provided API key for faster processing
-API_KEY = os.getenv('GEMINI_API_KEY') or 'AIzaSyAvdI4MfjJRIare-G6c0VEM9KnwaIJTj1o'
+API_KEY = os.getenv('GEMINI_API_KEY') 
 genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel('gemini-2.5-flash')
+model = genai.GenerativeModel('gemini-2.5-flash-lite')
 
 import json
 from typing import Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
-def process_farmer_query(query: str, last_response: str = "") -> Dict:
+def process_farmer_query(query: str, last_response: str = "", user_preferred_state: str = None, user_preferred_station_id: str = None) -> Dict:
     """
     Process farmer query using Gemini AI and extract structured JSON
     
     Args:
         query: Farmer's query (can be in English, Malayalam, or Hinglish)
         last_response: Last assistant response for context (optional)
+        user_preferred_state: User's preferred state (takes priority over detected state)
+        user_preferred_station_id: User's preferred weather station ID (takes priority)
     
     Returns:
         Dictionary with:
         - is_general: bool (True if greeting/chit-chat)
         - actions: List of pipeline actions to execute
         - state_name: Detected state (default: Kerala)
+        - station_id: If user_preferred_station_id provided
         - english_translation: If query was in regional language
         - optimized_query: If web search is needed
         - generate: bool (False if not agriculture-related)
@@ -48,9 +51,23 @@ def process_farmer_query(query: str, last_response: str = "") -> Dict:
         logger.info(f"🔍 Processing query: {query[:100]}...")
         logger.info(f"🔑 Using API Key: {API_KEY[:20]}...")
         logger.info(f"🤖 Model: gemini-2.5-flash")
+        if user_preferred_state:
+            logger.info(f"👤 User preferred state: {user_preferred_state}")
+        if user_preferred_station_id:
+            logger.info(f"📍 User preferred station: {user_preferred_station_id}")
         
-        # Build prompt with optional context
+        # Build prompt with optional context and user preferences
         prompt = f"{FARMER_QUERY_PROCESS_SYSTEM_MESSAGE}\n\n"
+        
+        # Add user preferences if provided
+        if user_preferred_state or user_preferred_station_id:
+            prompt += "**USER PREFERENCES (USE THESE):**\n"
+            if user_preferred_state:
+                prompt += f"user_preferred_state: {user_preferred_state}\n"
+            if user_preferred_station_id:
+                prompt += f"user_preferred_station_id: {user_preferred_station_id}\n"
+            prompt += "\n"
+        
         if last_response:
             prompt += f"Last Assistant Response: {last_response[:500]}\n\n"
         prompt += f"Current Query: {query}"

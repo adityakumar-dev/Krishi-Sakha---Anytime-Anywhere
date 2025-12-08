@@ -2,13 +2,15 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:krishi_sakha/models/mandi_price_model.dart';
+import 'package:krishi_sakha/providers/agri_chat_provider.dart';
+import 'package:krishi_sakha/providers/profile_provider.dart';
 import 'package:krishi_sakha/utils/ui/markdown_helper.dart';
 import 'package:krishi_sakha/widgets/translater_widgets.dart';
 import 'package:krishi_sakha/widgets/url_modal.dart';
 import 'package:krishi_sakha/widgets/youtube_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:krishi_sakha/providers/server_chat_handler_provider.dart';
 import 'package:krishi_sakha/utils/theme/colors.dart';
 import 'package:krishi_sakha/widgets/youtube_player_dialog.dart';
 
@@ -24,7 +26,22 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final provider = Provider.of<ServerChatHandlerProvider>(context, listen: false);
+      final provider = Provider.of<AgriChatProvider>(context, listen: false);
+      final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+      
+      // Set user preferences from profile for chat context
+      final stateName = profileProvider.userProfile?.preferedStateName;
+      final stationId = profileProvider.userProfile?.preferredWeatherStationId;
+      
+      if (stateName != null || stationId != null) {
+        // Match state name with market price model state list
+        final matchedState = stateName != null ? _findMatchingState(stateName) : null;
+        provider.setUserPreferences(
+          state: matchedState,
+          stationId: stationId,
+        );
+      }
+      
       // Only fetch if we have a conversation ID and no messages loaded
       if (provider.actualConversationId != -1 && provider.messages.isEmpty) {
         provider.fetchMessages(context);
@@ -33,6 +50,37 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
         if (mounted) setState(() {});
       });
     });
+  }
+  
+  String? _findMatchingState(String stateName) {
+    // Normalize the state name from profile
+    final normalizedInput = stateName.toUpperCase().trim();
+    
+    // Try exact match first
+    for (final state in MandiPriceModel.allStatesMandiPrice) {
+      if (state.toUpperCase() == normalizedInput) {
+        return state;
+      }
+    }
+    
+    // Try partial match (contains)
+    for (final state in MandiPriceModel.allStatesMandiPrice) {
+      if (state.toUpperCase().contains(normalizedInput) || 
+          normalizedInput.contains(state.toUpperCase())) {
+        return state;
+      }
+    }
+    
+    // Try matching without "AND" or special characters
+    final simplifiedInput = normalizedInput.replaceAll(RegExp(r'[^\w\s]'), '').replaceAll('AND', '').trim();
+    for (final state in MandiPriceModel.allStatesMandiPrice) {
+      final simplifiedState = state.toUpperCase().replaceAll(RegExp(r'[^\w\s]'), '').replaceAll('AND', '').trim();
+      if (simplifiedState.contains(simplifiedInput) || simplifiedInput.contains(simplifiedState)) {
+        return state;
+      }
+    }
+    
+    return null;
   }
 
   @override
@@ -51,18 +99,18 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Consumer<ServerChatHandlerProvider>(
+            Consumer<AgriChatProvider>(
               builder: (context, provider, child) {
                 return Text(
                   provider.actualConversationTitle.isNotEmpty 
                       ? provider.actualConversationTitle 
-                      : 'Chat',
+                      : 'Agricultural Chat',
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primaryBlack),
                 );
                 
               },
             ),
-            Consumer<ServerChatHandlerProvider>(
+            Consumer<AgriChatProvider>(
               builder: (context, provider, child) {
                 String status = 'Ready';
                 if (provider.isLoading) {
@@ -101,7 +149,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
               final path = result.files.single.path!;
               // Convert to XFile for provider compatibility
               final xFile = XFile(path);
-              context.read<ServerChatHandlerProvider>().setImage(xFile);
+              context.read<AgriChatProvider>().setImage(xFile);
 
               ScaffoldMessenger.of(context).showMaterialBanner(
                 MaterialBanner(
@@ -127,7 +175,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
       ),
       body: Column(
         children: [
-          Consumer<ServerChatHandlerProvider>(
+          Consumer<AgriChatProvider>(
             builder: (context, provider, child) {
               if (provider.error != null) {
                 return _buildErrorBanner(provider);
@@ -139,7 +187,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
           _buildInputArea(),
         ],
       ),
-      floatingActionButton: Consumer<ServerChatHandlerProvider>(
+      floatingActionButton: Consumer<AgriChatProvider>(
         builder: (context, provider, child) {
           if (provider.showScrollToBottom) {
             return FloatingActionButton.small(
@@ -155,7 +203,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
     );
   }
 
-  Widget _buildErrorBanner(ServerChatHandlerProvider provider) {
+  Widget _buildErrorBanner(AgriChatProvider provider) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),
@@ -190,7 +238,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
   }
 
   Widget _buildMessageList() {
-    return Consumer<ServerChatHandlerProvider>(
+    return Consumer<AgriChatProvider>(
       builder: (context, provider, child) {
         if (provider.isLoading) {
           return const Center(
@@ -477,7 +525,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
 
 
   Widget _buildInputArea() {
-    return Consumer<ServerChatHandlerProvider>(
+    return Consumer<AgriChatProvider>(
       builder: (context, provider, child) {
         final canSend = _canSendMessage(provider);
         return Container(
@@ -494,7 +542,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                   style: const TextStyle(color: Colors.black),
                   maxLines: null,
                   decoration: InputDecoration(
-                    hintText: 'Type your message…',
+                    hintText: 'Ask about farming, crops, weather...',
                     hintStyle: const TextStyle(color: Colors.black54),
                     filled: true,
                     fillColor: Colors.grey.withValues(alpha: 0.1),
@@ -539,7 +587,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
     );
   }
 
-  bool _canSendMessage(ServerChatHandlerProvider provider) {
+  bool _canSendMessage(AgriChatProvider provider) {
     return provider.canSend;
   }
 }

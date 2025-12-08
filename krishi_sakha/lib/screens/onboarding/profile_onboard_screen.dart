@@ -522,7 +522,8 @@ class _ProfileOnboardScreenState extends State<ProfileOnboardScreen> {
           _showErrorSnackBar(profileProvider.error!);
         } else {
           // Navigate to home
-          context.go(AppRoutes.home);
+          // check first the user location preference 
+          profileProvider.userProfile?.preferedStateName == null ? context.go(AppRoutes.locationOnBoard) : context.go(AppRoutes.home);
         }
       } catch (e) {
         _showErrorSnackBar('Error saving profile: ${e.toString()}');

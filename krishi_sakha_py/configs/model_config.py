@@ -188,6 +188,19 @@ Use last response to:
 - Maintain topic continuity
 - Infer missing details from conversation history
 
+**USER PREFERENCES (HIGHEST PRIORITY):**
+The system may provide user's preferred state and weather station_id.
+- If user_preferred_state is provided → ALWAYS use it, DO NOT override with detected state
+- If user_preferred_station_id is provided → ALWAYS include it in your response
+- User preferences take ABSOLUTE PRIORITY over query-detected values
+
+Example with preferences:
+- User preferred state: "Tamil Nadu"
+- User preferred station_id: "101669"
+- Query: "What is the weather today?"
+- You MUST return: state_name = "Tamil Nadu", station_id = "101669"
+- Even if query mentions "Kerala", user's preference wins
+
 Available pipelines:
 - vector_db     → KAU/ICAR PDFs & local agri knowledge
 - imd           → weather forecast & alerts
@@ -200,19 +213,33 @@ Strict Rules:
 1. Reply ONLY in valid JSON — no extra text ever.
 2. If query is NOT agriculture-related → "generate": false
 3. If query is greeting/chit-chat → "is_general": true
-4. Always detect state name (default = "Kerala")
-5. If original query is in Malayalam → add "english_translation"
-6. For web search → give clean English "optimized_query"
+4. State detection priority: user_preferred_state > query-detected state > default "Kerala"
+5. If user_preferred_station_id provided → ALWAYS include "station_id" in response
+6. If original query is in Malayalam/regional language → MUST add "english_translation"
+7. **CRITICAL: "english_translation" is the PRIMARY QUERY for all processing:**
+   - This field will be used for final model generation
+   - This field will be used for scheme optimization with Gemini
+   - This field will be used for all downstream context retrieval
+   - Make it comprehensive and include all relevant context from conversation
+8. For web/YouTube search → give clean English "optimized_query"
 
 Exact JSON format:
 {
   "is_general": true/false,
   "actions": ["web", "vector_db", "enam", "imd", "myscheme"],
-  "state_name": "Kerala" or detected state,
-  "english_translation": "only if query was in Malayalam/regional language",
-  "optimized_query": "for youtube and the web search",
+  "state_name": "Kerala" or user preferred state or detected state,
+  "station_id": "only if user_preferred_station_id provided",
+  "english_translation": "REQUIRED for regional language queries - This becomes the PRIMARY query used for: model generation, scheme optimization, and all context retrieval. Include conversation context and make it comprehensive.",
+  "optimized_query": "for youtube and web search only (if state name available, include it)",
   "generate": true/false
 }
+
+**IMPORTANT ABOUT english_translation:**
+- For Malayalam/Hindi/regional queries: ALWAYS provide english_translation
+- This field is NOT just translation - it's the MAIN PROCESSING QUERY
+- Include conversation context and clarifications in english_translation
+- The system will use english_translation for: Gemini generation, scheme optimization, vector search
+- Make it detailed and context-aware
 
 Examples:
 
@@ -223,45 +250,50 @@ Query: "വാഴയിൽ ഇലത്തഴമ്പ് കണ്ടു എന
   "is_general": false,
   "actions": ["vector_db"],
   "state_name": "Kerala",
-  "english_translation": "I saw leaf spot on banana plants, what should I do?",
+  "english_translation": "I saw leaf spot disease on my banana plants in Kerala, what treatment should I apply?",
   "generate": true
 }
+Note: english_translation includes location context for better results
 
 Query: "നാളെ കോഴിക്കോട് മഴ പെയ്യുമോ?"
 → {
   "is_general": false,
   "actions": ["imd"],
   "state_name": "Kerala",
-  "english_translation": "Will it rain tomorrow in Kozhikode?",
+  "english_translation": "Will it rain tomorrow in Kozhikode, Kerala? What is the weather forecast?",
   "generate": true
 }
+Note: english_translation is comprehensive for weather context retrieval
 
 Query: "നെന്ത്രൻ വാഴയ്ക്ക് ഇന്ന് വില എത്ര?"
 → {
   "is_general": false,
   "actions": ["enam"],
   "state_name": "Kerala",
-  "english_translation": "What is today's price of nendran banana?",
+  "english_translation": "What is the current market price of nendran banana in Kerala mandis today?",
   "generate": true
 }
+Note: english_translation specifies commodity and location clearly
 
 Query: "ഹലോ മാഷേ, എങ്ങനെയുണ്ട്?"
 → {
   "is_general": true,
   "actions": [],
-  "english_translation": "Hello sir, how are you?",
+  "english_translation": "Hello sir, how are you? General greeting.",
   "generate": true
 }
 
-English Queries:
+English Queries (english_translation optional for English, but recommended for context enhancement):
 
 Query: "What is the price of coconut today?"
 → {
   "is_general": false,
   "actions": ["enam"],
   "state_name": "Kerala",
+  "english_translation": "What is the current market price of coconut in Kerala mandis today?",
   "generate": true
 }
+Note: Even for English queries, english_translation can add context
 
 Query: "When to apply fertilizer for cardamom?"
 → {
@@ -292,6 +324,33 @@ Non-agri Query: "Who won IPL 2025?"
   "actions": [],
   "generate": false
 }
+
+Conversation Context Examples:
+
+Last Response: "നെല്ല് കൃഷിക്ക് നല്ല ജല പരിപാലനം ആവശ്യമാണ്..." (Rice cultivation needs proper water management...)
+Current Query: "വളം എന്താണ് ഉപയോഗിക്കേണ്ടത്?"
+→ {
+  "is_general": false,
+  "actions": ["vector_db"],
+  "state_name": "Kerala",
+  "english_translation": "What fertilizer should I use for rice cultivation in Kerala? The conversation is about rice farming.",
+  "generate": true
+}
+Note: english_translation includes conversation context (rice) to resolve ambiguity
+
+With User Preferences:
+User Preferred State: "Tamil Nadu"
+User Preferred Station ID: "101669"
+Query: "What is the weather today?"
+→ {
+  "is_general": false,
+  "actions": ["imd"],
+  "state_name": "Tamil Nadu",
+  "station_id": "101669",
+  "english_translation": "What is the weather forecast today for Tamil Nadu?",
+  "generate": true
+}
+Note: User preferences ALWAYS override - state_name and station_id from preferences
 """
 
 
@@ -360,8 +419,10 @@ You help farmers with comprehensive agricultural guidance by analyzing multiple 
 - Supporting context from provided sources
 - Step-by-step actionable recommendations
 - Additional tips based on context (weather/season/location)
+- always answer in the english language
 
-Keep responses concise (200-250 words) unless complex topic requires more detail.
+
+Keep responses concise (200-250 words the most prior) unless complex topic requires more detail.
 
 ❌ AVOID:
 - Generic advice without using provided context

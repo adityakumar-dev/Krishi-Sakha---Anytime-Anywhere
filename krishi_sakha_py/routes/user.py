@@ -10,6 +10,9 @@ router = APIRouter()
 
 # Set up logging
 logger = logging.getLogger(__name__)
+class UserLocation(BaseModel) :
+    state_name: str
+    station_id: str
 
 class UserProfile(BaseModel):
     name: str
@@ -37,6 +40,55 @@ class UserProfile(BaseModel):
         if not (-180 <= v <= 180):
             raise ValueError('Longitude must be between -180 and 180')
         return v
+
+@router.post("/user/location")
+async def set_user_location(
+    state_name: str = Form(...),
+    station_id: str = Form(...),
+    user=Depends(supabase_jwt_middleware)
+):
+    try:
+        user_id = user.get("sub")
+        if not user_id:
+            raise HTTPException(status_code=400, detail="Invalid user ID")
+        
+        # Validate data using Pydantic model
+        location_data = UserLocation(
+            state_name=state_name,
+            station_id=station_id
+        )
+        
+        # Prepare data for Supabase
+        supabase_data = {
+            "id": user_id,
+            "prefered_state_name": location_data.state_name,
+            "preferred_weather_station_id": location_data.station_id
+        }
+        
+        logger.info(f"Updating location for user {user_id} with data: {supabase_data}")
+        
+        # Use upsert to handle both insert and update
+        result = SUPABASE.table("users").upsert(
+            supabase_data,
+            on_conflict="id"
+        ).execute()
+        
+        logger.info(f"Location updated successfully for user {user_id}")
+        
+        return {
+            "msg": "User location updated successfully",
+            "data": result.data
+        }
+        
+    except ValueError as e:
+        logger.error(f"Validation error: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.error(f"Error updating user location: {e}")
+        raise HTTPException(status_code=500, detail=f"Error updating user location: {str(e)}")
+
+
+
 
 @router.post("/user/profile")
 async def set_user_profile(

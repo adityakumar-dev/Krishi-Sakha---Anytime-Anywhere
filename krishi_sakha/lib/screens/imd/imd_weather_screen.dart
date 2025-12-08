@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../models/imd_weather_model.dart';
 import '../../providers/imd_weather_provider.dart';
+import '../../providers/profile_provider.dart';
 import '../../utils/theme/colors.dart';
 import 'state_list_screen.dart';
 import 'widgets/imd_station_management_sheet.dart';
@@ -18,6 +19,7 @@ class _ImdWeatherScreenState extends State<ImdWeatherScreen> {
   late PageController _pageController;
 
   @override
+
   void initState() {
     super.initState();
     _pageController = PageController();
@@ -36,8 +38,16 @@ class _ImdWeatherScreenState extends State<ImdWeatherScreen> {
 
   Future<void> _initializeProvider() async {
     final provider = Provider.of<ImdWeatherProvider>(context, listen: false);
+    final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+    
     provider.setPageController(_pageController);
     await provider.initHive();
+    
+    // Auto-add default weather station from profile if available and not already added
+    final defaultStationId = profileProvider.userProfile?.preferredWeatherStationId;
+    if (defaultStationId != null && !provider.savedStationIds.contains(defaultStationId)) {
+      await provider.addStation(defaultStationId);
+    }
   }
 
   @override

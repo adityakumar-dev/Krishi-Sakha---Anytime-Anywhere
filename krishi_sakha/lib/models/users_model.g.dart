@@ -27,13 +27,15 @@ class UsersModelAdapter extends TypeAdapter<UsersModel> {
       longitude: fields[7] as double?,
       locationiqPlaceId: fields[8] as String?,
       createdAt: fields[9] as DateTime?,
+      preferedStateName: fields[10] as String?,
+      preferredWeatherStationId: fields[11] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UsersModel obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -53,7 +55,11 @@ class UsersModelAdapter extends TypeAdapter<UsersModel> {
       ..writeByte(8)
       ..write(obj.locationiqPlaceId)
       ..writeByte(9)
-      ..write(obj.createdAt);
+      ..write(obj.createdAt)
+      ..writeByte(10)
+      ..write(obj.preferedStateName)
+      ..writeByte(11)
+      ..write(obj.preferredWeatherStationId);
   }
 
   @override

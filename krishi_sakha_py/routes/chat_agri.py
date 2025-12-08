@@ -116,17 +116,24 @@ async def chat_agri(
             # ---------------------------------------------------------------------
             yield f"data: {json.dumps({'type': 'status', 'message': 'Processing query...'})}\n\n"
             
-            # Step 1: Process query with Gemini (with conversation context)
+            # Step 1: Process query with Gemini (with conversation context and user preferences)
             yield f"data: {json.dumps({'type': 'status', 'message': 'Analyzing query...'})}\n\n"
-            processed = process_farmer_query(prompt, last_response=last_response)
+            processed = process_farmer_query(
+                prompt, 
+                last_response=last_response,
+                user_preferred_state=state,
+                user_preferred_station_id=station_id
+            )
             
             actions = processed.get('actions', [])
             is_general = processed.get('is_general', False)
             # Use user preference state, or fall back to processed query state, or default to Kerala
             state_name = state or processed.get('state_name', 'Kerala')
+            # Use user preference station_id, or fall back to Gemini's returned station_id
+            station_id_to_use = station_id or processed.get('station_id')
             optimized_query = processed.get('optimized_query', prompt)
             
-            logger.info(f"Processed query: actions={actions}, is_general={is_general}, state={state_name} (user_pref={bool(state)})")
+            logger.info(f"Processed query: actions={actions}, is_general={is_general}, state={state_name} (user_pref={bool(state)}), station={station_id_to_use}")
             
             # Check if query should be generated
             if not processed.get('generate', True):
@@ -150,7 +157,10 @@ async def chat_agri(
             # Weather context
             if 'imd' in actions:
                 yield f"data: {json.dumps({'type': 'status', 'message': 'Fetching weather forecast...'})}\n\n"
-                weather_result = get_imd_weather_context(state_name=state_name)
+                weather_result = get_imd_weather_context(
+                    station_id=station_id_to_use,
+                    state_name=state_name
+                )
                 pipeline_context['weather'] = weather_result
                 logger.info(f"Weather: {weather_result.get('results_count', 0)} forecast days")
             

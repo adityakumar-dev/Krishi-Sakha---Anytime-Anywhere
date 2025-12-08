@@ -5,6 +5,7 @@ import 'package:krishi_sakha/utils/routes/routes.dart';
 import 'package:provider/provider.dart';
 import '../../models/mandi_price_model.dart';
 import '../../providers/mandi_provider.dart';
+import '../../providers/profile_provider.dart';
 import '../../utils/theme/colors.dart';
 
 class MandiPriceScreen extends StatefulWidget {
@@ -33,6 +34,18 @@ class _MandiPriceScreenState extends State<MandiPriceScreen> {
 
   Future<void> _fetchData() async {
     final provider = Provider.of<MandiProvider>(context, listen: false);
+    final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+    
+    // Use default state from profile if available
+    final defaultState = profileProvider.userProfile?.preferedStateName;
+    if (defaultState != null && provider.selectedState == null) {
+      // Match state name from profile with available states (case-insensitive)
+      final matchedState = _findMatchingState(defaultState);
+      if (matchedState != null) {
+        provider.setSelectedState(matchedState);
+      }
+    }
+    
     await provider.fetchMandiPriceData();
   }
 
@@ -101,6 +114,37 @@ class _MandiPriceScreenState extends State<MandiPriceScreen> {
       backgroundColor: Colors.transparent,
       builder: (context) => const _FilterBottomSheet(),
     );
+  }
+
+  String? _findMatchingState(String stateName) {
+    // Normalize the state name from profile
+    final normalizedInput = stateName.toUpperCase().trim();
+    
+    // Try exact match first
+    for (final state in MandiPriceModel.allStatesMandiPrice) {
+      if (state.toUpperCase() == normalizedInput) {
+        return state;
+      }
+    }
+    
+    // Try partial match (contains)
+    for (final state in MandiPriceModel.allStatesMandiPrice) {
+      if (state.toUpperCase().contains(normalizedInput) || 
+          normalizedInput.contains(state.toUpperCase())) {
+        return state;
+      }
+    }
+    
+    // Try matching without "AND" or special characters
+    final simplifiedInput = normalizedInput.replaceAll(RegExp(r'[^\w\s]'), '').replaceAll('AND', '').trim();
+    for (final state in MandiPriceModel.allStatesMandiPrice) {
+      final simplifiedState = state.toUpperCase().replaceAll(RegExp(r'[^\w\s]'), '').replaceAll('AND', '').trim();
+      if (simplifiedState.contains(simplifiedInput) || simplifiedInput.contains(simplifiedState)) {
+        return state;
+      }
+    }
+    
+    return null;
   }
 
   String _formatDate(DateTime date) {

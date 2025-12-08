@@ -10,6 +10,7 @@ import 'package:krishi_sakha/screens/login/login_screen.dart';
 import 'package:krishi_sakha/screens/mandi/mandi_price_screen.dart';
 import 'package:krishi_sakha/screens/mandi/mandi_state_select_screen.dart';
 import 'package:krishi_sakha/screens/models/model_list_screen.dart';
+import 'package:krishi_sakha/screens/onboarding/location_onboard.dart';
 import 'package:krishi_sakha/screens/onboarding/onboarding.dart';
 import 'package:krishi_sakha/screens/onboarding/profile_onboard_screen.dart';
 import 'package:krishi_sakha/screens/permission/permission_screen.dart';
@@ -64,6 +65,7 @@ class AppRoutes {
   static const String imdStationList = "/imd-station-list";
   static const String mandiStateSelect = "/mandi-state-select";
   static const String mandiPrice = "/mandi-price";
+  static const String locationOnBoard = "/location-onboard";
 }
 
 // GoRouter configuration
@@ -72,6 +74,7 @@ final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.splash,
   navigatorKey:  AppGlobal.navigatorKey,
   routes: [
+    GoRoute(path: AppRoutes.locationOnBoard, name: 'locationOnBoard', builder: (context, state) => const LocationOnboardScreen()),
     GoRoute(path: AppRoutes.imdStationList, name: 'imdStationList', builder: (context, state){
       final stateName = state.extra;
       return StationListScreen(stateName: stateName as String);
