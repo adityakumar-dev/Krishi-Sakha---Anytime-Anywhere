@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
-import 'package:krishi_sakha/screens/login/helpers/auth_service.dart';
 import 'package:krishi_sakha/utils/theme/colors.dart';
 import 'package:krishi_sakha/utils/routes/routes.dart';
 import 'package:krishi_sakha/utils/ui/set_system_ui_overlay.dart';
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Image.asset('assets/images/krishi_logo.png', height: 24, width: 24),
                 const SizedBox(height: 8),
                 Text(
-                  'Hello, ${name ?? userName}',
+                  '${AppLocalizations.of(context)!.hello}, ${name ?? userName}',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -96,9 +96,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
-                const Text(
-                  "Smart farming begins today!",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.smartFarmingBegins,
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Colors.black,
                   ),
@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //   const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  'Search for crops...',
+                  AppLocalizations.of(context)!.searchForCrops,
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 16,
@@ -238,17 +238,17 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Your Farm Tools',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.yourFarmTools,
+            style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
               color: AppColors.primaryBlack,
             ),
           ),
-          const Text(
-            'Ai-powered insights for your daily decisions',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.aiPoweredInsights,
+            style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.normal,
               color: AppColors.primaryBlack,
@@ -266,38 +266,38 @@ class _HomeScreenState extends State<HomeScreen> {
             childAspectRatio: 0.85, // Increase height (lower ratio = taller cards)
             children: [
               _buildFeatureCard(
-                title: 'Weather',
-                subtitle: 'Forecasts',
+                title: AppLocalizations.of(context)!.weather,
+                subtitle: AppLocalizations.of(context)!.forecasts,
                 icon: Icons.wb_sunny,
                 color: const Color(0xFF2196F3),
                 onTap: () => context.push(AppRoutes.weather),
               ),
               // /card for create post scree
                _buildFeatureCard(
-                title: 'Share Post',
-                subtitle: 'add your post',
+                title: AppLocalizations.of(context)!.sharePost,
+                subtitle: AppLocalizations.of(context)!.addYourPost,
                 icon: Icons.post_add,
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.createPost),
               ),
               _buildFeatureCard(
-                title: 'Posts',
-                subtitle: 'Community Posts',
+                title: AppLocalizations.of(context)!.posts,
+                subtitle: AppLocalizations.of(context)!.communityPosts,
                 icon: Icons.forum,
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.posts),
               ),
 
                _buildFeatureCard(
-                title: 'MyScheme',
-                subtitle: 'Government Schemes',
+                title: AppLocalizations.of(context)!.myScheme,
+                subtitle: AppLocalizations.of(context)!.governmentSchemes,
                 icon: Icons.forum,
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.schemes),
               ),
               _buildFeatureCard(
-                title: 'IMD',
-                subtitle: 'Weather Forecasts',
+                title: AppLocalizations.of(context)!.imd,
+                subtitle: AppLocalizations.of(context)!.weatherForecasts,
                 icon: Icons.support_agent,
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.imdWeather),
@@ -305,21 +305,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
               _buildFeatureCard(
-                title: 'Disease',
-                subtitle: 'Detector',
+                title: AppLocalizations.of(context)!.disease,
+                subtitle: AppLocalizations.of(context)!.detector,
                 icon: Icons.bug_report,
                 color: const Color(0xFF66BB6A),
                 onTap: () => context.push(AppRoutes.plantDisease),
               ),
               _buildFeatureCard(
-                title: 'Offline AI',
+                title: AppLocalizations.of(context)!.offlineAI,
                 subtitle: '',
                 icon: Icons.chat_bubble,
                 color: const Color(0xFF5C7C8A),
                 onTap: () => context.push(AppRoutes.selector),
               ),
               _buildFeatureCard(
-                title: 'Saved Posts',
+                title: AppLocalizations.of(context)!.savedPosts,
                 subtitle: '',
                 icon: Icons.bookmark,
                 color: const Color(0xFF5C7C8A),
@@ -327,29 +327,29 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
          
               _buildFeatureCard(
-                title: 'Satellite',
-                subtitle: 'View',
+                title: AppLocalizations.of(context)!.satellite,
+                subtitle: AppLocalizations.of(context)!.view,
                 icon: Icons.satellite_alt,
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.satteliteView),
               ),
               _buildFeatureCard(
-                title: 'Test Translation',
-                subtitle: 'offline ML',
+                title: AppLocalizations.of(context)!.testTranslation,
+                subtitle: AppLocalizations.of(context)!.offlineML,
                 icon: Icons.translate,
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.test_translation),
               ),
                 _buildFeatureCard(
-                title: 'Translation',
-                subtitle: 'All Languages',
+                title: AppLocalizations.of(context)!.translation,
+                subtitle: AppLocalizations.of(context)!.allLanguages,
                 icon: Icons.translate,
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.test_offline_translation),
               ),
                _buildFeatureCard(
-                title: 'Mandi Prices',
-                subtitle: 'Price',
+                title: AppLocalizations.of(context)!.mandiPricesList,
+                subtitle: AppLocalizations.of(context)!.price,
                 icon: Icons.currency_rupee,
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.mandiPrice),

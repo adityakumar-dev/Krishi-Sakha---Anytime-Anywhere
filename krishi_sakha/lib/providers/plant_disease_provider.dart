@@ -72,6 +72,16 @@ class PlantDiseaseProvider extends ChangeNotifier {
   String? _geminiError;
   String? get geminiError => _geminiError;
 
+  // Gatekeeper model (always loaded first)
+  static const String gatekeeperModelPath = 'assets/model/gatekeeper/gatekeeper.tflite';
+  static const String gatekeeperClassesPath = 'assets/model/gatekeeper/classes.json';
+  static const double gatekeeperHighConfidenceThreshold = 0.7; // 70% - auto proceed
+  static const double gatekeeperMediumConfidenceThreshold = 0.5; // 50% - ask user
+  
+  bool _isGatekeeperLoaded = false;
+  Map<String, String>? _gatekeeperClassesMap;
+  bool get isGatekeeperLoaded => _isGatekeeperLoaded;
+
   // Available models list
   final List<ModelConfig> availableModels = [
     ModelConfig(
@@ -119,6 +129,15 @@ class PlantDiseaseProvider extends ChangeNotifier {
         _isLoadingModel = true;
         _modelError = null;
       });
+
+      // Load gatekeeper classes first
+      if (!_isGatekeeperLoaded) {
+        final gatekeeperClassesJson = await DefaultAssetBundle.of(context)
+            .loadString(gatekeeperClassesPath);
+        _gatekeeperClassesMap = Map<String, String>.from(jsonDecode(gatekeeperClassesJson));
+        _isGatekeeperLoaded = true;
+        AppLogger.info('Gatekeeper classes loaded');
+      }
 
       // Load classes mapping
       final classesJson = await DefaultAssetBundle.of(context)
@@ -192,6 +211,168 @@ class PlantDiseaseProvider extends ChangeNotifier {
     }
   }
 
+  /// Validate image with gatekeeper model
+  Future<Map<String, dynamic>> validateImageWithGatekeeper() async {
+    if (!_isGatekeeperLoaded || _gatekeeperClassesMap == null || _imageFile == null) {
+      return {
+        'isValid': false,
+        'error': 'Gatekeeper not initialized or no image selected',
+      };
+    }
+
+    try {
+      AppLogger.info('Running gatekeeper validation...');
+      
+      // Temporarily load gatekeeper model
+      final initResponse = await _tfliteService.initialize(path: gatekeeperModelPath);
+      if (!initResponse.status) {
+        return {
+          'isValid': false,
+          'error': 'Failed to load gatekeeper model',
+        };
+      }
+
+      // Run detection
+      final response = await _tfliteService.detectDiseaseFromImage(
+        _imageFile!.path,
+        _gatekeeperClassesMap!,
+      );
+
+      // Close gatekeeper model
+      await _tfliteService.close();
+
+      if (response.status && response.diseaseResult != null) {
+        final result = response.diseaseResult!;
+        final isPlant = result.className.toLowerCase() == 'plant';
+        final confidence = result.confidence;
+
+        AppLogger.info(
+          'Gatekeeper result: ${result.className} (${(confidence * 100).toStringAsFixed(1)}%)',
+        );
+
+        if (isPlant && confidence >= gatekeeperHighConfidenceThreshold) {
+          // High confidence - auto proceed
+          return {
+            'isValid': true,
+            'confidence': confidence,
+            'needsConfirmation': false,
+          };
+        } else if (isPlant && confidence >= gatekeeperMediumConfidenceThreshold) {
+          // Medium confidence - ask user
+          return {
+            'isValid': false,
+            'needsConfirmation': true,
+            'confidence': confidence,
+            'message': 'The system is not sure if this is a plant image (${(confidence * 100).toStringAsFixed(1)}% confidence). Do you want to continue?',
+          };
+        } else {
+          // Low confidence or not a plant
+          return {
+            'isValid': false,
+            'needsConfirmation': false,
+            'isPlant': isPlant,
+            'confidence': confidence,
+            'error': isPlant 
+                ? 'Low confidence: Image might not contain a clear plant'
+                : 'No plant detected: Please use an image of a plant',
+          };
+        }
+      }
+
+      return {
+        'isValid': false,
+        'error': 'Gatekeeper validation failed',
+      };
+    } catch (e) {
+      AppLogger.error('Gatekeeper error: $e');
+      return {
+        'isValid': false,
+        'error': 'Error validating image: $e',
+      };
+    }
+  }
+
+  /// Continue disease detection (called after user confirms medium confidence)
+  Future<void> continueDetectionAfterConfirmation() async {
+    if (!_modelLoaded || _classesMap == null || _imageFile == null) {
+      _detectionError = 'Model not loaded or no image selected';
+      notifyListeners();
+      return;
+    }
+
+    try {
+      setState(() {
+        _isDetecting = true;
+        _detectionError = null;
+        _geminiResponse = null;
+        _geminiError = null;
+      });
+
+      // Reload disease detection model
+      AppLogger.info('User confirmed - proceeding with disease detection...');
+      final reloadResponse = await _tfliteService.initialize(path: _currentModelPath!);
+      if (!reloadResponse.status) {
+        _detectionError = 'Failed to reload disease detection model';
+        setState(() => _isDetecting = false);
+        return;
+      }
+
+      // Run disease detection
+      await _runDiseaseDetection();
+    } catch (e) {
+      _detectionError = 'Error detecting disease: $e';
+      _detectionResult = null;
+      _allScores = null;
+      AppLogger.error('Error during detection: $e');
+      notifyListeners();
+    } finally {
+      setState(() => _isDetecting = false);
+    }
+  }
+
+  /// Internal method to run disease detection
+  Future<void> _runDiseaseDetection() async {
+    // Step 3: Get main detection result
+    AppLogger.info('Running disease detection...');
+    final detectionResponse = await _tfliteService.detectDiseaseFromImage(
+      _imageFile!.path,
+      _classesMap!,
+    );
+
+    if (detectionResponse.status) {
+      // Get all scores for detailed view
+      final scoresResponse = await _tfliteService.getDiseaseScores(
+        _imageFile!.path,
+        _classesMap!,
+      );
+
+      _detectionResult = detectionResponse.diseaseResult;
+      if (scoresResponse.status) {
+        _allScores = List<Map<String, dynamic>>.from(
+          scoresResponse.result as List<dynamic>,
+        );
+      }
+      _detectionError = null;
+      AppLogger.info(
+        'Disease detected: ${_detectionResult?.className} (${(_detectionResult?.confidence ?? 0 * 100).toStringAsFixed(1)}%)',
+      );
+
+      // Notify listeners about detection results before calling Gemini
+      notifyListeners();
+
+      // Get Gemini advice
+      String plantName = "Tomato"; // Assuming tomato model
+      String diseaseName = _detectionResult!.className;
+      await getGeminiAdvice(plantName, diseaseName);
+    } else {
+      _detectionError = detectionResponse.message;
+      _detectionResult = null;
+      _allScores = null;
+      AppLogger.error('Detection failed: ${detectionResponse.message}');
+      notifyListeners();
+    }
+  }
+
   /// Detect disease in selected image
   Future<void> detectDisease() async {
     if (!_modelLoaded || _classesMap == null || _imageFile == null) {
@@ -205,46 +386,48 @@ class PlantDiseaseProvider extends ChangeNotifier {
         _isDetecting = true;
         _detectionError = null;
         _geminiResponse = null; // Clear previous Gemini response
+        _geminiError = null;
       });
 
-      // Get main detection result
-      final detectionResponse = await _tfliteService.detectDiseaseFromImage(
-        _imageFile!.path,
-        _classesMap!,
-      );
-
-      if (detectionResponse.status) {
-        // Get all scores for detailed view
-        final scoresResponse = await _tfliteService.getDiseaseScores(
-          _imageFile!.path,
-          _classesMap!,
-        );
-
-        _detectionResult = detectionResponse.diseaseResult;
-        if (scoresResponse.status) {
-          _allScores = List<Map<String, dynamic>>.from(
-            scoresResponse.result as List<dynamic>,
-          );
-        }
-        _detectionError = null;
-        AppLogger.info(
-          'Disease detected: ${_detectionResult?.className} (${(_detectionResult?.confidence ?? 0 * 100).toStringAsFixed(1)}%)',
-        );
-
-        // Notify listeners about detection results before calling Gemini
-        notifyListeners();
-
-        // Get Gemini advice
-        String plantName = "Tomato"; // Assuming tomato model
-        String diseaseName = _detectionResult!.className;
-        await getGeminiAdvice(plantName, diseaseName);
-      } else {
-        _detectionError = detectionResponse.message;
+      // Step 1: Gatekeeper validation
+      AppLogger.info('Step 1: Running gatekeeper validation...');
+      final gatekeeperResult = await validateImageWithGatekeeper();
+      
+      if (gatekeeperResult['needsConfirmation'] == true) {
+        // Medium confidence - need user confirmation
+        _detectionError = gatekeeperResult['message'] ?? 'Please confirm to continue';
         _detectionResult = null;
         _allScores = null;
-        AppLogger.error('Detection failed: ${detectionResponse.message}');
-        notifyListeners();
+        AppLogger.info('Gatekeeper needs user confirmation: ${(gatekeeperResult["confidence"] * 100).toStringAsFixed(1)}%');
+        setState(() => _isDetecting = false);
+        // Error will trigger confirmation dialog in UI
+        return;
       }
+      
+      if (!gatekeeperResult['isValid']) {
+        // Image is not a plant or low confidence
+        _detectionError = gatekeeperResult['error'] ?? 'Image validation failed';
+        _detectionResult = null;
+        _allScores = null;
+        AppLogger.warning('Gatekeeper rejected image: ${_detectionError}');
+        setState(() => _isDetecting = false);
+        return;
+      }
+
+      AppLogger.info(
+        'Gatekeeper passed with ${(gatekeeperResult["confidence"] * 100).toStringAsFixed(1)}% confidence',
+      );
+
+      // Step 2: Reload disease detection model
+      final reloadResponse = await _tfliteService.initialize(path: _currentModelPath!);
+      if (!reloadResponse.status) {
+        _detectionError = 'Failed to reload disease detection model';
+        setState(() => _isDetecting = false);
+        return;
+      }
+
+      // Step 3: Run disease detection
+      await _runDiseaseDetection();
     } catch (e) {
       _detectionError = 'Error detecting disease: $e';
       _detectionResult = null;

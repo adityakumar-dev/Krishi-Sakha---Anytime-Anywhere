@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:krishi_sakha/providers/language_provider.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
 import 'package:krishi_sakha/utils/routes/routes.dart';
 import 'package:krishi_sakha/utils/theme/colors.dart';
@@ -69,13 +70,35 @@ class _SplashScreenState extends State<SplashScreen>
     if (mounted) {
       final user = Supabase.instance.client.auth.currentUser;
       if (user != null) {
-        final provider = Provider.of<ProfileProvider>(context, listen: false);
-      await  provider.initProfile();
-        if(provider.userProfile != null) {
-          context.go(AppRoutes.home);}
-          else{
-          context.go(AppRoutes.profileOnboard);
+        final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+        final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+        
+        await profileProvider.initProfile();
+        
+        // Set locale based on user's preferred language
+        if (profileProvider.userProfile != null) {
+          final preferredLanguage = profileProvider.userProfile!.prefered_language;
+          
+          // Default to English if no preference or invalid value
+          if (preferredLanguage != null && preferredLanguage.isNotEmpty) {
+            // Support 'en', 'hi', 'ml' language codes
+            if (preferredLanguage == 'hi' || preferredLanguage == 'hindi') {
+              languageProvider.setLocale(const Locale('hi'));
+            } else if (preferredLanguage == 'ml' || preferredLanguage == 'malayalam') {
+              languageProvider.setLocale(const Locale('ml'));
+            } else {
+              // Default to English for any other value
+              languageProvider.setLocale(const Locale('en'));
+            }
+          } else {
+            // No preference set, use English as default
+            languageProvider.setLocale(const Locale('en'));
           }
+          
+          context.go(AppRoutes.home);
+        } else {
+          context.go(AppRoutes.profileOnboard);
+        }
       } else {
         context.go(AppRoutes.onboarding);
       }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:krishi_sakha/models/post_model.dart';
 import 'package:krishi_sakha/providers/post_manage_provider.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
@@ -79,7 +80,7 @@ class _ExpertPostsScreenState extends State<ExpertPostsScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text('Expert Advice', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.expertAdvice, style: const TextStyle(fontWeight: FontWeight.bold)),
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.blue[800],

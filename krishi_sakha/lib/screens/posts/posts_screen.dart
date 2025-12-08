@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:krishi_sakha/models/post_model.dart';
 import 'package:krishi_sakha/providers/post_manage_provider.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
@@ -76,10 +77,11 @@ class _PostsScreenState extends State<PostsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text('Community Posts', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(l10n.communityPosts, style: const TextStyle(fontWeight: FontWeight.bold)),
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: const Color(0xFF2D5016),
@@ -95,9 +97,9 @@ class _PostsScreenState extends State<PostsScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Row(
                 children: [
-                  _buildFilterTab('All', null, null),
-                  _buildFilterTab('Your City', 'your_city', null),
-                  _buildFilterTab('Verified', 'approved', 'approved'),
+                  _buildFilterTab(l10n.all, null, null),
+                  _buildFilterTab(l10n.yourCity, 'your_city', null),
+                  _buildFilterTab(l10n.verified, 'approved', 'approved'),
                   _buildFilterTab('Pending', 'pending', 'pending'),
                 ],
               ),

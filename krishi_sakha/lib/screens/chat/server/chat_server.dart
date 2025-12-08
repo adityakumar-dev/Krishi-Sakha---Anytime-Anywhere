@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:krishi_sakha/models/mandi_price_model.dart';
 import 'package:krishi_sakha/providers/agri_chat_provider.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
@@ -328,9 +329,9 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                   color: Colors.grey.withValues(alpha: 0.8),
                 ),
                 const SizedBox(height: 12),
-                const Text(
-                  'Start your conversation',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.startConversation,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -338,7 +339,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Ask anything related to farming, crops, weather, and more.',
+                  AppLocalizations.of(context)!.askAnything,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.grey.withValues(alpha: 0.8),

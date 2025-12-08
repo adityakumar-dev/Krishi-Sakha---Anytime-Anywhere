@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
 import 'package:krishi_sakha/screens/login/helpers/auth_service.dart';
@@ -71,17 +72,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _isEditing = false;
     });
 
+    final l10n = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Profile updated successfully')),
+      SnackBar(content: Text(l10n.profileUpdated)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text('My Profile', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(l10n.myProfile, style: const TextStyle(fontWeight: FontWeight.bold)),
         elevation: 0,
         backgroundColor: const Color(0xFF2D5016),
         foregroundColor: Colors.white,
@@ -93,13 +96,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('No profile found'),
+                  Text(l10n.noProfileFound),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
                       profileProvider.fetchProfile();
                     },
-                    child: const Text('Reload Profile'),
+                    child: Text(l10n.retry),
                   ),
                 ],
               ),
@@ -218,18 +221,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       // Personal Information Card
                       _buildSectionCard(
-                        title: 'Personal Information',
+                        title: l10n.personalInformation,
                         icon: Icons.person_outline,
                         children: [
                           _buildProfileField(
-                            label: 'Name',
+                            label: l10n.name,
                             controller: _nameController,
                             isEditing: _isEditing,
                             icon: Icons.person,
                           ),
                           const SizedBox(height: 16),
                           _buildProfileField(
-                            label: 'Phone',
+                            label: l10n.phone,
                             controller: _phoneController,
                             isEditing: _isEditing,
                             icon: Icons.phone,
@@ -240,11 +243,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       // Location Information Card
                       _buildSectionCard(
-                        title: 'Your Choice',
+                        title: l10n.yourChoice,
                         icon: Icons.location_on_outlined,
                         children: [
                           _buildProfileField(
-                            label: 'City',
+                            label: l10n.city,
                             controller: _cityController,
                             isEditing: _isEditing,
                             icon: Icons.location_city,
@@ -252,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                           _buildProfileField(
 
-                            label: 'Language',
+                            label: l10n.language,
                             controller: _languageController,
                             isEditing: _isEditing,
                             icon: Icons.location_city,
@@ -263,7 +266,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           
                           const SizedBox(height: 16),
                           _buildProfileField(
-                            label: 'State',
+                            label: l10n.state,
                             controller: _stateController,
                             isEditing: _isEditing,
                             icon: Icons.map,
@@ -274,11 +277,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       // Account details section
                       _buildSectionCard(
-                        title: 'Account Information',
+                        title: l10n.accountInformation,
                         icon: Icons.info_outline,
                         children: [
                           _buildReadOnlyField(
-                            label: 'Member Since',
+                            label: l10n.memberSince,
                             value: user.createdAt != null
                                 ? _formatDate(user.createdAt!)
                                 : 'N/A',
@@ -290,12 +293,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       // Settings section
                       _buildSectionCard(
-                        title: 'Settings',
+                        title: l10n.settings,
                         icon: Icons.settings_outlined,
                         children: [
                           _buildSettingsTile(
-                            title: 'Translation Models',
-                            subtitle: 'Download languages for offline translation',
+                            title: l10n.translationModels,
+                            subtitle: l10n.downloadLanguages,
                             icon: Icons.translate,
                             onTap: () {
                               Navigator.push(
@@ -356,7 +359,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Icon(Icons.logout_rounded, color: Colors.red[600]),
                                 const SizedBox(width: 12),
                                 Text(
-                                  'Logout',
+                                  l10n.logout,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,

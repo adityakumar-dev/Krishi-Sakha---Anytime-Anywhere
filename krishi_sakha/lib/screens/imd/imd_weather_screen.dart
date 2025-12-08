@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../models/imd_weather_model.dart';
 import '../../providers/imd_weather_provider.dart';

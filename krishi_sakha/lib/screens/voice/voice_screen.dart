@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:krishi_sakha/models/mandi_price_model.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
 import 'package:krishi_sakha/providers/void_provider.dart';
@@ -96,6 +97,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Consumer<VoiceProvider>(
       builder: (context, provider, child) {
         return Scaffold(
@@ -112,14 +114,14 @@ class _VoiceScreenState extends State<VoiceScreen> {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                      title: const Text('Stop voice chat?'),
-                      content: const Text(
-                        'This will cancel the current operation.',
+                      title: Text(l10n.stopVoiceChat),
+                      content: Text(
+                        l10n.cancelOperation,
                       ),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(ctx),
-                          child: const Text('Cancel'),
+                          child: Text(l10n.cancel),
                         ),
                         TextButton(
                           onPressed: () {
@@ -127,9 +129,9 @@ class _VoiceScreenState extends State<VoiceScreen> {
                             Navigator.pop(ctx);
                             Navigator.pop(context);
                           },
-                          child: const Text(
-                            'Stop',
-                            style: TextStyle(color: Colors.red),
+                          child: Text(
+                            l10n.stop,
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ),
                       ],
@@ -140,9 +142,9 @@ class _VoiceScreenState extends State<VoiceScreen> {
                 }
               },
             ),
-            title: const Text(
-              "Voice Chat",
-              style: TextStyle(color: AppColors.primaryBlack),
+            title: Text(
+              l10n.voiceChat,
+              style: const TextStyle(color: AppColors.primaryBlack),
             ),
             elevation: 0,
           ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:krishi_sakha/apis/app_global.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
+import 'package:krishi_sakha/providers/language_provider.dart';
 import 'package:provider/provider.dart';
 
 class LanguageScreen extends StatefulWidget {
@@ -55,6 +57,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
       context,
       listen: false,
     );
+    final languageProvider = Provider.of<LanguageProvider>(
+      context,
+      listen: false,
+    );
+    final l10n = AppLocalizations.of(context)!;
+    
     await profileProvider.setLanguagePreference(_selectedLanguage!);
 
     setState(() => _isLoading = false);
@@ -68,9 +76,15 @@ class _LanguageScreenState extends State<LanguageScreen> {
           ),
         );
       } else {
+        // Update LanguageProvider for localization (only for en, hi, ml)
+        final langCode = _selectedLanguage!.split('-').first;
+        if (langCode == 'en' || langCode == 'hi' || langCode == 'ml') {
+          languageProvider.setLocaleFromCode(_selectedLanguage!);
+        }
+        
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Language updated successfully'),
+          SnackBar(
+            content: Text(l10n.languageUpdated),
             backgroundColor: Colors.green,
           ),
         );
@@ -81,12 +95,13 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          'Select Language',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+        title: Text(
+          l10n.selectLanguage,
+          style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -204,9 +219,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             valueColor: AlwaysStoppedAnimation(Colors.white),
                           ),
                         )
-                      : const Text(
-                          'Save Language',
-                          style: TextStyle(
+                      : Text(
+                          l10n.save,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:krishi_sakha/providers/weather_provider.dart';
@@ -69,43 +70,46 @@ class _WeatherScreenState extends State<WeatherScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        backgroundColor: AppColors.primaryBlack,
-        title: const Text(
-          'Location Permission Required',
-          style: TextStyle(color: AppColors.primaryWhite),
-        ),
-        content: const Text(
-          'Location permission and location services are required for weather reports. Please enable them to continue.',
-          style: TextStyle(color: AppColors.primaryWhite),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel', style: TextStyle(color: AppColors.primaryGreen)),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return AlertDialog(
+          backgroundColor: AppColors.primaryBlack,
+          title: Text(
+            l10n.locationPermission,
+            style: const TextStyle(color: AppColors.primaryWhite),
           ),
-          TextButton(
-            onPressed: () async {
-              Navigator.of(context).pop();
-              final weatherProvider = context.read<WeatherProvider>();
-              
-              await weatherProvider.requestLocationPermission();
-              
-              // Check again
-              final hasPermission = await weatherProvider.checkLocationPermission();
-              final serviceEnabled = await weatherProvider.checkLocationService();
-              
-              if (hasPermission && serviceEnabled) {
-                await weatherProvider.initializeWithCurrentLocation();
-              } else {
+          content: Text(
+            l10n.locationPermissionMessage,
+            style: const TextStyle(color: AppColors.primaryWhite),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(l10n.cancel, style: const TextStyle(color: AppColors.primaryGreen)),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                final weatherProvider = context.read<WeatherProvider>();
+                
+                await weatherProvider.requestLocationPermission();
+                
+                // Check again
+                final hasPermission = await weatherProvider.checkLocationPermission();
+                final serviceEnabled = await weatherProvider.checkLocationService();
+                
+                if (hasPermission && serviceEnabled) {
+                  await weatherProvider.initializeWithCurrentLocation();
+                } else {
                 // Open settings
                 await weatherProvider.openAppSettings();
               }
             },
-            child: const Text('Grant Permission', style: TextStyle(color: AppColors.primaryGreen)),
+            child: Text(l10n.grantLocationPermission, style: const TextStyle(color: AppColors.primaryGreen)),
           ),
         ],
-      ),
+      );
+      },
     );
   }
 

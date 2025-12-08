@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:krishi_sakha/providers/agri_chat_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -136,9 +137,9 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
         ),
         backgroundColor: const Color(0xFFF7F5E8),
         foregroundColor: AppColors.primaryBlack,
-        title: const Text(
-          'Chat History',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.chatHistory,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: AppColors.primaryBlack,
@@ -158,9 +159,9 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
         backgroundColor: AppColors.primaryGreen,
         foregroundColor: AppColors.primaryBlack,
         icon: const Icon(Icons.add),
-        label: const Text(
-          'New Chat',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        label: Text(
+          AppLocalizations.of(context)!.newChat,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
     );

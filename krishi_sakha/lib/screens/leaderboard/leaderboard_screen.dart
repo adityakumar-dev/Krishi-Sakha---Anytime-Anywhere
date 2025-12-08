@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:krishi_sakha/models/leaderboard_model.dart';
 import 'package:krishi_sakha/providers/leaderboard_provider.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
@@ -87,7 +88,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  'Loading leaderboard...',
+                  AppLocalizations.of(context)!.loadingLeaderboard,
                   style: TextStyle(
                     color: Colors.grey.shade600,
                     fontSize: 16,
@@ -198,9 +199,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           const SizedBox(width: 12),
           const Icon(Icons.emoji_events, color: Color(0xFF2D5016), size: 28),
           const SizedBox(width: 8),
-          const Text(
-            'Leaderboard',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.leaderboard,
+            style: const TextStyle(
               color: Color(0xFF1A2F0D),
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -248,7 +249,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'YOUR RANK',
+                  AppLocalizations.of(context)!.yourRank,
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.85),
                     fontSize: 11,

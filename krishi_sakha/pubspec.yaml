@@ -58,6 +58,7 @@ dependencies:
   onnx_translation: ^0.1.2
   google_mlkit_translation: ^0.13.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -78,4 +79,5 @@ flutter:
     - assets/model/tamato/
     - assets/model/tea_leaf/
     - assets/model/en_ml/
+    - assets/model/gatekeeper/
     - .env
