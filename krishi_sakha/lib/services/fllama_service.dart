@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:fllama/fllama.dart';
 import 'package:flutter/foundation.dart';
+import 'package:krishi_sakha/services/app_logger.dart';
 
 /// -----------------------------------------------------------------
 /// CONSTANTS
@@ -10,11 +11,10 @@ import 'package:flutter/foundation.dart';
 /// -----------------------------------------------------------------
 class LlamaSetup {
   // --- Model Configuration ---
-  static const String modelName = 'model.gguf'; // Your model file name
+  static const String modelName = 'model.gguf'; 
   
   // --- System Prompt ---
-  static const String systemPrompt = 'You are a helpful and concise assistant.';
-
+static const String systemPrompt = 'You are a Kerala Krishi Bhavan officer. Answer in spoken Malayalam for farming queries. Keep responses concise, 3 sentences max, with one action + one money tip.';
   // --- Inference Parameters ---
   static const int maxTokens = 512;
   static const double temperature = 0.7;
@@ -67,7 +67,7 @@ class LlamaService {
     }
 
     try {
-      print("Initializing LlamaService...");
+      AppLogger.info("Initializing LlamaService...");
       
       // Validate model file exists
       final modelFile = File(modelPath);
@@ -81,10 +81,10 @@ class LlamaService {
       _isInitialized = true;
       
       _statusController.add("LlamaService initialized successfully");
-      print("LlamaService initialized with model: $modelPath");
+      AppLogger.info("LlamaService initialized with model: $modelPath");
     } catch (e) {
       _statusController.add("Failed to initialize: $e");
-      print("Failed to initialize LlamaService: $e");
+      AppLogger.error("Failed to initialize LlamaService: $e");
       throw e;
     }
   }
@@ -119,16 +119,16 @@ class LlamaService {
         presencePenalty: LlamaSetup.presencePenalty,
         contextSize: LlamaSetup.contextSize,
         numGpuLayers: LlamaSetup.numGpuLayers,
+        
         logger: (log) {
           if (!log.contains('<unused') && !log.contains('ggml_')) {
-            print('[fllama] $log');
+            debugPrint('[fllama] $log');
           }
         },
       );
 
       String fullAssistantResponse = "";
       List<String> allResponses = [];
-
       _currentRequestId = await fllamaChat(request, (response, responseJson, done) {
         if (!_isGenerating) return; 
         // Calculate new tokens (incremental response)
@@ -154,7 +154,7 @@ class LlamaService {
       _statusController.add("Error: $e");
       _isGenerating = false;
       _currentRequestId = null;
-      print("Chat error: $e");
+      AppLogger.error("Chat error: $e");
     }
   }
 
@@ -179,10 +179,10 @@ class LlamaService {
       _inferenceStartTime = null;
       
       _statusController.add("Response completed");
-      print("Chat response completed successfully");
+      AppLogger.info("Chat response completed successfully");
       
     } catch (e) {
-      print("Error finalizing response: $e");
+      AppLogger.error("Error finalizing response: $e");
       _statusController.add("Error finalizing response: $e");
     }
   }
@@ -197,11 +197,11 @@ class LlamaService {
     )).then((tokenCount) {
       if (elapsedSeconds > 0) {
         final tokensPerSecond = tokenCount / elapsedSeconds;
-        print("Performance: ${tokensPerSecond.toStringAsFixed(2)} tokens/sec");
+        AppLogger.info("Performance: ${tokensPerSecond.toStringAsFixed(2)} tokens/sec");
         _statusController.add("Speed: ${tokensPerSecond.toStringAsFixed(1)} tok/s");
       }
     }).catchError((e) {
-      print("Error calculating tokens: $e");
+      AppLogger.error("Error calculating tokens: $e");
     });
   }
 
@@ -216,9 +216,9 @@ class LlamaService {
       _inferenceStartTime = null;
       
       _statusController.add("Generation cancelled");
-      print("Generation cancelled successfully");
+      AppLogger.info("Generation cancelled successfully");
     } catch (e) {
-      print("Error cancelling generation: $e");
+      AppLogger.error("Error cancelling generation: $e");
       _statusController.add("Error cancelling: $e");
     }
   }
@@ -230,7 +230,7 @@ class LlamaService {
       _chatHistory.clear();
       _chatHistory.add(systemPrompt);
       _statusController.add("Chat history cleared");
-      print("Chat history cleared");
+      AppLogger.info("Chat history cleared");
     }
   }
 
@@ -257,6 +257,6 @@ class LlamaService {
     _responseController.close();
     _statusController.close();
     _isInitialized = false;
-    print("LlamaService disposed");
+    AppLogger.info("LlamaService disposed");
   }
 }

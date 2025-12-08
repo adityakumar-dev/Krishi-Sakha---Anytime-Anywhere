@@ -179,9 +179,58 @@ class MandiProvider extends ChangeNotifier {
       });
 
       if (response.statusCode == 200) {
-        _responseData = MandiPriceResponse.fromJson(jsonDecode(response.body));
+        AppLogger.info('✅ Mandi price data fetched successfully');
+        AppLogger.info("Response body: ${response.body}");
+
+        final decoded = jsonDecode(response.body);
+
+        // API can return multiple shapes. Handle both:
+        // 1) { status: ..., data: [ ... ] }
+        // 2) { success: true, data: { date_range: 'YYYY-MM-DD to YYYY-MM-DD', prices: [ ... ], note: '...' } }
+        List<dynamic> pricesList = [];
+        int status = 0;
+
+        if (decoded is Map<String, dynamic>) {
+          // derive status
+          if (decoded.containsKey('status')) {
+            status = (decoded['status'] is int) ? decoded['status'] as int : int.tryParse(decoded['status']?.toString() ?? '') ?? 0;
+          } else if (decoded.containsKey('success')) {
+            final s = decoded['success'];
+            if (s is bool) status = s ? 1 : 0; else if (s is int) status = s;
+          }
+
+          final dataNode = decoded['data'];
+          if (dataNode is List) {
+            pricesList = dataNode;
+          } else if (dataNode is Map<String, dynamic>) {
+            // look for 'prices' key first, then 'data' key (nested)
+            List<dynamic>? maybePrices = dataNode['prices'];
+            if (maybePrices is List) {
+              pricesList = maybePrices;
+            } else {
+              // Some APIs nest items under 'data' key: { data: { data: [...], ... } }
+              final maybeData = dataNode['data'];
+              if (maybeData is List) {
+                pricesList = maybeData;
+              } else {
+                // fallback to empty list
+                pricesList = [];
+              }
+            }
+          }
+        } else if (decoded is List) {
+          pricesList = decoded;
+        }
+
+        // Build response object
+        final parsedItems = pricesList.map<MandiPriceItem>((e) {
+          if (e is Map<String, dynamic>) return MandiPriceItem.fromJson(e);
+          return MandiPriceItem.fromJson(Map<String, dynamic>.from(e));
+        }).toList();
+
+        _responseData = MandiPriceResponse(status: status, data: parsedItems);
         _extractFilterOptions();
-        AppLogger.info('✅ Mandi price data fetched successfully: ${_responseData!.data.length} items');
+        AppLogger.info('✅ Mandi price data parsed: ${_responseData!.data.length} items');
         _isLoading = false;
         notifyListeners();
       } else {

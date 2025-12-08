@@ -26,4 +26,7 @@ class ApiManager {
 
   // enam mandi 
   static String mandiTradeDataUrl(String stateName, String fromDate, String toDate) => "$baseUrl/mandi/trade_data/$stateName/$fromDate/$toDate";
+
+  // chat agri
+  static const String chatAgriUrl = '$baseUrl/chat/agri';
 }

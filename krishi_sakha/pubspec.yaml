@@ -76,5 +76,6 @@ flutter:
     - assets/images/
     - assets/
     - assets/model/tamato/
+    - assets/model/tea_leaf/
     - assets/model/en_ml/
     - .env

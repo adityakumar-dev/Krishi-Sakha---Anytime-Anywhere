@@ -59,12 +59,24 @@ class _TestTranslationScreenState extends State<TestTranslationScreen> {
 
     try {
       final startTime = DateTime.now();
-      final result = await _translator.translate(text);
+      
+      // Use streaming translation with delays for better performance
+      final result = await _translator.translateLongText(
+        text,
+        onSentenceTranslated: (partial, current, total) {
+          // Update UI with each sentence as it completes
+          setState(() {
+            _translatedText = partial;
+            _statusMessage = 'Translating: $current/$total sentences...';
+          });
+        },
+      );
+      
       final elapsed = DateTime.now().difference(startTime).inMilliseconds;
       
       setState(() {
         _translatedText = result;
-        _statusMessage = 'Translated in ${elapsed}ms';
+        _statusMessage = 'Completed in ${elapsed}ms';
         _isLoading = false;
       });
     } catch (e) {

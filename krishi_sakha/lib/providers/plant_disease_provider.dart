@@ -81,6 +81,13 @@ class PlantDiseaseProvider extends ChangeNotifier {
       description: '10 classes - 96% accuracy',
       icon: '🍅',
     ),
+    ModelConfig(
+      name: 'Tea Leaf Disease',
+      modelPath: 'assets/model/tea_leaf/tea_disease_model.tflite',
+      classesPath: 'assets/model/tea_leaf/classes.json',
+      description: 'Tea leaf disease classification',
+      icon: '🍵',
+    ),
     // Add more models here in future
     // ModelConfig(
     //   name: 'Potato Disease',

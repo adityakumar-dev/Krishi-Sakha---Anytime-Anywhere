@@ -3,6 +3,7 @@ import 'package:onnx_translation/onnx_translation.dart';
 
 /// Translation service using Helsinki-NLP/opus-mt-en-ml ONNX model
 /// Translates English text to Malayalam using MarianMT architecture
+/// Handles long paragraphs by breaking them into sentences
 class OpusOnnxTranslator {
   static final OpusOnnxTranslator _instance = OpusOnnxTranslator._internal();
   factory OpusOnnxTranslator() => _instance;
@@ -12,7 +13,7 @@ class OpusOnnxTranslator {
   bool _isInitialized = false;
   bool _isInitializing = false;
 
-  /// Check if model is ready
+  /// Check if model is readysentence_splitter
   bool get isReady => _isInitialized;
 
   /// Initialize the ONNX translation model
@@ -46,7 +47,41 @@ class OpusOnnxTranslator {
     }
   }
 
-  /// Translate English text to Malayalam
+  /// Robust sentence segmentation using proven regex pattern
+  /// Battle-tested approach for production use
+  List<String> _segmentSentences(String text) {
+    if (text.trim().isEmpty) return [];
+
+    // Normalize whitespace
+    String normalized = text.replaceAll(RegExp(r'\s+'), ' ').trim();
+
+    // Industry-standard sentence boundary detection
+    // Splits on . ! ? followed by whitespace and uppercase letter
+    final sentenceBoundary = RegExp(
+      r'(?<=[.!?])\s+(?=[A-Z])',
+      multiLine: true,
+    );
+
+    List<String> sentences = normalized.split(sentenceBoundary)
+        .map((s) => s.trim())
+        .where((s) => s.isNotEmpty)
+        .toList();
+
+    // If no splits, return whole text as one sentence
+    if (sentences.isEmpty) {
+      sentences = [normalized];
+    }
+
+    debugPrint('🔢 Split into ${sentences.length} sentences');
+    for (int i = 0; i < sentences.length; i++) {
+      debugPrint('  [$i]: ${sentences[i]}');
+    }
+
+    return sentences;
+  }
+
+  /// Translate English text to Malayalam (single sentence)
+  /// NO CACHING - always fresh translation to prevent memory issues
   /// 
   /// [text] - English text to translate
   /// [maxTokens] - Maximum output tokens (default: 256)
@@ -67,14 +102,15 @@ class OpusOnnxTranslator {
     }
 
     try {
-      // Clean and prepare input text
+      // Clean and prepare input text (no caching)
       final cleanText = text.trim();
-      debugPrint('📝 Translating: "$cleanText"');
+      debugPrint('📝 Translating (NO CACHE): "$cleanText"');
       debugPrint('⏳ Running ONNX model...');
       
       final startTime = DateTime.now();
       
-      // Run translation - MarianMT model handles EN->ML automatically
+      // Run fresh translation - MarianMT model handles EN->ML
+      // No caching to prevent memory buildup and crashes
       final result = await _model!.runModel(
         cleanText,
         maxNewTokens: maxTokens,
@@ -92,30 +128,129 @@ class OpusOnnxTranslator {
     }
   }
 
-  /// Translate multiple sentences/paragraphs
-  /// Splits by sentence and translates each for better quality
-  Future<String> translateParagraph(String paragraph, {int maxTokens = 256}) async {
-    if (paragraph.trim().isEmpty) return '';
+  /// Translate long text with streaming support - shows each sentence as it's translated
+  /// NO CACHING - processes fresh each time to prevent memory issues and crashes
+  /// 
+  /// [text] - English text (single or multiple sentences/paragraphs)
+  /// [onSentenceTranslated] - Callback fired after each sentence is translated with partial result
+  /// [maxTokens] - Maximum tokens per sentence (default: 256)
+  /// 
+  /// Returns full translated Malayalam text
+  /// 
+  /// Example:
+  /// ```dart
+  /// await translator.translateLongText(
+  ///   paragraph,
+  ///   onSentenceTranslated: (partial, current, total) {
+  ///     setState(() {
+  ///       translatedText = partial; // Show streaming result
+  ///       progress = '$current/$total sentences';
+  ///     });
+  ///   },
+  /// );
+  /// ```
+  Future<String> translateLongText(
+    String text, {
+    Function(String partialResult, int currentSentence, int totalSentences)? onSentenceTranslated,
+    int maxTokens = 256,
+  }) async {
+    if (text.trim().isEmpty) return '';
 
-    // Split into sentences for better translation quality
-    final sentences = paragraph
-        .split(RegExp(r'(?<=[.!?])\s+'))
-        .where((s) => s.trim().isNotEmpty)
-        .toList();
+    debugPrint('📚 Processing long text for translation (STREAMING MODE - NO CACHE)');
+    debugPrint('📏 Text length: ${text.length} characters');
 
-    if (sentences.isEmpty) {
-      return await translate(paragraph, maxTokens: maxTokens);
-    }
+    try {
+      // Segment text into sentences (no caching)
+      final sentences = _segmentSentences(text);
+      debugPrint('🔢 Segmented into ${sentences.length} sentence(s)');
 
-    final translatedParts = <String>[];
-    for (final sentence in sentences) {
-      final translated = await translate(sentence.trim(), maxTokens: maxTokens);
-      if (translated.isNotEmpty) {
-        translatedParts.add(translated);
+      if (sentences.isEmpty) {
+        return '';
       }
-    }
 
-    return translatedParts.join(' ');
+      // Track translated sentences for streaming display
+      final translatedSentences = <String>[];
+      
+      // Process each sentence with 0.5s delay BETWEEN sentences for stability
+      for (int i = 0; i < sentences.length; i++) {
+        final sentence = sentences[i];
+        debugPrint('📌 [${i + 1}/${sentences.length}] Translating: "$sentence"');
+        
+        try {
+          // Translate one sentence
+          final translated = await translate(
+            sentence,
+            maxTokens: maxTokens,
+          );
+          
+          if (translated.isNotEmpty) {
+            translatedSentences.add(translated);
+            debugPrint('✅ [${i + 1}/${sentences.length}] Result: "$translated"');
+            
+            // Stream the result to UI immediately
+            if (onSentenceTranslated != null) {
+              final partialResult = translatedSentences.join(' ');
+              onSentenceTranslated(partialResult, i + 1, sentences.length);
+              debugPrint('🔄 UI Updated with ${i + 1}/${sentences.length} sentences');
+            }
+            
+            // Wait 0.5 seconds AFTER showing result, BEFORE next translation
+            // This prevents model overload and gives UI time to render
+            if (i < sentences.length - 1) {
+              debugPrint('⏸️  Waiting 500ms before next sentence...');
+              await Future.delayed(const Duration(milliseconds: 500));
+            }
+          }
+        } catch (e) {
+          debugPrint('⚠️ Failed to translate sentence ${i + 1}: $e');
+          // Wait even on error to prevent rapid retry crashes
+          if (i < sentences.length - 1) {
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+          continue;
+        }
+      }
+
+      // Final result
+      final result = translatedSentences.join(' ');
+      debugPrint('✅ Full translation completed: ${result.length} characters');
+      
+      return result;
+    } catch (e, stackTrace) {
+      debugPrint('❌ Error in translateLongText: $e');
+      debugPrint('$stackTrace');
+      rethrow;
+    }
+  }
+
+  /// Translate paragraph with streaming support (alias for translateLongText)
+  /// NO CACHING - fresh translation each time
+  /// 
+  /// [paragraph] - English paragraph or text
+  /// [onSentenceTranslated] - Callback for streaming results
+  /// [maxTokens] - Maximum tokens per sentence
+  /// 
+  /// Returns translated Malayalam paragraph
+  Future<String> translateParagraph(
+    String paragraph, {
+    Function(String partialResult, int currentSentence, int totalSentences)? onSentenceTranslated,
+    int maxTokens = 256,
+  }) async {
+    return translateLongText(
+      paragraph,
+      onSentenceTranslated: onSentenceTranslated,
+      maxTokens: maxTokens,
+    );
+  }
+
+  /// Get sentence count without translation (useful for progress UI)
+  int getSentenceCount(String text) {
+    return _segmentSentences(text).length;
+  }
+
+  /// Get list of sentences (for debugging/preview)
+  List<String> getSentences(String text) {
+    return _segmentSentences(text);
   }
 
   /// Release resources

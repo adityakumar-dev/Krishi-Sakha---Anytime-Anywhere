@@ -29,20 +29,47 @@ class _PlantDiseaseScreenState extends State<PlantDiseaseScreen> {
           backgroundColor: const Color(0xFFF7F5E8),
           appBar: AppBar(
             backgroundColor: const Color(0xFFF7F5E8),
-            title: const Text(
-              'Plant Disease Detection',
-              style: TextStyle(color: AppColors.primaryBlack),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Plant Disease Detection',
+                  style: TextStyle(color: AppColors.primaryBlack, fontSize: 18),
+                ),
+                if (provider.modelLoaded)
+                  Text(
+                    'Model: ${provider.getModelConfig(provider.currentModelPath ?? '')?.name ?? 'Unknown'}',
+                    style: TextStyle(
+                      color: AppColors.primaryBlack.withOpacity(0.6),
+                      fontSize: 12,
+                    ),
+                  ),
+              ],
             ),
             elevation: 0,
             actions: [
               if (provider.modelLoaded)
-                IconButton(
-                  onPressed: () async {
-                    await provider.unloadModel();
-                    setState(() => _showModelSelector = true);
+                PopupMenuButton<String>(
+                  onSelected: (value) async {
+                    if (value == 'change') {
+                      await provider.unloadModel();
+                      setState(() => _showModelSelector = true);
+                    }
                   },
-                  icon: const Icon(Icons.refresh),
-                  tooltip: 'Change Model',
+                  itemBuilder: (BuildContext context) => [
+                    const PopupMenuItem<String>(
+                      value: 'change',
+                      child: Row(
+                        children: [
+                          Icon(Icons.swap_horiz, size: 18),
+                          SizedBox(width: 8),
+                          Text('Change Model'),
+                        ],
+                      ),
+                    ),
+                  ],
+                  child: const Icon(Icons.more_vert),
                 )
             ],
           ),
