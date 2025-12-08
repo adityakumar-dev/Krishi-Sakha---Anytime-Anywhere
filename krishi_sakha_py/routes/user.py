@@ -177,3 +177,38 @@ async def set_user_profile(
     except Exception as e:
         logger.error(f"Error updating user profile: {e}")
         raise HTTPException(status_code=500, detail=f"Error updating user profile: {str(e)}")
+    
+@router.post("/user/language") 
+async def set_user_language(
+    language: str = Form(...),
+    user=Depends(supabase_jwt_middleware)
+):
+    try:
+        user_id = user.get("sub")
+        if not user_id:
+            raise HTTPException(status_code=400, detail="Invalid user ID")
+        
+        # Prepare data for Supabase
+        supabase_data = {
+            "id": user_id,
+            "prefered_language": language
+        }
+        
+        logger.info(f"Updating language for user {user_id} with data: {supabase_data}")
+        
+        # Use upsert to handle both insert and update
+        result = SUPABASE.table("users").upsert(
+            supabase_data,
+            on_conflict="id"
+        ).execute()
+        
+        logger.info(f"Language updated successfully for user {user_id}")
+        
+        return {
+            "msg": "User language updated successfully",
+            "data": result.data
+        }
+        
+    except Exception as e:
+        logger.error(f"Error updating user language: {e}")
+        raise HTTPException(status_code=500, detail=f"Error updating user language: {str(e)}")

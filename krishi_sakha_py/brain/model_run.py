@@ -229,7 +229,8 @@ class ModelRun:
         conversation_id: str = "",
         user_id: str = "",
         stream: bool = True,
-        push_to_db: bool = True
+        push_to_db: bool = True,
+        custom_system_message: str = None
     ) -> AsyncGenerator[str, None]:
         """
         Run model with context from complete pipeline (vector DB, weather, schemes, prices, etc.)
@@ -241,6 +242,7 @@ class ModelRun:
             user_id: User ID
             stream: Whether to stream response
             push_to_db: Whether to save to database
+            custom_system_message: Optional custom system message (e.g., for voice mode)
             
         Yields:
             Response chunks
@@ -314,9 +316,12 @@ class ModelRun:
         
         combined_context = "\n".join(context_parts)
         
+        # Use custom system message if provided, otherwise use default
+        system_message = custom_system_message or PIPELINE_SYSTEM_MESSAGE
+        
         # Build prompt with system message and context
         messages = [
-            ("system", PIPELINE_SYSTEM_MESSAGE + "\n\nUSE THE FOLLOWING CONTEXT TO ANSWER:\n{context}"),
+            ("system", system_message + "\n\nUSE THE FOLLOWING CONTEXT TO ANSWER:\n{context}"),
             ("human", "{question}")
         ]
         

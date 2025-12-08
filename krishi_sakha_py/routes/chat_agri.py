@@ -28,8 +28,9 @@ async def chat_agri(
     conversation_id: str = Form(...),
     image: Optional[UploadFile] = File(None),
     history: str = Form(None),
-    state: str = Form(None),  # User's preferred state
-    station_id: str = Form(None),  # User's preferred weather station
+    state: str = Form(None),  
+    station_id: str = Form(None), 
+    is_voice : bool = Form(False),
     user=Depends(supabase_jwt_middleware)
 ):
     """
@@ -40,9 +41,11 @@ async def chat_agri(
     Args:
         state: User's state preference (e.g., 'Kerala', 'Tamil Nadu')
         station_id: User's preferred IMD weather station ID (e.g., '99952')
+        is_voice: Boolean flag for voice mode. If True, uses TTS-optimized system prompt
+                  that generates concise responses (50-100 words max) suitable for text-to-speech
     """
     user_id = user.get("sub")
-    logger.info(f"User: {user_id}, Conversation: {conversation_id}, Query: {prompt[:100]}, State: {state}, Station: {station_id}")
+    logger.info(f"User: {user_id}, Conversation: {conversation_id}, Query: {prompt[:100]}, State: {state}, Station: {station_id}, Voice: {is_voice}")
     
     # Parse history if provided
     parsed_history = None
@@ -190,8 +193,8 @@ async def chat_agri(
                 
                 logger.info(f"Web: {web_result.get('results_count', 0)} URLs, scraped: {web_result.get('scraped_count', 0)}")
             
-            # YouTube context (skip if general query)
-            if not is_general:
+            # YouTube context (skip if general query or voice mode)
+            if not is_general and not is_voice:
                 yield f"data: {json.dumps({'type': 'status', 'message': 'Finding video resources...'})}\n\n"
                 youtube_result = get_youtube_context(optimized_query, limit=5, skip_if_general=is_general)
                 pipeline_context['youtube'] = youtube_result
@@ -201,9 +204,18 @@ async def chat_agri(
                     youtube_results = youtube_result['context']['videos'][:5]
                 
                 logger.info(f"YouTube: {youtube_result.get('results_count', 0)} videos")
+            else:
+                logger.info(f"YouTube: Skipped (is_general={is_general}, is_voice={is_voice})")
             
             # Step 3: Generate response with pipeline context
             yield f"data: {json.dumps({'type': 'status', 'message': 'Generating response...'})}\n\n"
+            
+            # Select system message based on is_voice flag
+            custom_system_message = None
+            if is_voice:
+                from configs.model_config import VOICE_PIPELINE_FARMER_SYSTEM_MESSAGE
+                custom_system_message = VOICE_PIPELINE_FARMER_SYSTEM_MESSAGE
+                logger.info("Using voice-optimized system message for TTS")
             
             full_response = ""
             async for chunk in model_runner.run_pipeline(
@@ -212,7 +224,8 @@ async def chat_agri(
                 conversation_id=conversation_id,
                 user_id=user_id,
                 stream=True,
-                push_to_db=False  # We'll push manually with metadata
+                push_to_db=False,  # We'll push manually with metadata
+                custom_system_message=custom_system_message
             ):
                 full_response += chunk
                 yield f"data: {json.dumps({'type': 'text', 'chunk': chunk})}\n\n"
