@@ -29,13 +29,14 @@ class UsersModelAdapter extends TypeAdapter<UsersModel> {
       createdAt: fields[9] as DateTime?,
       preferedStateName: fields[10] as String?,
       preferredWeatherStationId: fields[11] as String?,
+      prefered_language: fields[12] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UsersModel obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -59,7 +60,9 @@ class UsersModelAdapter extends TypeAdapter<UsersModel> {
       ..writeByte(10)
       ..write(obj.preferedStateName)
       ..writeByte(11)
-      ..write(obj.preferredWeatherStationId);
+      ..write(obj.preferredWeatherStationId)
+      ..writeByte(12)
+      ..write(obj.prefered_language);
   }
 
   @override

@@ -25,7 +25,6 @@ class _ProfileOnboardScreenState extends State<ProfileOnboardScreen> {
   final _phoneController = TextEditingController();
   final _cityController = TextEditingController();
   final _stateController = TextEditingController();
-
   bool _isLoading = false;
   bool _isAutofillLoading = false;
 
@@ -521,9 +520,8 @@ class _ProfileOnboardScreenState extends State<ProfileOnboardScreen> {
         if (profileProvider.error != null) {
           _showErrorSnackBar(profileProvider.error!);
         } else {
-          // Navigate to home
-          // check first the user location preference 
-          profileProvider.userProfile?.preferedStateName == null ? context.go(AppRoutes.locationOnBoard) : context.go(AppRoutes.home);
+          // Navigate to language onboarding first, then location, then home
+          context.go(AppRoutes.languageOnBoard);
         }
       } catch (e) {
         _showErrorSnackBar('Error saving profile: ${e.toString()}');

@@ -22,64 +22,94 @@ class ChatServerScreen extends StatefulWidget {
 }
 
 class _ChatServerScreenState extends State<ChatServerScreen> {
+  int? _lastLoadedConversationId;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final provider = Provider.of<AgriChatProvider>(context, listen: false);
-      final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
-      
-      // Set user preferences from profile for chat context
-      final stateName = profileProvider.userProfile?.preferedStateName;
-      final stationId = profileProvider.userProfile?.preferredWeatherStationId;
-      
-      if (stateName != null || stationId != null) {
-        // Match state name with market price model state list
-        final matchedState = stateName != null ? _findMatchingState(stateName) : null;
-        provider.setUserPreferences(
-          state: matchedState,
-          stationId: stationId,
-        );
-      }
-      
-      // Only fetch if we have a conversation ID and no messages loaded
-      if (provider.actualConversationId != -1 && provider.messages.isEmpty) {
-        provider.fetchMessages(context);
-      }
-      provider.messageController.addListener(() {
-        if (mounted) setState(() {});
-      });
+      _initializeChat();
     });
   }
-  
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Check if conversation ID changed and reload messages if needed
+    final provider = Provider.of<AgriChatProvider>(context, listen: false);
+    if (provider.actualConversationId != _lastLoadedConversationId &&
+        provider.actualConversationId != -1) {
+      _lastLoadedConversationId = provider.actualConversationId;
+      provider.fetchMessages(context);
+    }
+  }
+
+  void _initializeChat() {
+    final provider = Provider.of<AgriChatProvider>(context, listen: false);
+    final profileProvider = Provider.of<ProfileProvider>(
+      context,
+      listen: false,
+    );
+
+    // Set user preferences from profile for chat context
+    final stateName = profileProvider.userProfile?.preferedStateName;
+    final stationId = profileProvider.userProfile?.preferredWeatherStationId;
+
+    if (stateName != null || stationId != null) {
+      // Match state name with market price model state list
+      final matchedState = stateName != null
+          ? _findMatchingState(stateName)
+          : null;
+      provider.setUserPreferences(state: matchedState, stationId: stationId);
+    }
+
+    // Fetch messages if we have a conversation ID
+    if (provider.actualConversationId != -1) {
+      _lastLoadedConversationId = provider.actualConversationId;
+      provider.fetchMessages(context);
+    }
+
+    provider.messageController.addListener(() {
+      if (mounted) setState(() {});
+    });
+  }
+
   String? _findMatchingState(String stateName) {
     // Normalize the state name from profile
     final normalizedInput = stateName.toUpperCase().trim();
-    
+
     // Try exact match first
     for (final state in MandiPriceModel.allStatesMandiPrice) {
       if (state.toUpperCase() == normalizedInput) {
         return state;
       }
     }
-    
+
     // Try partial match (contains)
     for (final state in MandiPriceModel.allStatesMandiPrice) {
-      if (state.toUpperCase().contains(normalizedInput) || 
+      if (state.toUpperCase().contains(normalizedInput) ||
           normalizedInput.contains(state.toUpperCase())) {
         return state;
       }
     }
-    
+
     // Try matching without "AND" or special characters
-    final simplifiedInput = normalizedInput.replaceAll(RegExp(r'[^\w\s]'), '').replaceAll('AND', '').trim();
+    final simplifiedInput = normalizedInput
+        .replaceAll(RegExp(r'[^\w\s]'), '')
+        .replaceAll('AND', '')
+        .trim();
     for (final state in MandiPriceModel.allStatesMandiPrice) {
-      final simplifiedState = state.toUpperCase().replaceAll(RegExp(r'[^\w\s]'), '').replaceAll('AND', '').trim();
-      if (simplifiedState.contains(simplifiedInput) || simplifiedInput.contains(simplifiedState)) {
+      final simplifiedState = state
+          .toUpperCase()
+          .replaceAll(RegExp(r'[^\w\s]'), '')
+          .replaceAll('AND', '')
+          .trim();
+      if (simplifiedState.contains(simplifiedInput) ||
+          simplifiedInput.contains(simplifiedState)) {
         return state;
       }
     }
-    
+
     return null;
   }
 
@@ -102,12 +132,15 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
             Consumer<AgriChatProvider>(
               builder: (context, provider, child) {
                 return Text(
-                  provider.actualConversationTitle.isNotEmpty 
-                      ? provider.actualConversationTitle 
+                  provider.actualConversationTitle.isNotEmpty
+                      ? provider.actualConversationTitle
                       : 'Agricultural Chat',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primaryBlack),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryBlack,
+                  ),
                 );
-                
               },
             ),
             Consumer<AgriChatProvider>(
@@ -116,11 +149,13 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                 if (provider.isLoading) {
                   status = 'Loading...';
                 } else if (provider.isSending) {
-                  status = provider.status.isNotEmpty ? provider.status : 'Generating response...';
+                  status = provider.status.isNotEmpty
+                      ? provider.status
+                      : 'Generating response...';
                 } else if (provider.error != null) {
                   status = 'Error occurred';
                 }
-                
+
                 return Text(
                   status,
                   style: TextStyle(
@@ -131,47 +166,47 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
               },
             ),
           ],
-          
         ),
         actions: [
-          IconButton(onPressed: ()async{
-              
-            // Use FilePicker for desktop (Linux/Windows/macOS) compatibility.
-            // image_picker is not supported on Linux; FilePicker works across desktop and mobile.
-            final result = await FilePicker.platform.pickFiles(
-              type: FileType.image,
-              allowMultiple: false,
-            );
-
-            if (!mounted) return;
-
-            if (result != null && result.files.single.path != null) {
-              final path = result.files.single.path!;
-              // Convert to XFile for provider compatibility
-              final xFile = XFile(path);
-              context.read<AgriChatProvider>().setImage(xFile);
-
-              ScaffoldMessenger.of(context).showMaterialBanner(
-                MaterialBanner(
-                  content: const Text("Image Selected"),
-                  actions: [
-                    IconButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context)..hideCurrentMaterialBanner();
-                      },
-                      icon: const Icon(Icons.close),
-                    )
-                  ],
-                ),
+          IconButton(
+            onPressed: () async {
+              // Use FilePicker for desktop (Linux/Windows/macOS) compatibility.
+              // image_picker is not supported on Linux; FilePicker works across desktop and mobile.
+              final result = await FilePicker.platform.pickFiles(
+                type: FileType.image,
+                allowMultiple: false,
               );
-            } else {
-              // Optional: give feedback when user cancels or selection fails
-              Fluttertoast.showToast(msg: 'No image selected');
-            }
 
-          }, icon: Icon(Icons.attach_file_outlined))
+              if (!mounted) return;
+
+              if (result != null && result.files.single.path != null) {
+                final path = result.files.single.path!;
+                // Convert to XFile for provider compatibility
+                final xFile = XFile(path);
+                context.read<AgriChatProvider>().setImage(xFile);
+
+                ScaffoldMessenger.of(context).showMaterialBanner(
+                  MaterialBanner(
+                    content: const Text("Image Selected"),
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentMaterialBanner();
+                        },
+                        icon: const Icon(Icons.close),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                // Optional: give feedback when user cancels or selection fails
+                Fluttertoast.showToast(msg: 'No image selected');
+              }
+            },
+            icon: Icon(Icons.attach_file_outlined),
+          ),
         ],
-
       ),
       body: Column(
         children: [
@@ -251,14 +286,18 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
           return _buildEmptyState();
         }
 
-        final itemCount = provider.messages.length + (provider.isSending ? 1 : 0);
+        final itemCount =
+            provider.messages.length + (provider.isSending ? 1 : 0);
         return ListView.builder(
           controller: provider.scrollController,
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
           itemCount: itemCount,
           itemBuilder: (context, index) {
             if (index == provider.messages.length && provider.isSending) {
-              return _buildStreamingMessage(provider.lastStreamingResponse, provider.currentMetadata);
+              return _buildStreamingMessage(
+                provider.lastStreamingResponse,
+                provider.currentMetadata,
+              );
             }
 
             final message = provider.messages[index];
@@ -314,7 +353,10 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
     );
   }
 
-  Widget _buildStreamingMessage(String streamingText, Map<String, dynamic> metadata) {
+  Widget _buildStreamingMessage(
+    String streamingText,
+    Map<String, dynamic> metadata,
+  ) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -375,16 +417,23 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                             const SizedBox(width: 8),
                             const Text(
                               'Thinking…',
-                              style: TextStyle(color: Colors.white70, fontSize: 16),
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 16,
+                              ),
                             ),
                           ],
                         )
                       else
                         Text(
                           streamingText,
-                          style: const TextStyle(color: Colors.white, fontSize: 16),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
                         ),
-                      if (metadata.isNotEmpty) ..._buildMetadataWidgets(metadata),
+                      if (metadata.isNotEmpty)
+                        ..._buildMetadataWidgets(metadata),
                     ],
                   ),
                 ),
@@ -402,11 +451,15 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       child: Column(
-        crossAxisAlignment: isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isUser
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: isUser
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             children: [
               Container(
                 width: 32,
@@ -414,7 +467,9 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                 margin: const EdgeInsets.only(bottom: 4),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isUser ? AppColors.primaryGreen : Colors.grey.withValues(alpha: 0.2),
+                  color: isUser
+                      ? AppColors.primaryGreen
+                      : Colors.grey.withValues(alpha: 0.2),
                 ),
                 child: Icon(
                   isUser ? Icons.person : Icons.smart_toy,
@@ -426,7 +481,9 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: isUser
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             children: [
               const SizedBox(width: 8),
               Flexible(
@@ -436,8 +493,8 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                   ),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isUser 
-                        ? AppColors.primaryGreen 
+                    color: isUser
+                        ? AppColors.primaryGreen
                         : Colors.grey.withValues(alpha: 0.1),
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
                     border: isUser ? null : Border.all(color: Colors.white12),
@@ -447,11 +504,11 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                     children: [
                       buildMarkdownText(message.message),
                       if (!isUser)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                    child: buildTranslationButton(message.message),
-                  ),
-                      if (!isUser && message.metadata.isNotEmpty) 
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                          child: buildTranslationButton(message.message),
+                        ),
+                      if (!isUser && message.metadata.isNotEmpty)
                         ..._buildMetadataWidgets(message.metadata),
                     ],
                   ),
@@ -463,6 +520,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
       ),
     );
   }
+
   List<Widget> _buildMetadataWidgets(Map<String, dynamic> metadata) {
     List<Widget> widgets = [];
 
@@ -472,9 +530,7 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
       if (urls.isNotEmpty) {
         widgets.add(const SizedBox(height: 8));
         widgets.add(
-          UrlDropDown(
-            urls: urls.map((url) => url.toString()).toList(),
-          ),
+          UrlDropDown(urls: urls.map((url) => url.toString()).toList()),
         );
       }
     }
@@ -497,7 +553,11 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.play_circle_fill, size: 16, color: Colors.red.shade300),
+                    Icon(
+                      Icons.play_circle_fill,
+                      size: 16,
+                      color: Colors.red.shade300,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       'YouTube Videos',
@@ -510,7 +570,9 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                   ],
                 ),
                 const SizedBox(height: 4),
-                ...videos.take(3).map((video) => youTubeVideoWidget(context, video)),
+                ...videos
+                    .take(3)
+                    .map((video) => youTubeVideoWidget(context, video)),
               ],
             ),
           ),
@@ -520,9 +582,6 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
 
     return widgets;
   }
-
-
-
 
   Widget _buildInputArea() {
     return Consumer<AgriChatProvider>(
@@ -548,22 +607,30 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                     fillColor: Colors.grey.withValues(alpha: 0.1),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.2)),
+                      borderSide: BorderSide(
+                        color: Colors.white.withValues(alpha: 0.2),
+                      ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.2)),
+                      borderSide: BorderSide(
+                        color: Colors.white.withValues(alpha: 0.2),
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
-                      borderSide: const BorderSide(color: AppColors.primaryGreen),
+                      borderSide: const BorderSide(
+                        color: AppColors.primaryGreen,
+                      ),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 12,
                     ),
                   ),
-                  onSubmitted: canSend ? (_) => provider.sendMessage(context) : null,
+                  onSubmitted: canSend
+                      ? (_) => provider.sendMessage(context)
+                      : null,
                   textInputAction: TextInputAction.send,
                 ),
               ),
@@ -574,7 +641,9 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: IconButton(
-                  onPressed: canSend ? () => provider.sendMessage(context) : null,
+                  onPressed: canSend
+                      ? () => provider.sendMessage(context)
+                      : null,
                   icon: const Icon(Icons.send),
                   color: AppColors.primaryBlack,
                   tooltip: 'Send message',

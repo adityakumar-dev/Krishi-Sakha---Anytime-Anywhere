@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:krishi_sakha/models/mandi_price_model.dart';
+import 'package:krishi_sakha/providers/profile_provider.dart';
 import 'package:krishi_sakha/providers/void_provider.dart';
 import 'package:krishi_sakha/utils/theme/colors.dart';
 import 'package:provider/provider.dart';
@@ -12,12 +14,81 @@ class VoiceScreen extends StatefulWidget {
 
 class _VoiceScreenState extends State<VoiceScreen> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final voiceProvider = Provider.of<VoiceProvider>(context, listen: false);
+      final profileProvider = Provider.of<ProfileProvider>(
+        context,
+        listen: false,
+      );
+
+      // Set user preferences from profile for voice context
+      final stateName = profileProvider.userProfile?.preferedStateName;
+      final stationId = profileProvider.userProfile?.preferredWeatherStationId;
+      final preferredLanguage = profileProvider.userProfile?.prefered_language;
+
+      if (stateName != null || stationId != null || preferredLanguage != null) {
+        // Match state name with market price model state list
+        final matchedState = stateName != null
+            ? _findMatchingState(stateName)
+            : null;
+        voiceProvider.setUserPreferences(
+          state: matchedState,
+          stationId: stationId,
+          preferredLanguage: preferredLanguage,
+        );
+        debugPrint(
+          '🎤 [VoiceScreen] User preferences set - State: $matchedState, Station: $stationId, Language: $preferredLanguage',
+        );
+      }
+    });
+  }
+
+  String? _findMatchingState(String stateName) {
+    final normalizedInput = stateName.toUpperCase().trim();
+
+    // Try exact match first
+    for (final state in MandiPriceModel.allStatesMandiPrice) {
+      if (state.toUpperCase() == normalizedInput) {
+        return state;
+      }
+    }
+
+    // Try partial match
+    for (final state in MandiPriceModel.allStatesMandiPrice) {
+      if (state.toUpperCase().contains(normalizedInput) ||
+          normalizedInput.contains(state.toUpperCase())) {
+        return state;
+      }
+    }
+
+    // Try simplified match (remove common words)
+    final simplified = normalizedInput
+        .replaceAll('STATE', '')
+        .replaceAll('PRADESH', '')
+        .trim();
+
+    for (final state in MandiPriceModel.allStatesMandiPrice) {
+      final simplifiedState = state
+          .toUpperCase()
+          .replaceAll('STATE', '')
+          .replaceAll('PRADESH', '')
+          .trim();
+      if (simplifiedState == simplified) {
+        return state;
+      }
+    }
+
+    return null;
+  }
+
+  @override
   void dispose() {
     super.dispose();
     try {
       // Provider.of<VoiceProvider>(context, listen: false).cancelSpeaking();
       Provider.of<VoiceProvider>(context, listen: false).dispose();
-
     } catch (e) {
       debugPrint('Error canceling speaking on dispose: $e');
     }
@@ -34,13 +105,17 @@ class _VoiceScreenState extends State<VoiceScreen> {
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: AppColors.primaryBlack),
               onPressed: () {
-                if (provider.isListening || provider.isSpeaking || provider.isStreaming) {
+                if (provider.isListening ||
+                    provider.isSpeaking ||
+                    provider.isStreaming) {
                   // Show confirmation dialog if operation is in progress
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
                       title: const Text('Stop voice chat?'),
-                      content: const Text('This will cancel the current operation.'),
+                      content: const Text(
+                        'This will cancel the current operation.',
+                      ),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(ctx),
@@ -52,7 +127,10 @@ class _VoiceScreenState extends State<VoiceScreen> {
                             Navigator.pop(ctx);
                             Navigator.pop(context);
                           },
-                          child: const Text('Stop', style: TextStyle(color: Colors.red)),
+                          child: const Text(
+                            'Stop',
+                            style: TextStyle(color: Colors.red),
+                          ),
                         ),
                       ],
                     ),
@@ -62,7 +140,10 @@ class _VoiceScreenState extends State<VoiceScreen> {
                 }
               },
             ),
-            title: const Text("Voice Chat", style: TextStyle(color: AppColors.primaryBlack)),
+            title: const Text(
+              "Voice Chat",
+              style: TextStyle(color: AppColors.primaryBlack),
+            ),
             elevation: 0,
           ),
           body: SafeArea(
@@ -71,7 +152,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
               children: [
                 // Status bar at top
                 _buildStatusBar(provider),
-                
+
                 // Main content area
                 Expanded(
                   child: Center(
@@ -165,10 +246,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
                 const SizedBox(height: 4),
                 Text(
                   provider.statusMessage,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                  ),
+                  style: const TextStyle(color: Colors.black, fontSize: 12),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -228,10 +306,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
               const SizedBox(height: 8),
               Text(
                 provider.errorMessage,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                ),
+                style: const TextStyle(color: Colors.black, fontSize: 14),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
@@ -265,10 +340,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
         SizedBox(
           width: 60,
           height: 60,
-          child: CircularProgressIndicator(
-            color: Colors.black,
-            strokeWidth: 3,
-          ),
+          child: CircularProgressIndicator(color: Colors.black, strokeWidth: 3),
         ),
         SizedBox(height: 24),
         Text(
@@ -283,10 +355,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
         SizedBox(height: 8),
         Text(
           "Please wait",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-          ),
+          style: TextStyle(color: Colors.black, fontSize: 14),
         ),
       ],
     );
@@ -454,8 +523,8 @@ class _VoiceScreenState extends State<VoiceScreen> {
                 provider.currentState == VoiceState.idle
                     ? "👇 Press and hold the button to start listening"
                     : provider.currentState == VoiceState.listening
-                        ? "🎤 Speak clearly and release to send"
-                        : "⏳ Processing your request...",
+                    ? "🎤 Speak clearly and release to send"
+                    : "⏳ Processing your request...",
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 14,
@@ -476,11 +545,16 @@ class _VoiceScreenState extends State<VoiceScreen> {
               label: const Text("Retry"),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 16,
+                ),
               ),
             ),
           // Cancel button if operation in progress
-          if (provider.isListening || provider.isStreaming || provider.isSpeaking)
+          if (provider.isListening ||
+              provider.isStreaming ||
+              provider.isSpeaking)
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: TextButton.icon(
@@ -519,9 +593,10 @@ class _MicButtonState extends State<MicButton>
       duration: const Duration(milliseconds: 800),
     )..repeat(reverse: true);
 
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _pulseAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -535,7 +610,10 @@ class _MicButtonState extends State<MicButton>
     return Consumer<VoiceProvider>(
       builder: (context, provider, child) {
         return GestureDetector(
-          onLongPress: provider.isInitialized && !provider.hasError && !provider.isListening
+          onLongPress:
+              provider.isInitialized &&
+                  !provider.hasError &&
+                  !provider.isListening
               ? () => provider.startListening()
               : null,
           onLongPressEnd: provider.isInitialized && !provider.hasError
@@ -568,10 +646,10 @@ class _MicButtonState extends State<MicButton>
                   color: provider.hasError
                       ? Colors.grey
                       : provider.isListening
-                          ? Colors.redAccent
-                          : provider.isInitialized
-                              ? Colors.greenAccent
-                              : Colors.grey,
+                      ? Colors.redAccent
+                      : provider.isInitialized
+                      ? Colors.greenAccent
+                      : Colors.grey,
                   shape: BoxShape.circle,
                   boxShadow: shadow,
                 ),

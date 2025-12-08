@@ -7,10 +7,7 @@ import 'package:krishi_sakha/apis/api_manager.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:http/http.dart' as http;
 
-enum MessageStatus {
-  sent,
-  failed
-}
+enum MessageStatus { sent, failed }
 
 class ChatMessage {
   final String id;
@@ -42,38 +39,46 @@ class ChatMessage {
       message: json['message'],
       createdAt: DateTime.parse(json['created_at']),
       status: MessageStatus.sent,
-      metadata: _normalizeMetadata((json['metadata'] as Map<String, dynamic>?) ?? const {}),
+      metadata: _normalizeMetadata(
+        (json['metadata'] as Map<String, dynamic>?) ?? const {},
+      ),
     );
   }
 
-  static Map<String, dynamic> _normalizeMetadata(Map<String, dynamic> rawMetadata) {
+  static Map<String, dynamic> _normalizeMetadata(
+    Map<String, dynamic> rawMetadata,
+  ) {
     Map<String, dynamic> normalized = Map<String, dynamic>.from(rawMetadata);
-    
+
     // Normalize URLs: ensure they're in the 'urls' key as a List
     if (rawMetadata.containsKey('url') && rawMetadata['url'] is List) {
       normalized['urls'] = rawMetadata['url'];
       normalized.remove('url');
     }
-    
+
     // Normalize YouTube: handle all possible backend formats
     List<dynamic>? youtubeData;
-    
+
     if (rawMetadata.containsKey('youtube') && rawMetadata['youtube'] is List) {
       youtubeData = rawMetadata['youtube'] as List;
-    } else if (rawMetadata.containsKey('youtberelated') && rawMetadata['youtberelated'] is List) {
+    } else if (rawMetadata.containsKey('youtberelated') &&
+        rawMetadata['youtberelated'] is List) {
       youtubeData = rawMetadata['youtberelated'] as List;
-    } else if (rawMetadata.containsKey('youtberelated') && rawMetadata['youtberelated'] is Map<String, dynamic>) {
-      final youtberelated = rawMetadata['youtberelated'] as Map<String, dynamic>;
-      if (youtberelated.containsKey('youtube_urls') && youtberelated['youtube_urls'] is List) {
+    } else if (rawMetadata.containsKey('youtberelated') &&
+        rawMetadata['youtberelated'] is Map<String, dynamic>) {
+      final youtberelated =
+          rawMetadata['youtberelated'] as Map<String, dynamic>;
+      if (youtberelated.containsKey('youtube_urls') &&
+          youtberelated['youtube_urls'] is List) {
         youtubeData = youtberelated['youtube_urls'] as List;
       }
     }
-    
+
     if (youtubeData != null && youtubeData.isNotEmpty) {
       normalized['youtube'] = youtubeData;
       normalized.remove('youtberelated');
     }
-    
+
     return normalized;
   }
 
@@ -191,14 +196,17 @@ class AgriChatProvider extends ChangeNotifier {
   String get lastStreamingResponse => _lastStreamingResponse;
   Map<String, dynamic> get currentMetadata => _currentMetadata;
   String? get error => _error;
-  bool get canSend => !_isSending && !_isLoading && (_messageController.text.trim().isNotEmpty || _currentImage != null);
+  bool get canSend =>
+      !_isSending &&
+      !_isLoading &&
+      (_messageController.text.trim().isNotEmpty || _currentImage != null);
 
   TextEditingController get messageController => _messageController;
   ScrollController get scrollController => _scrollController;
   XFile? get currentImage => _currentImage;
   String? get userState => _userState;
   String? get userStationId => _userStationId;
-  
+
   bool get showScrollToBottom => _userManuallyScrolled && _isSending;
   bool get isAtBottom => _isAtBottom;
 
@@ -213,7 +221,7 @@ class AgriChatProvider extends ChangeNotifier {
     _userManuallyScrolled = false;
     _isAtBottom = true;
     _scrollTimer?.cancel();
-    
+
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
@@ -234,16 +242,21 @@ class AgriChatProvider extends ChangeNotifier {
   }
 
   void setIdAndTitle(int id, String title) {
+    // Clear previous state completely
     _clearState();
+
+    // Set new conversation details
     _actualConversationId = id;
     _actualConversationTitle = title;
     _error = null;
+
+    // Notify listeners immediately so UI updates
     notifyListeners();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_actualConversationId != -1) {
-        fetchMessages(null);
-      }
-    });
+
+    // Fetch messages for this conversation
+    if (_actualConversationId != -1) {
+      fetchMessages(null);
+    }
   }
 
   void clearAllData() {
@@ -325,10 +338,7 @@ class AgriChatProvider extends ChangeNotifier {
 
       final response = await _supabase
           .from('conversations')
-          .insert({
-            'title': title,
-            'user_id': user.id,
-          })
+          .insert({'title': title, 'user_id': user.id})
           .select()
           .single();
 
@@ -346,7 +356,7 @@ class AgriChatProvider extends ChangeNotifier {
     _userManuallyScrolled = false;
     _isAtBottom = true;
     _scrollTimer?.cancel();
-    
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
@@ -428,7 +438,9 @@ class AgriChatProvider extends ChangeNotifier {
 
   Future<void> _startStreamingRequest(String text, User user) async {
     _isSending = true;
-    _status = _currentImage != null ? "Processing uploaded image..." : "Processing query...";
+    _status = _currentImage != null
+        ? "Processing uploaded image..."
+        : "Processing query...";
     _lastStreamingResponse = '';
     _currentMetadata = {};
     _error = null;
@@ -449,7 +461,7 @@ class AgriChatProvider extends ChangeNotifier {
       request.headers['ngrok-skip-browser-warning'] = 'true';
       request.fields['conversation_id'] = _actualConversationId.toString();
       request.fields['prompt'] = text;
-      
+
       // Add user preferences for pipeline context
       if (_userState != null && _userState!.isNotEmpty) {
         request.fields['state'] = _userState!;
@@ -457,20 +469,19 @@ class AgriChatProvider extends ChangeNotifier {
       if (_userStationId != null && _userStationId!.isNotEmpty) {
         request.fields['station_id'] = _userStationId!;
       }
-      
+
       // Get last 5 messages for history
       final startIndex = _messages.length > 5 ? _messages.length - 5 : 0;
       final last5Message = _messages.sublist(startIndex);
-      final jsonHistory = last5Message.map((msg) => {
-        'sender': msg.sender,
-        'message': msg.message,
-      }).toList();
+      final jsonHistory = last5Message
+          .map((msg) => {'sender': msg.sender, 'message': msg.message})
+          .toList();
       request.fields['history'] = jsonEncode(jsonHistory);
-      
+
       debugPrint('🌾 Sending to /chat/agri with history: $jsonHistory');
       if (_userState != null) debugPrint('   State: $_userState');
       if (_userStationId != null) debugPrint('   Station: $_userStationId');
-      
+
       // Add image if present
       if (_currentImage != null) {
         try {
@@ -578,7 +589,9 @@ class AgriChatProvider extends ChangeNotifier {
           debugPrint('📨 RECEIVED URLS: $urls');
           if (urls != null && urls is List) {
             _currentMetadata['urls'] = urls.cast<String>();
-            debugPrint('   Updated URLs in metadata: ${_currentMetadata['urls']}');
+            debugPrint(
+              '   Updated URLs in metadata: ${_currentMetadata['urls']}',
+            );
             notifyListeners();
           }
           break;
@@ -588,7 +601,9 @@ class AgriChatProvider extends ChangeNotifier {
           debugPrint('📺 RECEIVED YOUTUBE: ${results?.length ?? 0} videos');
           if (results != null && results is List) {
             _currentMetadata['youtube'] = results;
-            debugPrint('   Updated YouTube in metadata: ${_currentMetadata['youtube']?.length} videos');
+            debugPrint(
+              '   Updated YouTube in metadata: ${_currentMetadata['youtube']?.length} videos',
+            );
             notifyListeners();
           }
           break;
@@ -599,7 +614,7 @@ class AgriChatProvider extends ChangeNotifier {
             _lastStreamingResponse += textChunk;
             _status = 'Generating response...';
             notifyListeners();
-            
+
             _autoScroll();
           }
           break;

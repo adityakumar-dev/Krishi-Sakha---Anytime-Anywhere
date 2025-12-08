@@ -10,6 +10,7 @@ import 'package:krishi_sakha/screens/login/login_screen.dart';
 import 'package:krishi_sakha/screens/mandi/mandi_price_screen.dart';
 import 'package:krishi_sakha/screens/mandi/mandi_state_select_screen.dart';
 import 'package:krishi_sakha/screens/models/model_list_screen.dart';
+import 'package:krishi_sakha/screens/onboarding/language_onboard_screen.dart';
 import 'package:krishi_sakha/screens/onboarding/location_onboard.dart';
 import 'package:krishi_sakha/screens/onboarding/onboarding.dart';
 import 'package:krishi_sakha/screens/onboarding/profile_onboard_screen.dart';
@@ -19,11 +20,12 @@ import 'package:krishi_sakha/screens/posts/create_post_screen.dart';
 import 'package:krishi_sakha/screens/posts/exper_post_scree.dart';
 import 'package:krishi_sakha/screens/posts/posts_screen.dart';
 import 'package:krishi_sakha/screens/posts/saved_posts_screen.dart';
+import 'package:krishi_sakha/screens/profile/language_screen.dart';
 import 'package:krishi_sakha/screens/profile/profile_screen.dart';
 import 'package:krishi_sakha/screens/sattelite_view/sattelite_view_screen.dart';
 import 'package:krishi_sakha/screens/leaderboard/leaderboard_screen.dart';
 import 'package:krishi_sakha/screens/search/ai_search_screen.dart';
-import 'package:krishi_sakha/screens/settings/settings_screen.dart';
+// import 'package:krishi_sakha/screens/settings/settings_screen.dart';
 import 'package:krishi_sakha/screens/schemes/schemes_screen.dart';
 import 'package:krishi_sakha/screens/splash/splash_screen.dart';
 import 'package:krishi_sakha/screens/translation/test_offline_translation.dart';
@@ -66,6 +68,8 @@ class AppRoutes {
   static const String mandiStateSelect = "/mandi-state-select";
   static const String mandiPrice = "/mandi-price";
   static const String locationOnBoard = "/location-onboard";
+  static const String languageOnBoard = "/language-onboard";
+  static const String languageScreen = "/language-screen";
 }
 
 // GoRouter configuration
@@ -74,6 +78,7 @@ final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.splash,
   navigatorKey:  AppGlobal.navigatorKey,
   routes: [
+    GoRoute(path: AppRoutes.languageOnBoard, name: 'languageOnBoard', builder: (context, state) => const LanguageOnboardScreen()),
     GoRoute(path: AppRoutes.locationOnBoard, name: 'locationOnBoard', builder: (context, state) => const LocationOnboardScreen()),
     GoRoute(path: AppRoutes.imdStationList, name: 'imdStationList', builder: (context, state){
       final stateName = state.extra;
@@ -100,6 +105,7 @@ final GoRouter appRouter = GoRouter(
       return const MandiPriceScreen();
     }),
     
+    GoRoute(path: AppRoutes.languageScreen, name: 'languageScreen', builder: (context, state) => const LanguageScreen()),
     
     GoRoute(path: AppRoutes.test_translation, name: 'test_translation', builder: (context, state) => const TestTranslationScreen()),
     GoRoute(path: AppRoutes.test_offline_translation, name: 'test_offline_translation', builder: (context, state) => const TestOfflineTranslationScreen()),
@@ -155,11 +161,11 @@ final GoRouter appRouter = GoRouter(
 
 
     // Settings route (placeholder for now)
-    GoRoute(
-      path: AppRoutes.settings,
-      name: 'settings',
-      builder: (context, state) => const SettingsScreen(),
-    ),
+    // GoRoute(
+    //   path: AppRoutes.settings,
+    //   name: 'settings',
+    //   builder: (context, state) => const SettingsScreen(),
+    // ),
 
     // Download route (placeholder for now)
     GoRoute(

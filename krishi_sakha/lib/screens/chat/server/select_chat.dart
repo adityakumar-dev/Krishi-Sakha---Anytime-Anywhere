@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:krishi_sakha/providers/server_chat_handler_provider.dart';
+import 'package:krishi_sakha/providers/agri_chat_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:krishi_sakha/utils/theme/colors.dart';
@@ -53,7 +53,7 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = 'Failed to fetch conversations: $e'; 
+        _error = 'Failed to fetch conversations: $e';
         _isLoading = false;
       });
     }
@@ -63,20 +63,18 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
     try {
       final user = _supabase.auth.currentUser;
       if (user == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User not authenticated')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('User not authenticated')));
         return;
       }
       // Navigate to the new chat
-      final provider = Provider.of<ServerChatHandlerProvider>(context, listen: false);
+      final provider = Provider.of<AgriChatProvider>(context, listen: false);
       provider.clearAllData();
-    
+
       if (mounted) {
         Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const ChatServerScreen(),
-          ),
+          MaterialPageRoute(builder: (context) => const ChatServerScreen()),
         );
       }
     } catch (e) {
@@ -91,7 +89,7 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
   Future<void> _deleteConversation(int conversationId) async {
     try {
       setState(() => _isLoading = true);
-      
+
       // First delete all messages in the conversation
       await _supabase
           .from('chat_messages')
@@ -99,10 +97,7 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
           .eq('conversation_id', conversationId);
 
       // Then delete the conversation
-      await _supabase
-          .from('conversations')
-          .delete()
-          .eq('id', conversationId);
+      await _supabase.from('conversations').delete().eq('id', conversationId);
 
       // Refresh the list
       await _fetchConversations();
@@ -143,7 +138,11 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
         foregroundColor: AppColors.primaryBlack,
         title: const Text(
           'Chat History',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primaryBlack),
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: AppColors.primaryBlack,
+          ),
         ),
         elevation: 0,
         actions: [
@@ -273,8 +272,10 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
   Widget _buildConversationCard(Map<String, dynamic> conversation) {
     final title = conversation['title'] ?? 'Untitled Chat';
     final createdAt = DateTime.parse(conversation['created_at']);
-    final formattedDate = '${createdAt.day}/${createdAt.month}/${createdAt.year}';
-    final formattedTime = '${createdAt.hour.toString().padLeft(2, '0')}:${createdAt.minute.toString().padLeft(2, '0')}';
+    final formattedDate =
+        '${createdAt.day}/${createdAt.month}/${createdAt.year}';
+    final formattedTime =
+        '${createdAt.hour.toString().padLeft(2, '0')}:${createdAt.minute.toString().padLeft(2, '0')}';
 
     return Card(
       color: const Color(0xFF2D5F4F),
@@ -290,10 +291,7 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
         contentPadding: const EdgeInsets.all(16),
         leading: CircleAvatar(
           backgroundColor: AppColors.primaryGreen,
-          child: Icon(
-            Icons.chat,
-            color: AppColors.primaryBlack,
-          ),
+          child: Icon(Icons.chat, color: AppColors.primaryBlack),
         ),
         title: Text(
           title,
@@ -323,10 +321,7 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
                 children: [
                   const Icon(Icons.delete, color: Colors.red),
                   const SizedBox(width: 8),
-                  const Text(
-                    'Delete',
-                    style: TextStyle(color: Colors.red),
-                  ),
+                  const Text('Delete', style: TextStyle(color: Colors.red)),
                 ],
               ),
             ),
@@ -338,12 +333,13 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
           },
         ),
         onTap: () {
-          final provider = Provider.of<ServerChatHandlerProvider>(context, listen: false);
+          final provider = Provider.of<AgriChatProvider>(
+            context,
+            listen: false,
+          );
           provider.setIdAndTitle(conversation['id'], title);
           Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const ChatServerScreen(),
-            ),
+            MaterialPageRoute(builder: (context) => const ChatServerScreen()),
           );
         },
       ),
@@ -376,10 +372,7 @@ class _SelectChatScreenState extends State<SelectChatScreen> {
               Navigator.of(context).pop();
               _deleteConversation(conversationId);
             },
-            child: const Text(
-              'Delete',
-              style: TextStyle(color: Colors.red),
-            ),
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
           ),
         ],
       ),

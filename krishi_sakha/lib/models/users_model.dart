@@ -40,6 +40,9 @@ class UsersModel {
   
   @HiveField(11)
   final String? preferredWeatherStationId;
+
+  @HiveField(12)
+  final String? prefered_language;
   UsersModel({
     required this.id,
     this.name,
@@ -53,6 +56,7 @@ class UsersModel {
     this.createdAt,
     this.preferedStateName,
     this.preferredWeatherStationId,
+    this.prefered_language,
   });
 
   // Factory constructor for creating from JSON (if needed)
@@ -72,6 +76,7 @@ class UsersModel {
           : null,
       preferedStateName: json['prefered_state_name'] as String?,
       preferredWeatherStationId: json['preferred_weather_station_id'] as String?,
+      prefered_language: json['prefered_language'] as String?,
     );
   }
 
@@ -90,6 +95,7 @@ class UsersModel {
       'created_at': createdAt?.toIso8601String(),
       'prefered_state_name': preferedStateName,
       'preferred_weather_station_id': preferredWeatherStationId,
+      'prefered_language': prefered_language,
     };
   }
 
@@ -107,6 +113,7 @@ class UsersModel {
     DateTime? createdAt,
     String? preferedStateName,
     String? preferredWeatherStationId,
+    String? prefered_language,
   }) {
     return UsersModel(
       id: id ?? this.id,
@@ -121,6 +128,7 @@ class UsersModel {
       createdAt: createdAt ?? this.createdAt,
       preferedStateName: preferedStateName ?? this.preferedStateName,
       preferredWeatherStationId: preferredWeatherStationId ?? this.preferredWeatherStationId,
+      prefered_language: prefered_language ?? this.prefered_language,
     );
   }
 

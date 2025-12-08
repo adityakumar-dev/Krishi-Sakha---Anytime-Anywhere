@@ -6,88 +6,150 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:http/http.dart' as http;
 import 'package:krishi_sakha/apis/api_manager.dart';
+import 'package:krishi_sakha/services/OpusOnnxTranslater.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 enum VoiceState {
-  idle,           // Ready to listen
-  listening,      // Currently listening to user
-  processing,     // Processing user input before sending
-  streaming,      // Receiving response from server
-  speaking,       // Speaking response back to user
-  error,          // Error occurred
+  idle, // Ready to listen
+  listening, // Currently listening to user
+  processing, // Processing user input before sending
+  streaming, // Receiving response from server
+  speaking, // Speaking response back to user
+  error, // Error occurred
 }
 
 class VoiceProvider extends ChangeNotifier {
   final FlutterTts _tts = FlutterTts();
   final SpeechToText _speech = SpeechToText();
-  
+
   String recognizedWord = "";
   bool _isListening = false;
   bool _isSpeaking = false;
   bool _isInitialized = false;
   bool _isStreaming = false;
-  
+
   bool get isListening => _isListening;
   bool get isSpeaking => _isSpeaking;
   bool get isInitialized => _isInitialized;
   bool get isStreaming => _isStreaming;
-  
+
   // State management
   VoiceState _currentState = VoiceState.idle;
   VoiceState get currentState => _currentState;
-  
+
   String _statusMessage = "Ready to listen";
   String get statusMessage => _statusMessage;
-  
+
   bool _hasError = false;
   bool get hasError => _hasError;
-  
+
   String _errorMessage = "";
   String get errorMessage => _errorMessage;
-  
+
   // Prevent concurrent operations
   bool _isProcessing = false;
   Timer? _listeningTimeout;
   Timer? _speakingTimeout;
-  
+
   double speechRate = 1.0;
 
-  String _language = 'en';
-  String _hindiLanguage = "hi";
+  String _language = 'en-US';
+  String _hindiLanguage = "hi-IN";
   String get language => _language;
   String get hindiLanguage => _hindiLanguage;
 
-  // Improved response handling
-  final List<String> _pendingSentences = [];
+  // User preferences for voice chat
+  String? _userState;
+  String? _userStationId;
+  String? _userPreferredLanguage; // Language code like 'en-US', 'ml-IN', etc.
+
+  // Translation service (currently only for Malayalam, will expand)
+  OpusOnnxTranslator? _translator;
+  bool _isTranslatorInitialized = false;
+
+  // Improved response handling with translation
+  final List<String> _pendingSentences = []; // English sentences to translate
+  final List<String> _pendingTranslatedSentences =
+      []; // Translated sentences to speak
   String _currentBuffer = "";
-  String lastResponse = "";
-  
+  String lastResponse = ""; // Full English response
+  String lastTranslatedResponse = ""; // Full translated response
+
   // Sentence boundary markers
   static const _sentenceEnders = ['.', '!', '?', '।', '॥'];
   static const _minSentenceLength = 15;
 
+  // JSON buffer for handling streaming data
+  String _incompleteJsonBuffer = '';
+
+  // Metadata from response
+  Map<String, dynamic> _currentMetadata = {};
+  Map<String, dynamic> get currentMetadata => _currentMetadata;
+
   VoiceProvider() {
     _initializeSpeech();
-    
+
     // Listen when current utterance finishes => start next one
     _tts.setCompletionHandler(() {
       _isSpeaking = false;
-      if (_pendingSentences.isNotEmpty) {
+      if (_pendingTranslatedSentences.isNotEmpty) {
         _speakNext();
       } else {
         _setIdle();
       }
     });
-    
+
     // Handle TTS errors
     _tts.setErrorHandler((msg) {
       debugPrint('TTS Error: $msg');
       _isSpeaking = false;
       _handleError('TTS Error: $msg');
-      if (_pendingSentences.isNotEmpty) {
+      if (_pendingTranslatedSentences.isNotEmpty) {
         _speakNext();
       }
     });
+  }
+
+  // Set user preferences from ProfileProvider
+  void setUserPreferences({
+    String? state,
+    String? stationId,
+    String? preferredLanguage,
+  }) {
+    _userState = state;
+    _userStationId = stationId;
+    _userPreferredLanguage = preferredLanguage;
+
+    // Set both STT and TTS language
+    if (preferredLanguage != null) {
+      _language = preferredLanguage; // Set speech recognition language
+      _tts.setLanguage(preferredLanguage); // Set TTS language
+      debugPrint(
+        '🌐 [VoiceProvider] STT & TTS language set to: $preferredLanguage',
+      );
+
+      // Initialize translator if needed (currently only for Malayalam)
+      if (preferredLanguage == 'ml-IN' && !_isTranslatorInitialized) {
+        _initializeTranslator();
+      }
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> _initializeTranslator() async {
+    if (_isTranslatorInitialized) return;
+
+    try {
+      debugPrint('🔄 [VoiceProvider] Initializing Malayalam translator...');
+      _translator = OpusOnnxTranslator();
+      await _translator!.init();
+      _isTranslatorInitialized = true;
+      debugPrint('✅ [VoiceProvider] Translator initialized successfully');
+    } catch (e) {
+      debugPrint('❌ [VoiceProvider] Translator initialization failed: $e');
+      _isTranslatorInitialized = false;
+    }
   }
 
   Future<void> _initializeSpeech() async {
@@ -95,27 +157,34 @@ class VoiceProvider extends ChangeNotifier {
       debugPrint('🎤 [VoiceProvider] ===== INITIALIZATION START =====');
       _statusMessage = "Initializing speech recognition...";
       notifyListeners();
-      
+
       debugPrint('🎤 [VoiceProvider] Calling _speech.initialize()...');
       _isInitialized = await _speech.initialize(
-        
         onError: (error) {
-          debugPrint('❌ [VoiceProvider] Speech onError callback during init: error=$error');
+          debugPrint(
+            '❌ [VoiceProvider] Speech onError callback during init: error=$error',
+          );
           if (!_isInitialized && !_hasError) {
             _handleError('Speech error: $error');
             notifyListeners();
           }
         },
         onStatus: (status) {
-          debugPrint('📊 [VoiceProvider] Speech onStatus callback: status=$status');
+          debugPrint(
+            '📊 [VoiceProvider] Speech onStatus callback: status=$status',
+          );
         },
       );
-      
-      debugPrint('🎤 [VoiceProvider] _speech.initialize() returned: $_isInitialized');
-      
+
+      debugPrint(
+        '🎤 [VoiceProvider] _speech.initialize() returned: $_isInitialized',
+      );
+
       if (_isInitialized) {
-        debugPrint('✅ [VoiceProvider] Speech recognition initialized successfully');
-        
+        debugPrint(
+          '✅ [VoiceProvider] Speech recognition initialized successfully',
+        );
+
         try {
           debugPrint('🎤 [VoiceProvider] Configuring TTS...');
           await _tts.setPitch(1.0);
@@ -124,20 +193,24 @@ class VoiceProvider extends ChangeNotifier {
         } catch (e) {
           debugPrint('⚠️ [VoiceProvider] TTS config warning: $e');
         }
-        
+
         _statusMessage = "Ready to listen";
         _currentState = VoiceState.idle;
         debugPrint('✅ [VoiceProvider] State set to IDLE');
       } else {
-        debugPrint('❌ [VoiceProvider] Speech recognition initialization FAILED');
+        debugPrint(
+          '❌ [VoiceProvider] Speech recognition initialization FAILED',
+        );
         _statusMessage = "Failed to initialize";
         _handleError("Failed to initialize speech recognition");
       }
-      
+
       debugPrint('🎤 [VoiceProvider] ===== INITIALIZATION END =====');
       notifyListeners();
     } catch (e) {
-      debugPrint('❌ [VoiceProvider] Initialization exception: $e (type: ${e.runtimeType})');
+      debugPrint(
+        '❌ [VoiceProvider] Initialization exception: $e (type: ${e.runtimeType})',
+      );
       _statusMessage = "Initialization error";
       _handleError('Initialization error: $e');
       notifyListeners();
@@ -152,22 +225,26 @@ class VoiceProvider extends ChangeNotifier {
   }
 
   Future<void> startListening() async {
-    debugPrint('🎤 [VoiceProvider] startListening called - isProcessing: $_isProcessing, isInitialized: $_isInitialized, isListening: $_isListening');
-    
+    debugPrint(
+      '🎤 [VoiceProvider] startListening called - isProcessing: $_isProcessing, isInitialized: $_isInitialized, isListening: $_isListening',
+    );
+
     // Prevent concurrent operations
     if (_isProcessing || _isListening) {
-      debugPrint('⚠️ [VoiceProvider] Already in progress (processing=$_isProcessing, listening=$_isListening), skipping start listen');
+      debugPrint(
+        '⚠️ [VoiceProvider] Already in progress (processing=$_isProcessing, listening=$_isListening), skipping start listen',
+      );
       if (!_hasError) {
         _handleError("Already processing. Please wait.");
       }
       return;
     }
-    
+
     if (!_isInitialized) {
       debugPrint('🎤 [VoiceProvider] Not initialized, initializing now...');
       await _initializeSpeech();
     }
-    
+
     if (!_isInitialized) {
       debugPrint('❌ [VoiceProvider] Still not initialized after init attempt');
       _handleError("Speech recognition not available");
@@ -175,11 +252,18 @@ class VoiceProvider extends ChangeNotifier {
     }
 
     debugPrint('🎤 [VoiceProvider] Proceeding with listen setup...');
-    
+
     // Cancel any existing operations
     _listeningTimeout?.cancel();
-    
+
     recognizedWord = "";
+    lastResponse = ""; // Clear previous response when starting new voice input
+    lastTranslatedResponse = ""; // Clear previous translated response
+    _currentMetadata = {}; // Clear previous metadata
+    debugPrint(
+      '🧹 [VoiceProvider] Cleared previous response text for new voice input',
+    );
+
     _isListening = true;
     _isProcessing = true;
     _currentState = VoiceState.listening;
@@ -187,81 +271,108 @@ class VoiceProvider extends ChangeNotifier {
     _hasError = false;
     _errorMessage = "";
     notifyListeners();
-    
+
     debugPrint('🎤 [VoiceProvider] Set initial state - notifyListeners sent');
-    
+
     // Set timeout for listening - don't auto-stop, just log when time is up
     _listeningTimeout = Timer(const Duration(seconds: 35), () {
       debugPrint("⏰ [VoiceProvider] 35-second timeout reached");
       if (_isListening && recognizedWord.isEmpty) {
-        debugPrint("⏰ [VoiceProvider] No speech yet after 35s - stopping listening");
+        debugPrint(
+          "⏰ [VoiceProvider] No speech yet after 35s - stopping listening",
+        );
         stopListening();
       }
     });
-    
+
     try {
-      debugPrint('🎤 [VoiceProvider] About to call _speech.listen() with locale: $_language, listenFor: 30s, pauseFor: 3s');
-      
+      debugPrint(
+        '🎤 [VoiceProvider] About to call _speech.listen() with locale: $_language, listenFor: 30s, pauseFor: 3s',
+      );
+
       bool hasReceivedResult = false;
-      
+
       try {
+        debugPrint('📝 [VoiceProvider] Calling _speech.listen()...');
+        debugPrint("Selected Language: $_language");
         // Call listen - the return value indicates if listening started
         // Note: This might return null on some platforms, so we check nullable bool
-        final dynamic listenResult = await _speech.listen(
-          onResult: (result) {
-            debugPrint('📝 [VoiceProvider] onResult FIRED - words="${result.recognizedWords}", isFinal=${result.finalResult}, confidence=${result.confidence}');
-            
-            if (!_isListening) {
-              debugPrint('📝 [VoiceProvider] onResult called but isListening=false, ignoring');
-              return;
-            }
-            
-            hasReceivedResult = true;
-            recognizedWord = result.recognizedWords;
-            
-            if (!result.finalResult) {
-              _statusMessage = "Listening: ${recognizedWord.isNotEmpty ? recognizedWord : '(waiting for speech...)'}";
-              debugPrint('🔄 [VoiceProvider] Partial result: "$recognizedWord"');
-            } else {
-              debugPrint('✅ [VoiceProvider] FINAL result received: "$recognizedWord"');
-              _listeningTimeout?.cancel();
-              debugPrint('✅ [VoiceProvider] Stopped listening timeout, now calling stopListening()');
-              stopListening();
-            }
-            notifyListeners();
-          },
-          listenFor: const Duration(seconds: 30),
-          pauseFor: const Duration(seconds: 3),
-          localeId: _language,
-          onSoundLevelChange: (double level) {
-            if (level > 0.5) {
-              debugPrint('🔊 [VoiceProvider] Sound level: $level');
-            }
-          },
-          listenOptions: SpeechListenOptions(
-            partialResults: true,
-            cancelOnError: false,
-            listenMode: ListenMode.confirmation,
-          ),
-        ).timeout(
-          const Duration(seconds: 40),
-          onTimeout: () {
-            debugPrint('⏰ [VoiceProvider] listen() call timeout after 40s');
-            return null;
-          },
+        final dynamic listenResult = await _speech
+            .listen(
+              onResult: (result) {
+                debugPrint(
+                  '📝 [VoiceProvider] onResult FIRED - words="${result.recognizedWords}", isFinal=${result.finalResult}, confidence=${result.confidence}',
+                );
+
+                if (!_isListening) {
+                  debugPrint(
+                    '📝 [VoiceProvider] onResult called but isListening=false, ignoring',
+                  );
+                  return;
+                }
+
+                hasReceivedResult = true;
+                recognizedWord = result.recognizedWords;
+
+                if (!result.finalResult) {
+                  _statusMessage =
+                      "Listening: ${recognizedWord.isNotEmpty ? recognizedWord : '(waiting for speech...)'}";
+                  debugPrint(
+                    '🔄 [VoiceProvider] Partial result: "$recognizedWord"',
+                  );
+                } else {
+                  debugPrint(
+                    '✅ [VoiceProvider] FINAL result received: "$recognizedWord"',
+                  );
+                  _listeningTimeout?.cancel();
+                  debugPrint(
+                    '✅ [VoiceProvider] Stopped listening timeout, now calling stopListening()',
+                  );
+                  stopListening();
+                }
+                notifyListeners();
+              },
+              listenFor: const Duration(seconds: 30),
+              pauseFor: const Duration(seconds: 3),
+              localeId: _language,
+              onSoundLevelChange: (double level) {
+                if (level > 0.5) {
+                  debugPrint('🔊 [VoiceProvider] Sound level: $level');
+                }
+              },
+              listenOptions: SpeechListenOptions(
+                partialResults: true,
+                cancelOnError: false,
+                listenMode: ListenMode.confirmation,
+              ),
+            )
+            .timeout(
+              const Duration(seconds: 40),
+              onTimeout: () {
+                debugPrint('⏰ [VoiceProvider] listen() call timeout after 40s');
+                return null;
+              },
+            );
+
+        debugPrint(
+          '🎤 [VoiceProvider] _speech.listen() returned: $listenResult (type: ${listenResult.runtimeType}), hasReceivedResult: $hasReceivedResult',
         );
-        
-        debugPrint('🎤 [VoiceProvider] _speech.listen() returned: $listenResult (type: ${listenResult.runtimeType}), hasReceivedResult: $hasReceivedResult');
-        
+
         // Handle the return value - it can be bool or null
         if (listenResult is bool) {
           if (!listenResult) {
             if (hasReceivedResult) {
-              debugPrint('📝 [VoiceProvider] listen() returned false but we got a result - probably normal completion');
+              debugPrint(
+                '📝 [VoiceProvider] listen() returned false but we got a result - probably normal completion',
+              );
             } else {
-              debugPrint('❌ [VoiceProvider] listen() returned false and no results received - listening may have failed to start');
+              debugPrint(
+                '❌ [VoiceProvider] listen() returned false and no results received - listening may have failed to start',
+              );
               if (_isListening) {
-                _handleError("Failed to start listening. Ensure microphone permissions are enabled.");
+                _handleError(
+                  "Failed to start listening. Ensure microphone permissions are enabled.",
+                );
                 _isListening = false;
                 _isProcessing = false;
                 _listeningTimeout?.cancel();
@@ -269,16 +380,24 @@ class VoiceProvider extends ChangeNotifier {
               }
             }
           } else {
-            debugPrint('✅ [VoiceProvider] listen() returned true - listening is active');
+            debugPrint(
+              '✅ [VoiceProvider] listen() returned true - listening is active',
+            );
           }
         } else if (listenResult == null) {
-          debugPrint('📝 [VoiceProvider] listen() returned null - waiting for result callbacks');
+          debugPrint(
+            '📝 [VoiceProvider] listen() returned null - waiting for result callbacks',
+          );
           // On some platforms, listen() returns null but callbacks will fire
           if (!hasReceivedResult) {
-            debugPrint('⏳ [VoiceProvider] No result callback yet, listening may still be active');
+            debugPrint(
+              '⏳ [VoiceProvider] No result callback yet, listening may still be active',
+            );
           }
         } else {
-          debugPrint('⚠️ [VoiceProvider] listen() returned unexpected type: ${listenResult.runtimeType}');
+          debugPrint(
+            '⚠️ [VoiceProvider] listen() returned unexpected type: ${listenResult.runtimeType}',
+          );
         }
       } on TimeoutException catch (e) {
         debugPrint('❌ [VoiceProvider] Listen timeout exception: $e');
@@ -289,21 +408,29 @@ class VoiceProvider extends ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      debugPrint('❌ [VoiceProvider] Listen exception: $e (type: ${e.runtimeType})');
-      
+      debugPrint(
+        '❌ [VoiceProvider] Listen exception: $e (type: ${e.runtimeType})',
+      );
+
       String errorMsg = e.toString();
-      if (errorMsg.contains('timeout') || errorMsg.contains('error_speech_timeout')) {
+      if (errorMsg.contains('timeout') ||
+          errorMsg.contains('error_speech_timeout')) {
         _handleError("No speech detected in 30 seconds. Please try again.");
-      } else if (errorMsg.contains('permission') || errorMsg.contains('Permission') || errorMsg.contains('403')) {
-        _handleError("Microphone permission required. Please enable in app settings.");
-      } else if (errorMsg.contains('not available') || errorMsg.contains('unavailable')) {
+      } else if (errorMsg.contains('permission') ||
+          errorMsg.contains('Permission') ||
+          errorMsg.contains('403')) {
+        _handleError(
+          "Microphone permission required. Please enable in app settings.",
+        );
+      } else if (errorMsg.contains('not available') ||
+          errorMsg.contains('unavailable')) {
         _handleError("Speech recognition not available on this device.");
       } else if (errorMsg.contains('no_match')) {
         _handleError("Could not understand your speech. Please try again.");
       } else {
         _handleError('Listen error: $errorMsg');
       }
-      
+
       _isListening = false;
       _isProcessing = false;
       _listeningTimeout?.cancel();
@@ -312,11 +439,13 @@ class VoiceProvider extends ChangeNotifier {
   }
 
   Future<void> stopListening() async {
-    debugPrint('🎤 [VoiceProvider] stopListening called - isListening: $_isListening, recognizedWord: "$recognizedWord" (${recognizedWord.length} chars)');
-    
+    debugPrint(
+      '🎤 [VoiceProvider] stopListening called - isListening: $_isListening, recognizedWord: "$recognizedWord" (${recognizedWord.length} chars)',
+    );
+
     _listeningTimeout?.cancel();
-    _isListening = false;  // ✅ Stop listening first
-    
+    _isListening = false; // ✅ Stop listening first
+
     try {
       debugPrint('🎤 [VoiceProvider] Calling _speech.stop()...');
       await _speech.stop();
@@ -324,32 +453,42 @@ class VoiceProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint('❌ [VoiceProvider] Error calling _speech.stop(): $e');
     }
-    
+
     // Small delay to let speech recognition fully stop
     await Future.delayed(const Duration(milliseconds: 100));
-    
-    debugPrint('📤 [VoiceProvider] stopListening - checking if we have valid recognized text...');
-    
+
+    debugPrint(
+      '📤 [VoiceProvider] stopListening - checking if we have valid recognized text...',
+    );
+
     // Trigger API call if we have recognized text
     if (recognizedWord.isNotEmpty && recognizedWord.length > 2) {
-      debugPrint('📤 [VoiceProvider] ✅ Valid speech: "$recognizedWord" (${recognizedWord.length} chars) - calling getResponse()');
+      debugPrint(
+        '📤 [VoiceProvider] ✅ Valid speech: "$recognizedWord" (${recognizedWord.length} chars) - calling getResponse()',
+      );
       _statusMessage = "Processing your request...";
       _currentState = VoiceState.processing;
       notifyListeners();
-      
+
       // Don't set _isProcessing = false here - let getResponse() and stream handlers manage it
       await getResponse();
     } else if (recognizedWord.isEmpty) {
       debugPrint('⚠️ [VoiceProvider] No speech recognized (empty text)');
       _handleError("No speech detected. Please try speaking again.");
-      _isProcessing = false;  // ✅ Reset on failed input
-      debugPrint('🔴 [VoiceProvider] No valid speech - reset _isProcessing = false');
+      _isProcessing = false; // ✅ Reset on failed input
+      debugPrint(
+        '🔴 [VoiceProvider] No valid speech - reset _isProcessing = false',
+      );
       _setIdle();
     } else if (recognizedWord.length <= 2) {
-      debugPrint('⚠️ [VoiceProvider] Speech too short: "${recognizedWord}" (${recognizedWord.length} chars, need >2)');
+      debugPrint(
+        '⚠️ [VoiceProvider] Speech too short: "${recognizedWord}" (${recognizedWord.length} chars, need >2)',
+      );
       _handleError("Speech too short. Please try speaking a full sentence.");
-      _isProcessing = false;  // ✅ Reset on failed input
-      debugPrint('🔴 [VoiceProvider] Speech too short - reset _isProcessing = false');
+      _isProcessing = false; // ✅ Reset on failed input
+      debugPrint(
+        '🔴 [VoiceProvider] Speech too short - reset _isProcessing = false',
+      );
       _setIdle();
     }
   }
@@ -357,83 +496,122 @@ class VoiceProvider extends ChangeNotifier {
   Future<void> getResponse() async {
     debugPrint('🎙️ [VoiceProvider] ===== API CALL START =====');
     debugPrint('🎙️ [VoiceProvider] Received prompt: "$recognizedWord"');
-    
+
     if (recognizedWord.isEmpty) {
       debugPrint('⚠️ [VoiceProvider] Prompt is empty, returning early');
       _setIdle();
       return;
     }
-    
+
     try {
       debugPrint('🎙️ [VoiceProvider] Stopping any existing TTS...');
       await _tts.stop();
-      
+
       lastResponse = "";
+      lastTranslatedResponse = "";
       _currentBuffer = "";
       _pendingSentences.clear();
+      _pendingTranslatedSentences.clear();
+      _processedSentences.clear(); // Clear processed sentences for new request
+      _currentMetadata = {};
+      _incompleteJsonBuffer = '';
       _isStreaming = true;
       _currentState = VoiceState.streaming;
       _statusMessage = "Receiving response...";
       notifyListeners();
       debugPrint('🎙️ [VoiceProvider] State prepared for streaming');
-      
-      final url = ApiManager.baseUrl + ApiManager.voiceUrl;
-      debugPrint('📤 [VoiceProvider] API URL: $url');
-      
-      final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+
+      final url = '${ApiManager.baseUrl}/chat/agri';
+      debugPrint(
+        '📤 [VoiceProvider] API URL: $url (using AgriChat with voice=true)',
+      );
+
+      final token =
+          Supabase.instance.client.auth.currentSession?.accessToken ?? '';
       debugPrint('📤 [VoiceProvider] Auth token present: ${token.isNotEmpty}');
-      
+      debugPrint(
+        '📤 [VoiceProvider] User preferences - State: $_userState, Station: $_userStationId, Language: $_userPreferredLanguage',
+      );
+
       final request = http.MultipartRequest('POST', Uri.parse(url));
       request.fields['prompt'] = recognizedWord;
+      request.fields['conversation_id'] = '-1'; // Voice doesn't save
+      request.fields['history'] = '[]'; // No history for voice
+      request.fields['is_voice'] = 'true'; // Mark as voice request
       request.headers['Authorization'] = 'Bearer $token';
-      
-      debugPrint('� [VoiceProvider] Multipart request prepared: prompt="${recognizedWord}", auth header set');
-      
+      request.headers['ngrok-skip-browser-warning'] = 'true';
+
+      // Add user preferences for pipeline context
+      if (_userState != null && _userState!.isNotEmpty) {
+        request.fields['state'] = _userState!;
+      }
+      if (_userStationId != null && _userStationId!.isNotEmpty) {
+        request.fields['station_id'] = _userStationId!;
+      }
+
+      debugPrint(
+        '📤 [VoiceProvider] Multipart request prepared: prompt="${recognizedWord}", is_voice=true',
+      );
+
       debugPrint('📤 [VoiceProvider] Sending request...');
       final response = await request.send().timeout(
-        const Duration(seconds: 60),
+        const Duration(seconds: 90), // Longer timeout for pipeline
         onTimeout: () {
-          debugPrint('⏰ [VoiceProvider] Request timeout after 60s');
-          throw TimeoutException("API request timeout after 60 seconds");
+          debugPrint('⏰ [VoiceProvider] Request timeout after 90s');
+          throw TimeoutException("API request timeout after 90 seconds");
         },
       );
-      
-      debugPrint('📥 [VoiceProvider] Response received: status=${response.statusCode}');
-      
+
+      debugPrint(
+        '📥 [VoiceProvider] Response received: status=${response.statusCode}',
+      );
+
       if (response.statusCode == 200) {
         debugPrint('✅ [VoiceProvider] HTTP 200 - starting to listen to stream');
-        
+
         int chunkCount = 0;
         int totalChars = 0;
-        
-        response.stream.transform(utf8.decoder).listen(
-          (data) {
-            chunkCount++;
-            totalChars += data.length;
-            debugPrint('📥 [VoiceProvider] Chunk $chunkCount: ${data.length} chars, total: $totalChars chars');
-            handleStreamChunk(data);
-          },
-          onError: (error) {
-            debugPrint('❌ [VoiceProvider] Stream error: $error (type: ${error.runtimeType})');
-            _handleError('Stream error: $error');
-            _isStreaming = false;
-            _isProcessing = false;  // ✅ Always reset on error
-            _listeningTimeout?.cancel();
-            debugPrint('🔴 [VoiceProvider] Stream error - reset _isProcessing = false');
-            notifyListeners();
-          },
-          onDone: () {
-            debugPrint('✅ [VoiceProvider] Stream completed - received $chunkCount chunks, $totalChars total chars');
-            _isStreaming = false;
-            _flushBuffer();
-            // ✅ Reset processing flag when stream is done
-            // Don't wait for TTS to finish - reset immediately so new requests can start
-            _isProcessing = false;
-            debugPrint('🟢 [VoiceProvider] Stream done - reset _isProcessing = false (TTS will complete separately)');
-            notifyListeners();
-            debugPrint('🎙️ [VoiceProvider] ===== API CALL END =====');
-          },
-        );
+
+        response.stream
+            .transform(utf8.decoder)
+            .listen(
+              (data) {
+                chunkCount++;
+                totalChars += data.length;
+                debugPrint(
+                  '📥 [VoiceProvider] Chunk $chunkCount: ${data.length} chars, total: $totalChars chars',
+                );
+                handleStreamChunk(data);
+              },
+              onError: (error) {
+                debugPrint(
+                  '❌ [VoiceProvider] Stream error: $error (type: ${error.runtimeType})',
+                );
+                _handleError('Stream error: $error');
+                _isStreaming = false;
+                _isProcessing = false; // ✅ Always reset on error
+                _listeningTimeout?.cancel();
+                debugPrint(
+                  '🔴 [VoiceProvider] Stream error - reset _isProcessing = false',
+                );
+                notifyListeners();
+              },
+              onDone: () {
+                debugPrint(
+                  '✅ [VoiceProvider] Stream completed - received $chunkCount chunks, $totalChars total chars',
+                );
+                _isStreaming = false;
+                _flushBuffer();
+                // ✅ Reset processing flag when stream is done
+                // Don't wait for TTS to finish - reset immediately so new requests can start
+                _isProcessing = false;
+                debugPrint(
+                  '🟢 [VoiceProvider] Stream done - reset _isProcessing = false (TTS will complete separately)',
+                );
+                notifyListeners();
+                debugPrint('🎙️ [VoiceProvider] ===== API CALL END =====');
+              },
+            );
       } else {
         debugPrint('❌ [VoiceProvider] HTTP Error: ${response.statusCode}');
         final responseBody = await response.stream.bytesToString();
@@ -444,7 +622,9 @@ class VoiceProvider extends ChangeNotifier {
         _setIdle();
       }
     } catch (e) {
-      debugPrint('❌ [VoiceProvider] Request exception: $e (type: ${e.runtimeType})');
+      debugPrint(
+        '❌ [VoiceProvider] Request exception: $e (type: ${e.runtimeType})',
+      );
       _handleError('Request error: $e');
       _isStreaming = false;
       _isProcessing = false;
@@ -456,47 +636,105 @@ class VoiceProvider extends ChangeNotifier {
   void handleStreamChunk(String chunk) {
     if (chunk.isEmpty) return;
 
-    final lines = chunk.split('\n');
-    for (final line in lines) {
-      final trimmedLine = line.trim();
-      if (trimmedLine.isEmpty) continue;
+    _incompleteJsonBuffer += chunk;
 
-      String jsonStr = trimmedLine;
-      if (jsonStr.startsWith('data: ')) {
-        jsonStr = jsonStr.substring(6).trim();
+    while (true) {
+      final newlineIndex = _incompleteJsonBuffer.indexOf('\n');
+      if (newlineIndex == -1) break;
+
+      final completeLine = _incompleteJsonBuffer.substring(0, newlineIndex);
+      _incompleteJsonBuffer = _incompleteJsonBuffer.substring(newlineIndex + 1);
+
+      _processCompleteLine(completeLine);
+    }
+  }
+
+  void _processCompleteLine(String line) {
+    final trimmedLine = line.trim();
+    if (trimmedLine.isEmpty) return;
+
+    String jsonStr = trimmedLine;
+    if (jsonStr.startsWith('data: ')) {
+      jsonStr = jsonStr.substring(6).trim();
+    }
+
+    if (jsonStr.isEmpty || jsonStr == '[DONE]') return;
+
+    debugPrint('🔵 VOICE JSON: $jsonStr');
+
+    try {
+      final data = jsonDecode(jsonStr);
+      if (data == null || data is! Map<String, dynamic>) return;
+
+      final type = data['type'];
+      if (type == null || type is! String) return;
+
+      debugPrint('🟡 VOICE CHUNK TYPE: $type');
+
+      switch (type) {
+        case 'status':
+          final message = data['message'];
+          if (message != null && message is String && message.isNotEmpty) {
+            _statusMessage = message;
+            notifyListeners();
+          }
+          break;
+
+        case 'urls':
+          final urls = data['urls'];
+          debugPrint('📨 RECEIVED URLS: $urls');
+          if (urls != null && urls is List) {
+            _currentMetadata['urls'] = urls.cast<String>();
+            notifyListeners();
+          }
+          break;
+
+        case 'youtube':
+          final results = data['results'];
+          debugPrint('📺 RECEIVED YOUTUBE: ${results?.length ?? 0} videos');
+          if (results != null && results is List) {
+            _currentMetadata['youtube'] = results;
+            notifyListeners();
+          }
+          break;
+
+        case 'text':
+          final textChunk = data['chunk'];
+          if (textChunk != null && textChunk is String) {
+            _processTextChunk(textChunk);
+          }
+          break;
+
+        case 'complete':
+          // Stream completed
+          break;
+
+        case 'error':
+          final errorMessage = data['message'] ?? 'Unknown error occurred';
+          debugPrint('❌ BACKEND ERROR: $errorMessage');
+          _handleError(errorMessage);
+          break;
       }
-
-      if (jsonStr.isEmpty || jsonStr == '[DONE]') continue;
-
-      dynamic data;
-      try {
-        data = jsonDecode(jsonStr);
-      } catch (_) {
-        continue;
-      }
-
-      if (data is Map<String, dynamic> && data['type'] == 'text') {
-        final textChunk = data['chunk'];
-        if (textChunk != null && textChunk is String) {
-          _processTextChunk(textChunk);
-        }
-      }
+    } catch (e) {
+      debugPrint('❌ JSON PARSE ERROR: $e for line: $jsonStr');
     }
   }
 
   void _processTextChunk(String chunk) {
-    debugPrint('📝 [VoiceProvider] Processing chunk (${chunk.length} chars): "$chunk"');
+    debugPrint('📥 [CHUNK] Raw: "$chunk"');
     _currentBuffer += chunk;
-    lastResponse += chunk;
+    debugPrint('📦 [BUFFER] Current buffer: "$_currentBuffer"');
     _checkAndExtractSentences();
-    debugPrint('📝 [VoiceProvider] After processing - currentBuffer length: ${_currentBuffer.length}, pending sentences: ${_pendingSentences.length}');
+    debugPrint(
+      '📝 [VoiceProvider] After processing - currentBuffer length: ${_currentBuffer.length}, pending English sentences: ${_pendingSentences.length}, pending translated: ${_pendingTranslatedSentences.length}',
+    );
     notifyListeners();
   }
 
   void _checkAndExtractSentences() {
     // ✅ Find the sentence that ends with any ender character
     int bestIndex = -1;
-    
+
     // Find which sentence ender comes first
     for (final ender in _sentenceEnders) {
       int index = _currentBuffer.indexOf(ender);
@@ -504,19 +742,22 @@ class VoiceProvider extends ChangeNotifier {
         bestIndex = index;
       }
     }
-    
+
     // Process only complete sentences
     while (bestIndex != -1) {
       String sentence = _currentBuffer.substring(0, bestIndex + 1).trim();
-      
+
       if (sentence.length >= _minSentenceLength) {
-        debugPrint('✂️ [VoiceProvider] Extracted complete sentence: "$sentence"');
+        debugPrint('✂️ [EXTRACT] English sentence: "$sentence"');
         _addSentence(sentence);
-        
+
         // Remove processed sentence from buffer
         _currentBuffer = _currentBuffer.substring(bestIndex + 1).trim();
-        debugPrint('✂️ [VoiceProvider] Remaining buffer: "${_currentBuffer.length > 50 ? _currentBuffer.substring(0, 50) + '...' : _currentBuffer}"');
-        
+        debugPrint('📦 [BUFFER] After removal: "$_currentBuffer"');
+        debugPrint(
+          '✂️ [VoiceProvider] Remaining buffer: "${_currentBuffer.length > 50 ? _currentBuffer.substring(0, 50) + '...' : _currentBuffer}"',
+        );
+
         // Find next sentence ender
         bestIndex = -1;
         for (final ender in _sentenceEnders) {
@@ -530,10 +771,12 @@ class VoiceProvider extends ChangeNotifier {
         // If the sentence ended and we have more text after, don't wait - speak it
         if (_currentBuffer.length > bestIndex + 1) {
           // More text exists after this short sentence, speak it anyway
-          debugPrint('✂️ [VoiceProvider] Short sentence but more content follows: "$sentence", speaking it');
+          debugPrint(
+            '✂️ [VoiceProvider] Short sentence but more content follows: "$sentence", speaking it',
+          );
           _addSentence(sentence);
           _currentBuffer = _currentBuffer.substring(bestIndex + 1).trim();
-          
+
           // Find next sentence ender
           bestIndex = -1;
           for (final ender in _sentenceEnders) {
@@ -544,22 +787,28 @@ class VoiceProvider extends ChangeNotifier {
           }
         } else {
           // Sentence too short and nothing after it, keep waiting for more text
-          debugPrint('⏳ [VoiceProvider] Sentence too short (${sentence.length} chars): "$sentence", waiting for more text');
+          debugPrint(
+            '⏳ [VoiceProvider] Sentence too short (${sentence.length} chars): "$sentence", waiting for more text',
+          );
           break;
         }
       }
     }
-    
+
     // Handle buffer overflow - split into chunks if too long
     if (_currentBuffer.length > 150) {
-      debugPrint('⚠️ [VoiceProvider] Buffer overflow (${_currentBuffer.length} chars), splitting into chunks');
+      debugPrint(
+        '⚠️ [VoiceProvider] Buffer overflow (${_currentBuffer.length} chars), splitting into chunks',
+      );
       final words = _currentBuffer.split(' ');
       if (words.length > 15) {
         final chunk = words.sublist(0, 15).join(' ');
         debugPrint('✂️ [VoiceProvider] Force-split chunk: "$chunk"');
         _addSentence(chunk);
         _currentBuffer = words.sublist(15).join(' ');
-        debugPrint('✂️ [VoiceProvider] Remaining after force-split: "${_currentBuffer.length > 50 ? _currentBuffer.substring(0, 50) + '...' : _currentBuffer}"');
+        debugPrint(
+          '✂️ [VoiceProvider] Remaining after force-split: "${_currentBuffer.length > 50 ? _currentBuffer.substring(0, 50) + '...' : _currentBuffer}"',
+        );
       }
     }
   }
@@ -571,9 +820,12 @@ class VoiceProvider extends ChangeNotifier {
     }
   }
 
+  // Track already processed sentences to avoid duplicates
+  final Set<String> _processedSentences = {};
+
   void _addSentence(String sentence) {
     if (sentence.isEmpty) return;
-    
+
     // ✅ Clean up markdown and unwanted characters
     var cleanedSentence = sentence
         // Remove markdown bold: **text** or __text__
@@ -605,52 +857,163 @@ class VoiceProvider extends ChangeNotifier {
         // Remove extra whitespace
         .replaceAll(RegExp(r'\s+'), ' ')
         .trim();
-    
-    if (cleanedSentence.isEmpty) {
-      debugPrint('⚠️ [VoiceProvider] Sentence was empty after cleaning');
+
+    if (cleanedSentence.isEmpty) return;
+
+    // Check if already processed (deduplication)
+    if (_processedSentences.contains(cleanedSentence)) {
+      debugPrint('⚠️ [DUPLICATE] Skipping: "$cleanedSentence"');
       return;
     }
-    
-    debugPrint('🧹 [VoiceProvider] Cleaned sentence: "$cleanedSentence"');
+
+    debugPrint('✅ [CLEAN] English: "$cleanedSentence"');
+    _processedSentences.add(cleanedSentence);
     _pendingSentences.add(cleanedSentence);
 
-    if (!_isSpeaking) {
-      _speakNext();
+    // Translate if needed
+    if (_userPreferredLanguage != null && _userPreferredLanguage != 'en-US') {
+      _translateAndSpeak(cleanedSentence);
+    } else {
+      lastResponse += cleanedSentence + ' ';
+      lastTranslatedResponse += cleanedSentence + ' ';
+      _pendingTranslatedSentences.add(cleanedSentence);
+      if (!_isSpeaking) _speakNext();
+    }
+    notifyListeners();
+  }
+
+  Future<void> _translateAndSpeak(String englishSentence) async {
+    try {
+      final targetLang = _getLanguageCode(_userPreferredLanguage ?? 'en');
+
+      // Use Google Translate API for all languages (including Malayalam)
+      final translatedText = await _translateViaGoogle(
+        englishSentence,
+        targetLang,
+      );
+
+      debugPrint('✅ [TRANSLATE] $targetLang: "$translatedText"');
+      lastResponse += translatedText + ' ';
+      lastTranslatedResponse += translatedText + ' ';
+      _pendingTranslatedSentences.add(translatedText);
+
+      if (!_isSpeaking) _speakNext();
+    } catch (e) {
+      debugPrint('❌ [TRANSLATE] Failed: $e');
+      lastResponse += englishSentence + ' ';
+      lastTranslatedResponse += englishSentence + ' ';
+      _pendingTranslatedSentences.add(englishSentence);
+      if (!_isSpeaking) _speakNext();
     }
   }
 
+  // Google Translate API helper
+  Future<String> _translateViaGoogle(String text, String targetLang) async {
+    try {
+      final url = Uri.parse(
+        'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=$targetLang&dt=t&q=${Uri.encodeComponent(text)}',
+      );
+
+      final response = await http
+          .get(url)
+          .timeout(
+            const Duration(seconds: 10),
+            onTimeout: () => throw TimeoutException('Translation timeout'),
+          );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data != null &&
+            data is List &&
+            data.isNotEmpty &&
+            data[0] is List) {
+          final translatedParts = data[0] as List;
+          final translated = translatedParts
+              .map(
+                (part) =>
+                    part is List && part.isNotEmpty ? part[0].toString() : '',
+              )
+              .where((text) => text.isNotEmpty)
+              .join('');
+          return translated.isNotEmpty ? translated : text;
+        }
+      }
+
+      debugPrint(
+        '⚠️ [VoiceProvider] Google Translate returned non-200: ${response.statusCode}',
+      );
+      return text; // Fallback to original
+    } catch (e) {
+      debugPrint('❌ [VoiceProvider] Google Translate error: $e');
+      return text; // Fallback to original
+    }
+  }
+
+  // Convert locale code to language code (en-US -> en, hi-IN -> hi)
+  String _getLanguageCode(String locale) {
+    return locale.split('-').first;
+  }
+
+  // Get language name for display
+  String _getLanguageName(String code) {
+    const names = {
+      'hi': 'Hindi',
+      'ta': 'Tamil',
+      'te': 'Telugu',
+      'kn': 'Kannada',
+      'ml': 'Malayalam',
+      'bn': 'Bengali',
+      'gu': 'Gujarati',
+      'mr': 'Marathi',
+      'pa': 'Punjabi',
+      'ur': 'Urdu',
+      'or': 'Odia',
+      'as': 'Assamese',
+      'mai': 'Maithili',
+      'bho': 'Bhojpuri',
+      'raj': 'Rajasthani',
+      'ne': 'Nepali',
+      'si': 'Sinhala',
+      'en': 'English',
+    };
+    return names[code] ?? code;
+  }
+
   void _speakNext() async {
-    if (_pendingSentences.isEmpty) {
+    if (_pendingTranslatedSentences.isEmpty) {
       _isSpeaking = false;
       _speakingTimeout?.cancel();
-      _isProcessing = false;  // ✅ ALWAYS reset processing flag when done speaking
-      debugPrint('🟢 [VoiceProvider] No more sentences to speak - setting _isProcessing = false');
+      _isProcessing =
+          false; // ✅ ALWAYS reset processing flag when done speaking
+      debugPrint(
+        '🟢 [VoiceProvider] No more sentences to speak - setting _isProcessing = false',
+      );
       _setIdle();
       notifyListeners();
       return;
     }
 
-    final nextSentence = _pendingSentences.removeAt(0);
+    final nextSentence = _pendingTranslatedSentences.removeAt(0);
 
     try {
       _isSpeaking = true;
       _currentState = VoiceState.speaking;
       _statusMessage = "Speaking response...";
       notifyListeners();
-      
+
       // Set timeout for speaking
       _speakingTimeout?.cancel();
       _speakingTimeout = Timer(const Duration(seconds: 120), () {
         debugPrint("Speaking timeout reached");
         cancelSpeaking();
       });
-      
+
       await _tts.speak(nextSentence);
     } catch (e) {
       debugPrint('TTS Error: $e');
       _handleError('TTS Error: $e');
       _isSpeaking = false;
-      _isProcessing = false;  // ✅ Reset on error
+      _isProcessing = false; // ✅ Reset on error
       _speakingTimeout?.cancel();
       notifyListeners();
       if (_pendingSentences.isNotEmpty) {
@@ -670,7 +1033,7 @@ class VoiceProvider extends ChangeNotifier {
     _speakingTimeout?.cancel();
     _setIdle();
   }
-  
+
   void _setIdle() {
     debugPrint('🟢 [VoiceProvider] Setting state to IDLE');
     _currentState = VoiceState.idle;
@@ -679,7 +1042,7 @@ class VoiceProvider extends ChangeNotifier {
     _errorMessage = "";
     notifyListeners();
   }
-  
+
   void _handleError(String message) {
     debugPrint('🔴 [VoiceProvider] ERROR: $message');
     _hasError = true;
@@ -688,7 +1051,7 @@ class VoiceProvider extends ChangeNotifier {
     _statusMessage = "Error: $message";
     notifyListeners();
   }
-  
+
   void clearError() {
     debugPrint('🟡 [VoiceProvider] Clearing error');
     _hasError = false;

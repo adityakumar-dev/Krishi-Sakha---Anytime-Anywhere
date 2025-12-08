@@ -16,4 +16,29 @@ json response format:
 keep the response small and concise.
 provide personalized solutions based on the crop type provided.
 """;
+
+
+// all the langauge supported by the flutter_tts
+static const List<String> supportedLanguages = [
+  'en-US', // English
+  'hi-IN', // Hindi
+  'ta-IN', // Tamil
+  'te-IN', // Telugu
+  'kn-IN', // Kannada
+  'ml-IN', // Malayalam
+  'bn-IN', // Bengali
+  'gu-IN', // Gujarati
+  'mr-IN', // Marathi
+  'pa-IN', // Punjabi
+  'ur-IN', // Urdu
+  'or-IN', // Odia
+  'as-IN', // Assamese
+  'mai-IN', // Maithili
+  'bho-IN', // Bhojpuri
+  'raj-IN', // Rajasthani
+  'ne-NP', // Nepali
+  'si-LK', // Sinhala
+];
+
+
 }

@@ -19,6 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController _phoneController;
   late TextEditingController _cityController;
   late TextEditingController _stateController;
+  late TextEditingController _languageController;
   bool _isEditing = false;
 
   @override
@@ -34,7 +35,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _cityController =
         TextEditingController(text: profileProvider.userProfile?.cityName ?? '');
     _stateController =
-        TextEditingController(text: profileProvider.userProfile?.preferedStateName ?? '');
+        TextEditingController(text: profileProvider.userProfile?.preferedStateName ?? '');    
+    _languageController = TextEditingController(
+        text: profileProvider.userProfile?.prefered_language ?? '');
     
   }
 
@@ -237,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       // Location Information Card
                       _buildSectionCard(
-                        title: 'Location Information',
+                        title: 'Your Choice',
                         icon: Icons.location_on_outlined,
                         children: [
                           _buildProfileField(
@@ -246,6 +249,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             isEditing: _isEditing,
                             icon: Icons.location_city,
                           ),
+
+                          _buildProfileField(
+
+                            label: 'Language',
+                            controller: _languageController,
+                            isEditing: _isEditing,
+                            icon: Icons.location_city,
+                            onTap: (){
+                              context.push(AppRoutes.languageScreen);
+                            }
+                          ),
+                          
                           const SizedBox(height: 16),
                           _buildProfileField(
                             label: 'State',
@@ -422,69 +437,73 @@ class _ProfileScreenState extends State<ProfileScreen> {
     required TextEditingController controller,
     required bool isEditing,
     required IconData icon,
+    VoidCallback? onTap,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(icon, size: 18, color: const Color(0xFF2D5016)),
-            const SizedBox(width: 8),
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey,
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 18, color: const Color(0xFF2D5016)),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        if (isEditing)
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey[300]!),
+            ],
+          ),
+          const SizedBox(height: 10),
+          if (isEditing)
+            TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF2D5016), width: 2),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey[300]!),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF2D5016), width: 2),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
+            )
+          else
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 14,
               ),
-            ),
-          )
-        else
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.grey[50],
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey[200]!),
-            ),
-            child: Text(
-              controller.text.isEmpty ? 'Not provided' : controller.text,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: controller.text.isEmpty ? Colors.grey[400] : Colors.black87,
+              decoration: BoxDecoration(
+                color: Colors.grey[50],
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.grey[200]!),
+              ),
+              child: Text(
+                controller.text.isEmpty ? 'Not provided' : controller.text,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: controller.text.isEmpty ? Colors.grey[400] : Colors.black87,
+                ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 

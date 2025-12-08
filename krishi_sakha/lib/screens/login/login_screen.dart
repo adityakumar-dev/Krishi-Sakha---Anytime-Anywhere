@@ -362,8 +362,15 @@ if(result.isSuccess){
       // Navigate based on whether profile exists
       if (mounted) {
         if(profileProvider.userProfile != null) {
-          AppLogger.debug("Profile exists, navigating to home.");
-          profileProvider.userProfile?.preferedStateName == null ? context.go(AppRoutes.locationOnBoard) : context.go(AppRoutes.home);
+          AppLogger.debug("Profile exists, navigating based on preferences.");
+          // Check if language is set, then location, then go to home
+          if (profileProvider.userProfile?.prefered_language == null) {
+            context.go(AppRoutes.languageOnBoard);
+          } else if (profileProvider.userProfile?.preferedStateName == null) {
+            context.go(AppRoutes.locationOnBoard);
+          } else {
+            context.go(AppRoutes.home);
+          }
         } else {
           AppLogger.debug("No profile found, navigating to onboarding.");
           context.go(AppRoutes.profileOnboard);
