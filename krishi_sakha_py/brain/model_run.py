@@ -221,47 +221,139 @@ class ModelRun:
         async for chunk in chain.astream(chain_input):
             if chunk:
                 yield chunk
-    
-    async def get_crop_advice(self, weather_info: str, comprehensive_data: str) -> AsyncGenerator[str, None]:
+
+    async def run_pipeline(
+        self,
+        question: str,
+        pipeline_context: Dict[str, Any],
+        conversation_id: str = "",
+        user_id: str = "",
+        stream: bool = True,
+        push_to_db: bool = True
+    ) -> AsyncGenerator[str, None]:
         """
-        Get crop advice based on weather information and comprehensive agricultural data.
-        Uses Gemini 2.0 Flash for smart pattern recognition and better accuracy.
+        Run model with context from complete pipeline (vector DB, weather, schemes, prices, etc.)
         
-        COMMENTED OUT: Original LangChain + Local Model approach:
-        # template = ChatPromptTemplate.from_messages([
-        #     ("system", CROP_ADVISE_SYSTEM_MESSAGE),
-        #     ("human", "Based on the following comprehensive agricultural information...")
-        # ])
-        # model = self.default_model
-        # chain = template | model | StrOutputParser()
+        Args:
+            question: Farmer's original question
+            pipeline_context: Dict containing all retrieved contexts from pipeline
+            conversation_id: Conversation ID for tracking
+            user_id: User ID
+            stream: Whether to stream response
+            push_to_db: Whether to save to database
+            
+        Yields:
+            Response chunks
         """
-        try:
-            logger.info("Getting crop advice from Gemini 2.0 Flash")
-            
-            # Build the complete prompt with system context
-            full_prompt = f"""{CROP_ADVISE_SYSTEM_MESSAGE}
-
-WEATHER & SENSOR INFORMATION:
-{weather_info}
-
-COMPREHENSIVE AGRICULTURAL DATA:
-{comprehensive_data}
-
-Based on this context, provide focused crop recommendations following the exact response structure specified in the system message."""
-
-            # Use Gemini with streaming (synchronous iterator)
-            response = gemini_model.generate_content(
-                full_prompt,
-                stream=True
+        from configs.model_config import PIPELINE_SYSTEM_MESSAGE
+        
+        # Build comprehensive context string from all sources
+        context_parts = []
+        
+        # Vector DB context
+        if pipeline_context.get('vector_db'):
+            vdb = pipeline_context['vector_db']
+            if vdb.get('success') and vdb.get('context'):
+                context_parts.append("📚 AGRICULTURAL KNOWLEDGE BASE:")
+                for i, doc in enumerate(vdb['context'][:3], 1):  # Top 3 docs
+                    context_parts.append(f"\n[Document {i}] {doc.get('metadata', {}).get('source_file', 'Unknown source')}")
+                    context_parts.append(f"Pages {doc.get('metadata', {}).get('start_page')}-{doc.get('metadata', {}).get('end_page')}")
+                    context_parts.append(doc['text'][:1000])  # Limit length
+        
+        # Weather context
+        if pipeline_context.get('weather'):
+            weather = pipeline_context['weather']
+            if weather.get('success') and weather.get('context'):
+                wc = weather['context']
+                context_parts.append(f"\n\n🌤️ WEATHER FORECAST ({wc['station_name']}):")
+                context_parts.append(f"Sunrise: {wc['sun_timings']['sunrise']} | Sunset: {wc['sun_timings']['sunset']}")
+                for day in wc['forecast'][:3]:  # Next 3 days
+                    context_parts.append(f"\n{day['date']}: {day['description']}")
+                    context_parts.append(f"Temp: {day['min_temp']}°C - {day['max_temp']}°C, Humidity: {day['humidity_morning']}%-{day['humidity_evening']}%")
+                    if day['warning'] != 'No warning':
+                        context_parts.append(f"⚠️ {day['warning']}")
+        
+        # Government schemes
+        if pipeline_context.get('schemes'):
+            schemes = pipeline_context['schemes']
+            if schemes.get('success') and schemes.get('context', {}).get('schemes'):
+                context_parts.append(f"\n\n🏛️ GOVERNMENT SCHEMES ({schemes.get('state', 'Kerala')}):")
+                for i, scheme in enumerate(schemes['context']['schemes'][:5], 1):  # Top 5 schemes
+                    context_parts.append(f"\n{i}. {scheme['name']} ({scheme['level']})")
+                    context_parts.append(f"   Ministry: {scheme['ministry']}")
+                    context_parts.append(f"   {scheme['description'][:200]}...")
+                    context_parts.append(f"   URL: {scheme['url']}")
+        
+        # Market prices
+        if pipeline_context.get('prices'):
+            prices = pipeline_context['prices']
+            if prices.get('success') and prices.get('context', {}).get('prices'):
+                context_parts.append(f"\n\n🌾 MANDI PRICES ({prices.get('state', 'KERALA')}):")
+                for i, price in enumerate(prices['context']['prices'][:10], 1):  # Top 10 commodities
+                    context_parts.append(f"\n{i}. {price['commodity']} ({price['variety']})")
+                    context_parts.append(f"   APMC: {price['apmc']}, {price['district']}")
+                    context_parts.append(f"   Price: ₹{price['min_price']}-₹{price['max_price']}/{price['unit']} (Modal: ₹{price['modal_price']})")
+        
+        # Note: YouTube videos are not included in model context - they're for frontend display only
+        
+        # Web search results
+        if pipeline_context.get('web_search'):
+            web = pipeline_context['web_search']
+            if web.get('success'):
+                if web.get('context', {}).get('pages'):  # Scraped content available
+                    context_parts.append(f"\n\n🔍 WEB INFORMATION:")
+                    for i, page in enumerate(web['context']['pages'][:3], 1):  # Top 3 pages
+                        if page.get('content'):
+                            context_parts.append(f"\n{i}. {page['title']}")
+                            context_parts.append(f"   Source: {page['url'][:80]}...")
+                            context_parts.append(f"   {page['content'][:500]}...")
+                elif web.get('context', {}).get('urls'):
+                    context_parts.append(f"\n\n🔗 RELEVANT URLS:")
+                    for i, url in enumerate(web['context']['urls'][:5], 1):
+                        context_parts.append(f"{i}. {url}")
+        
+        combined_context = "\n".join(context_parts)
+        
+        # Build prompt with system message and context
+        messages = [
+            ("system", PIPELINE_SYSTEM_MESSAGE + "\n\nUSE THE FOLLOWING CONTEXT TO ANSWER:\n{context}"),
+            ("human", "{question}")
+        ]
+        
+        template = ChatPromptTemplate.from_messages(messages)
+        chain = template | self.default_model | StrOutputParser()
+        
+        chain_input = {
+            "question": question,
+            "context": combined_context
+        }
+        
+        full_response = ""
+        
+        if stream:
+            async for chunk in chain.astream(chain_input):
+                if chunk:
+                    full_response += chunk
+                    yield chunk
+        else:
+            full_response = await chain.ainvoke(chain_input)
+            yield full_response
+        
+        # Save to database
+        if push_to_db and full_response:
+            push_to_supabase(
+                'chat_messages',
+                {
+                    'conversation_id': conversation_id,
+                    'user_id': user_id,
+                    'message': full_response,
+                    'sender': 'assistant',
+                    'metadata': {
+                        'sources': list(pipeline_context.keys()),
+                        'context_types': [k for k, v in pipeline_context.items() if v.get('success')]
+                    }
+                }
             )
-            
-            # Stream the response chunks (Gemini returns synchronous iterator)
-            for chunk in response:
-                if chunk.text:
-                    yield chunk.text
-                    
-        except Exception as e:
-            logger.error(f"Error in get_crop_advice: {str(e)}")
-            error_message = f"Error generating crop advice: {str(e)}"
-            yield error_message
+    
+
 model_runner = ModelRun()

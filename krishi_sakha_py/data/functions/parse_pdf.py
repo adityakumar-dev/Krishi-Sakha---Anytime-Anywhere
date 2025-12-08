@@ -1,9 +1,17 @@
 import os
 import logging
+import time
 from typing import List, Dict, Optional, Union
 from pathlib import Path
 import hashlib
 from datetime import datetime
+import dotenv
+dotenv.load_dotenv(dotenv_path='./../../.env')
+try:
+    import google.generativeai as genai
+    GEMINI_AVAILABLE = True
+except ImportError:
+    GEMINI_AVAILABLE = False
 
 try:
     import PyPDF2
@@ -32,32 +40,34 @@ class PDFParseError(Exception):
 
 class PDFParser:
     """
-    A comprehensive PDF parser for extracting text and preparing data for vector database integration.
-    
-    This class provides methods to:
-    - Extract text from PDF files using multiple backends
-    - Chunk text into manageable pieces for vector storage
-    - Generate metadata for each document chunk
-    - Handle various PDF formats and edge cases
+    A comprehensive PDF parser with standard and AI-Enhanced modes.
     """
     
     def __init__(self, 
                  chunk_size: int = 1000, 
                  chunk_overlap: int = 200,
-                 min_chunk_size: int = 100):
+                 min_chunk_size: int = 100,
+                 gemini_api_key: str = None):
         """
-        Initialize the PDF parser.
-        
+        Initialize the parser.
         Args:
             chunk_size: Maximum size of each text chunk
             chunk_overlap: Number of characters to overlap between chunks
             min_chunk_size: Minimum size for a chunk to be considered valid
+            gemini_api_key: Needed if using parse_kau_smart_pdf
         """
         self.chunk_size = chunk_size
         self.chunk_overlap = chunk_overlap
         self.min_chunk_size = min_chunk_size
         
-        # Initialize text splitter if available
+        # Configure GenAI if key is provided
+        if gemini_api_key and GEMINI_AVAILABLE:
+            genai.configure(api_key=gemini_api_key)
+            self.has_ai = True
+        else:
+            self.has_ai = False
+        
+        # Initialize text splitter
         if RecursiveCharacterTextSplitter:
             self.text_splitter = RecursiveCharacterTextSplitter(
                 chunk_size=self.chunk_size,
@@ -303,6 +313,104 @@ class PDFParser:
         
         return chunked_data
     
+    def parse_kau_smart_pdf(self, pdf_path: Union[str, Path]) -> List[Dict]:
+        """
+        SPECIAL MODE: Uses Gemini to 'read' the PDF page-by-page.
+        1. Detects Crop Context (e.g., if page is about Coconut).
+        2. Flattens Tables into Sentences (Fixes Fertilizer charts).
+        3. Returns chunks directly.
+        """
+        if not self.has_ai:
+            raise PDFParseError("Gemini API Key not provided. Cannot use Smart Parse.")
+
+        logger.info(f"🧠 AI-Enhanced Parsing started for: {pdf_path}")
+        
+        chunks = []
+        current_crop = "General"
+        
+        # Use PyPDF2 for page iteration (lighter) or pdfplumber
+        try:
+            reader = PyPDF2.PdfReader(pdf_path)
+            total_pages = len(reader.pages)
+        except:
+            raise PDFParseError("Could not open PDF for Smart Parsing")
+
+        # Skip first 15 pages (Indexes)
+        start_page = 15 if total_pages > 20 else 0
+        
+        logger.info(f"Processing {total_pages - start_page} pages with AI...")
+
+        model = genai.GenerativeModel('gemini-2.5-flash')
+
+        for i in range(start_page, total_pages):
+            page = reader.pages[i]
+            raw_text = page.extract_text()
+            
+            if not raw_text or len(raw_text) < 50: 
+                continue
+
+            # 1. Heuristic: Update Crop Context
+            # This ensures "Leaf Rot" is tagged with "Coconut" not "Rice"
+            header_check = raw_text[:100].upper()
+            if "RICE" in header_check: 
+                current_crop = "Rice"
+            elif "COCONUT" in header_check: 
+                current_crop = "Coconut"
+            elif "BANANA" in header_check: 
+                current_crop = "Banana"
+            elif "PEPPER" in header_check: 
+                current_crop = "Pepper"
+            elif "RUBBER" in header_check: 
+                current_crop = "Rubber"
+
+            # 2. Heuristic: Is this a Table? 
+            # (Lots of numbers + newlines = likely a dosage table)
+            is_table = raw_text.count('\n') > 15 and sum(c.isdigit() for c in raw_text) > 20
+            
+            clean_text = raw_text
+            
+            # 3. AI Cleaning (Only for tables to save tokens/time)
+            if is_table:
+                try:
+                    response = model.generate_content(
+                        f"""
+                        Read this PDF page from Kerala Agriculture Manual.
+                        It contains complex tables (Fertilizer/Chemicals/Dosage).
+                        Task: Rewrite the content as clear, factual sentences.
+                        Context: This page is about {current_crop}.
+                        
+                        Page Text:
+                        {raw_text[:3000]}
+                        """
+                    )
+                    clean_text = response.text
+                except Exception as e:
+                    logger.warning(f"AI cleaning failed on page {i}: {e}")
+            
+            # 4. Create Chunk Immediately
+            # We treat 1 Page = 1 Chunk for strict context
+            chunk_metadata = {
+                'source_file': os.path.basename(pdf_path),
+                'page_number': i + 1,
+                'crop_context': current_crop,
+                'chunk_index': i,
+                'extraction_method': 'gemini_smart_parse',
+                'is_table': is_table,
+                'created_at': datetime.now().isoformat()
+            }
+
+            chunks.append({
+                'text': clean_text.strip(),
+                'metadata': chunk_metadata
+            })
+            
+            # Rate limit protection (Free tier)
+            time.sleep(2)
+            if i % 5 == 0: 
+                logger.info(f"Processed page {i} ({current_crop})...")
+
+        return chunks
+    
     def parse_pdf_for_vector_db(self, pdf_path: Union[str, Path], 
                                organization: str = None,
                                document_type: str = None,
@@ -387,6 +495,80 @@ class PDFParser:
         return results
 
 # Convenience functions for easy usage
+def parse_pdf_smart(pdf_path: str, gemini_api_key: str = None) -> List[Dict]:
+    """
+    Convenience function for smart AI-enhanced PDF parsing.
+    
+    Automatically detects tables and uses Gemini to convert them to readable text.
+    Includes crop context and metadata for agriculture PDFs.
+    
+    Args:
+        pdf_path: Path to the PDF file
+        gemini_api_key: Gemini API key (if None, will try to read from environment)
+        
+    Returns:
+        List[Dict]: List of chunks with text and metadata
+    """
+    api_key = gemini_api_key
+    if not api_key:
+        from configs.external_keys import GEMINI_API_KEY
+        api_key = GEMINI_API_KEY
+    
+    parser = PDFParser(gemini_api_key=api_key)
+    return parser.parse_kau_smart_pdf(pdf_path)
+
+
+def to_vector_db(pdf_path: str, 
+                 gemini_api_key: str = None,
+                 organization: str = None,
+                 document_type: str = None,
+                 document_category: str = None,
+                 year: str = None,
+                 tags: List[str] = None) -> List[Dict]:
+    """
+    Parse PDF using AI-enhanced mode and prepare for vector database insertion.
+    
+    This function:
+    1. Automatically detects tables and converts them to text
+    2. Detects crop context for agriculture PDFs
+    3. Prepares metadata for vector database
+    
+    Args:
+        pdf_path: Path to the PDF file
+        gemini_api_key: Gemini API key (if None, will try to read from environment)
+        organization: Organization name for metadata
+        document_type: Document type (e.g., 'agricultural_guide', 'manual')
+        document_category: Document category (e.g., 'agriculture')
+        year: Publication year
+        tags: List of tags for the document
+        
+    Returns:
+        List[Dict]: List of chunks ready for vector database
+    """
+    api_key = gemini_api_key
+    if not api_key:
+        from configs.external_keys import GEMINI_API_KEY
+        api_key = GEMINI_API_KEY
+    
+    parser = PDFParser(gemini_api_key=api_key)
+    chunks = parser.parse_kau_smart_pdf(pdf_path)
+    
+    # Enhance metadata with additional information
+    for chunk in chunks:
+        chunk['metadata'].update({
+            'organization': organization or 'KAU',
+            'document_type': document_type or 'agricultural_guide',
+            'document_category': document_category or 'agriculture',
+            'publication_year': year or 'Unknown',
+            'tags': tags or [],
+            'document_title': Path(pdf_path).stem,
+            'file_size_bytes': os.path.getsize(pdf_path) if os.path.exists(pdf_path) else 0,
+        })
+    
+    logger.info(f"Prepared {len(chunks)} chunks from {pdf_path} for vector database")
+    return chunks
+
+
 def parse_pdf(pdf_path: Union[str, Path], 
               chunk_size: int = 1000, 
               chunk_overlap: int = 200,

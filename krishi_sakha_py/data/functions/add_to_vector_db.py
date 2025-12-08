@@ -74,48 +74,69 @@ class ChromaVectorDB:
         if len(chunks) != len(embeddings):
             raise VectorDBError("Number of chunks must match number of embeddings")
         
-        ids = []
-        documents = []
-        metadatas = []
+        # Batch size for ChromaDB (5461 is the safe limit)
+        batch_size = 5000
+        total_added = 0
         
-        for i, chunk in enumerate(chunks):
-            # Generate unique ID for each chunk
-            chunk_id = f"{chunk.get('file_hash', 'unknown')}_{i}"
-            ids.append(chunk_id)
-            documents.append(chunk['text'])
+        for batch_start in range(0, len(chunks), batch_size):
+            batch_end = min(batch_start + batch_size, len(chunks))
+            batch_chunks = chunks[batch_start:batch_end]
+            batch_embeddings = embeddings[batch_start:batch_end]
             
-            # Prepare metadata (ChromaDB requires string values)
-            chunk_metadata = chunk.get('metadata', {})
-            metadata = {
-                'source_file': str(chunk.get('source_file', '')),
-                'chunk_index': str(chunk.get('chunk_index', i)),
-                'file_hash': chunk.get('file_hash', ''),
-                'created_at': chunk.get('created_at', datetime.now().isoformat()),
-                'total_pages': str(chunk_metadata.get('total_pages', 0)),
-                'extraction_method': chunk_metadata.get('extraction_method', ''),
-                # Enhanced organizational metadata
-                'organization': chunk_metadata.get('organization', 'Unknown'),
-                'document_type': chunk_metadata.get('document_type', 'Unknown'),
-                'document_category': chunk_metadata.get('document_category', 'General'),
-                'publication_year': str(chunk_metadata.get('publication_year', 'Unknown')),
-                'language': chunk_metadata.get('language', 'Unknown'),
-                'document_title': chunk_metadata.get('document_title', ''),
-                'file_size_bytes': str(chunk_metadata.get('file_size_bytes', 0)),
-                'tags': ','.join(chunk_metadata.get('tags', [])),  # Convert list to comma-separated string
-                'chunk_size': str(chunk_metadata.get('chunk_size', 0)),
-                'total_chunks': str(chunk_metadata.get('total_chunks', 0))
-            }
-            metadatas.append(metadata)
+            ids = []
+            documents = []
+            metadatas = []
+            
+            for i, chunk in enumerate(batch_chunks):
+                # Generate unique ID for each chunk
+                chunk_id = f"{chunk.get('file_hash', 'unknown')}_{batch_start + i}"
+                ids.append(chunk_id)
+                documents.append(chunk['text'])
+                
+                # Prepare metadata (ChromaDB requires string values)
+                chunk_metadata = chunk.get('metadata', {})
+                metadata = {
+                    'source_file': str(chunk.get('source_file', '')),
+                    'chunk_index': str(chunk.get('chunk_index', batch_start + i)),
+                    'file_hash': chunk.get('file_hash', ''),
+                    'created_at': chunk.get('created_at', datetime.now().isoformat()),
+                    'total_pages': str(chunk_metadata.get('total_pages', 0)),
+                    'extraction_method': chunk_metadata.get('extraction_method', ''),
+                    # Enhanced organizational metadata
+                    'organization': chunk_metadata.get('organization', 'Unknown'),
+                    'document_type': chunk_metadata.get('document_type', 'Unknown'),
+                    'document_category': chunk_metadata.get('document_category', 'General'),
+                    'publication_year': str(chunk_metadata.get('publication_year', 'Unknown')),
+                    'language': chunk_metadata.get('language', 'Unknown'),
+                    'document_title': chunk_metadata.get('document_title', ''),
+                    'file_size_bytes': str(chunk_metadata.get('file_size_bytes', 0)),
+                    'tags': ','.join(chunk_metadata.get('tags', [])),  # Convert list to comma-separated string
+                    'chunk_size': str(chunk_metadata.get('chunk_size', 0)),
+                    'total_chunks': str(chunk_metadata.get('total_chunks', 0)),
+                    # Content positioning metadata
+                    'start_page': str(chunk_metadata.get('start_page', '')),
+                    'end_page': str(chunk_metadata.get('end_page', '')),
+                    'page_span': str(chunk_metadata.get('page_span', '')),
+                    'content_type': chunk_metadata.get('content_type', ''),
+                    'is_multipage': str(chunk_metadata.get('is_multipage', '')),
+                    'is_table': str(chunk_metadata.get('is_table', '')),
+                    'crop_context': chunk_metadata.get('crop_context', ''),
+                    'ai_processed': str(chunk_metadata.get('ai_processed', ''))
+                }
+                metadatas.append(metadata)
+            
+            # Add batch to collection
+            self.collection.add(
+                ids=ids,
+                embeddings=batch_embeddings,
+                documents=documents,
+                metadatas=metadatas
+            )
+            
+            total_added += len(batch_chunks)
+            logger.info(f"Added batch {batch_start}-{batch_end}: {len(batch_chunks)} documents")
         
-        # Add to collection
-        self.collection.add(
-            ids=ids,
-            embeddings=embeddings,
-            documents=documents,
-            metadatas=metadatas
-        )
-        
-        logger.info(f"Added {len(chunks)} documents to ChromaDB collection")
+        logger.info(f"✅ Added total {total_added} documents to ChromaDB collection")
     
     def search(self, query_embedding: List[float], n_results: int = 5, 
                where_filter: Dict = None) -> Dict:

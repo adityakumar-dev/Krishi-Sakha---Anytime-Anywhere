@@ -24,5 +24,9 @@ dependencies = [
     "pyserial",
     "pandas",
     "httpx",
-    "sentencepiece"
+    "sentencepiece",
+    "PyPDF2",
+    "pdfplumber",
+    "opencv-python",
+    "matplotlib",
 ]

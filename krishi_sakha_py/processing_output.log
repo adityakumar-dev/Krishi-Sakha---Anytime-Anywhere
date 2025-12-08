@@ -1,0 +1,26 @@
+INFO:__main__:================================================================================
+INFO:__main__:PROCESSING POP2016.PDF TO VECTOR DATABASE
+INFO:__main__:================================================================================
+INFO:__main__:PDF Path: /home/linmar/Desktop/Krishi-Sakha/krishi_sakha_py/data/pdfs/pop2016.pdf
+INFO:__main__:Timestamp: 2025-12-06T23:49:37.047569
+INFO:__main__:================================================================================
+INFO:__main__:
+📖 STEP 1: Parsing PDF with multi-page continuity...
+INFO:__main__:--------------------------------------------------------------------------------
+ERROR:__main__:
+================================================================================
+ERROR:__main__:❌ ERROR: Gemini API key required for enhanced parsing
+ERROR:__main__:================================================================================
+ERROR:__main__:Traceback (most recent call last):
+  File "/home/linmar/Desktop/Krishi-Sakha/krishi_sakha_py/scripts/process_pop2016_to_vectordb.py", line 50, in process_pop2016_pdf
+    chunks = parse_pdf_enhanced(
+        pdf_path=str(pdf_path),
+    ...<5 lines>...
+        gemini_api_key=os.getenv("GEMINI_API_KEY")
+    )
+  File "/home/linmar/Desktop/Krishi-Sakha/krishi_sakha_py/data/functions/enhanced_pdf_parser.py", line 421, in parse_pdf_enhanced
+    parser = EnhancedPDFParser(gemini_api_key=gemini_api_key)
+  File "/home/linmar/Desktop/Krishi-Sakha/krishi_sakha_py/data/functions/enhanced_pdf_parser.py", line 78, in __init__
+    raise ValueError("Gemini API key required for enhanced parsing")
+ValueError: Gemini API key required for enhanced parsing
+

@@ -4,7 +4,7 @@ from typing import Dict, Any
 from fastapi.params import Depends
 from routes.middlewares.auth_middleware import supabase_jwt_middleware
 from scripts.enam_mandi import all_states_mandi_details, mandi_details, mandi_list, request_districts
-from scripts.enam_price import all_states_mandi_price
+from scripts.enam_price import all_states_mandi_price, get_mandi_prices
 from scripts.imd_handler import (
     get_imd_weather, 
     get_imd_by_location,
@@ -44,7 +44,7 @@ async def get_mandi_details(state_name: str, district_name: str, mandi_id: str, 
 async def get_trade_data(state_name: str, from_date: str, to_date: str, user=Depends(supabase_jwt_middleware)) -> Dict[str, Any]:
     if state_name not in all_states_mandi_price:
         return {"success": False, "message": "Invalid state name"}
-    result = await all_states_mandi_price(state_name, from_date, to_date)
+    result = await get_mandi_prices(from_date, to_date, state_name)
     return {"success": True, "data": result}
 
 # ---------------------- GET WEATHER DATA (IMD) ----------------------

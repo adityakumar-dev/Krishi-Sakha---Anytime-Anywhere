@@ -1,0 +1,1495 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0100   418   0     0 100   418     0   347   0:00:01  0:00:01 --:--:--   348100   418   0     0 100   418     0   189   0:00:02  0:00:02 --:--:--   189100   418   0     0 100   418     0   130   0:00:03  0:00:03 --:--:--   130100   418   0     0 100   418     0    99   0:00:04  0:00:04 --:--:--    99100   418   0     0 100   418     0    80   0:00:05  0:00:05 --:--:--    80100   418   0     0 100   418     0    67   0:00:06  0:00:06 --:--:--     0100   418   0     0 100   418     0    57   0:00:07  0:00:07 --:--:--     0100   418   0     0 100   418     0    50   0:00:08  0:00:08 --:--:--     0100   418   0     0 100   418     0    45   0:00:09  0:00:09 --:--:--     0data: {"type": "status", "message": "Processing query..."}
+
+data: {"type": "status", "message": "Analyzing query..."}
+
+data: {"type": "status", "message": "Searching knowledge base..."}
+
+data: {"type": "status", "message": "Finding video resources..."}
+
+data: {"type": "status", "message": "Generating response..."}
+
+100   735   0   317 100   418    30    40   0:00:10  0:00:10 --:--:--    63100   735   0   317 100   418    28    37   0:00:11  0:00:11 --:--:--    63100   735   0   317 100   418    25    34   0:00:12  0:00:12 --:--:--    63100   735   0   317 100   418    23    31   0:00:13  0:00:13 --:--:--    63100   735   0   317 100   418    22    29   0:00:14  0:00:14 --:--:--    63100   735   0   317 100   418    20    27   0:00:15  0:00:15 --:--:--     0100   735   0   317 100   418    19    25   0:00:16  0:00:16 --:--:--     0data: {"type": "text", "chunk": "Nam"}
+
+data: {"type": "text", "chunk": "aste"}
+
+data: {"type": "text", "chunk": "!"}
+
+data: {"type": "text", "chunk": " Let"}
+
+data: {"type": "text", "chunk": "\u2019"}
+
+data: {"type": "text", "chunk": "s"}
+
+data: {"type": "text", "chunk": " talk"}
+
+data: {"type": "text", "chunk": " about"}
+
+data: {"type": "text", "chunk": " controlling"}
+
+data: {"type": "text", "chunk": " pests"}
+
+data: {"type": "text", "chunk": " in"}
+
+data: {"type": "text", "chunk": " your"}
+
+data: {"type": "text", "chunk": " banana"}
+
+data: {"type": "text", "chunk": " plants"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": " Based"}
+
+data: {"type": "text", "chunk": " on"}
+
+100  1444   0  1026 100   418    60    24   0:00:17  0:00:16  0:00:01   149data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " information"}
+
+data: {"type": "text", "chunk": " from"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " documents"}
+
+data: {"type": "text", "chunk": " you"}
+
+data: {"type": "text", "chunk": " provided"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " here"}
+
+data: {"type": "text", "chunk": "\u2019"}
+
+data: {"type": "text", "chunk": "s"}
+
+data: {"type": "text", "chunk": " a"}
+
+data: {"type": "text", "chunk": " breakdown"}
+
+data: {"type": "text", "chunk": " of"}
+
+data: {"type": "text", "chunk": " how"}
+
+data: {"type": "text", "chunk": " to"}
+
+data: {"type": "text", "chunk": " manage"}
+
+data: {"type": "text", "chunk": " those"}
+
+data: {"type": "text", "chunk": " pesky"}
+
+data: {"type": "text", "chunk": " critters"}
+
+data: {"type": "text", "chunk": ":"}
+
+data: {"type": "text", "chunk": "\n\n"}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Key"}
+
+data: {"type": "text", "chunk": " P"}
+
+100  2492   0  2074 100   418   115    23   0:00:18  0:00:17  0:00:01   370data: {"type": "text", "chunk": "ests"}
+
+data: {"type": "text", "chunk": " and"}
+
+data: {"type": "text", "chunk": " Recommended"}
+
+data: {"type": "text", "chunk": " Treatments"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": "\n\n"}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Pseud"}
+
+data: {"type": "text", "chunk": "ost"}
+
+data: {"type": "text", "chunk": "em"}
+
+data: {"type": "text", "chunk": " We"}
+
+data: {"type": "text", "chunk": "evil"}
+
+data: {"type": "text", "chunk": " &"}
+
+data: {"type": "text", "chunk": " Rhiz"}
+
+data: {"type": "text", "chunk": "ome"}
+
+data: {"type": "text", "chunk": " We"}
+
+data: {"type": "text", "chunk": "evil"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": " These"}
+
+data: {"type": "text", "chunk": " are"}
+
+data: {"type": "text", "chunk": " major"}
+
+data: {"type": "text", "chunk": " concerns"}
+
+data: {"type": "text", "chunk": "."}
+
+100  3524   0  3106 100   418   163    22   0:00:19  0:00:18  0:00:01   588data: {"type": "text", "chunk": "\n"}
+
+data: {"type": "text", "chunk": "    "}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Short"}
+
+data: {"type": "text", "chunk": "-"}
+
+data: {"type": "text", "chunk": "Term"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": "-"}
+
+data: {"type": "text", "chunk": "7"}
+
+data: {"type": "text", "chunk": " months"}
+
+data: {"type": "text", "chunk": " after"}
+
+data: {"type": "text", "chunk": " planting"}
+
+data: {"type": "text", "chunk": "):"}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": " The"}
+
+data: {"type": "text", "chunk": " documents"}
+
+data: {"type": "text", "chunk": " strongly"}
+
+data: {"type": "text", "chunk": " recommend"}
+
+data: {"type": "text", "chunk": " applying"}
+
+data: {"type": "text", "chunk": " either"}
+
+data: {"type": "text", "chunk": " F"}
+
+data: {"type": "text", "chunk": "ip"}
+
+100  4555   0  4137 100   418   207    20   0:00:20  0:00:19  0:00:01   805data: {"type": "text", "chunk": "ron"}
+
+data: {"type": "text", "chunk": "il"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": "%"}
+
+data: {"type": "text", "chunk": " SC"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "3"}
+
+data: {"type": "text", "chunk": "ml"}
+
+data: {"type": "text", "chunk": " l"}
+
+data: {"type": "text", "chunk": "-"}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": ")"}
+
+data: {"type": "text", "chunk": " or"}
+
+data: {"type": "text", "chunk": " Car"}
+
+data: {"type": "text", "chunk": "bos"}
+
+data: {"type": "text", "chunk": "ulf"}
+
+data: {"type": "text", "chunk": "an"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": " EC"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "."}
+
+100  5526   0  5108 100   418   243    19   0:00:22  0:00:20  0:00:02  1008data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": "ml"}
+
+data: {"type": "text", "chunk": " l"}
+
+data: {"type": "text", "chunk": "-"}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": ")."}
+
+data: {"type": "text", "chunk": " This"}
+
+data: {"type": "text", "chunk": " is"}
+
+data: {"type": "text", "chunk": " best"}
+
+data: {"type": "text", "chunk": " done"}
+
+data: {"type": "text", "chunk": " at"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "6"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " and"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "7"}
+
+data: {"type": "text", "chunk": " months"}
+
+data: {"type": "text", "chunk": " after"}
+
+data: {"type": "text", "chunk": " planting"}
+
+data: {"type": "text", "chunk": "."}
+
+100  6479   0  6061 100   418   275    19   0:00:22  0:00:21  0:00:01  1007data: {"type": "text", "chunk": "\n"}
+
+data: {"type": "text", "chunk": "    "}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Organic"}
+
+data: {"type": "text", "chunk": " Option"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": "  "}
+
+data: {"type": "text", "chunk": "In"}
+
+data: {"type": "text", "chunk": " organic"}
+
+data: {"type": "text", "chunk": " farming"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " *"}
+
+data: {"type": "text", "chunk": "Beau"}
+
+data: {"type": "text", "chunk": "ver"}
+
+data: {"type": "text", "chunk": "ia"}
+
+data: {"type": "text", "chunk": " bass"}
+
+data: {"type": "text", "chunk": "iana"}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": " @"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "0"}
+
+100  7443   0  7025 100   418   306    18   0:00:23  0:00:22  0:00:01   993data: {"type": "text", "chunk": " g"}
+
+data: {"type": "text", "chunk": " l"}
+
+data: {"type": "text", "chunk": "-"}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": " is"}
+
+data: {"type": "text", "chunk": " a"}
+
+data: {"type": "text", "chunk": " great"}
+
+data: {"type": "text", "chunk": " alternative"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " also"}
+
+data: {"type": "text", "chunk": " applied"}
+
+data: {"type": "text", "chunk": " at"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "6"}
+
+data: {"type": "text", "chunk": " and"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "7"}
+
+data: {"type": "text", "chunk": " months"}
+
+data: {"type": "text", "chunk": " after"}
+
+data: {"type": "text", "chunk": " planting"}
+
+data: {"type": "text", "chunk": "."}
+
+100  8411   0  7993 100   418   333    17   0:00:24  0:00:23  0:00:01   981data: {"type": "text", "chunk": "\n\n"}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Brown"}
+
+data: {"type": "text", "chunk": " Plant"}
+
+data: {"type": "text", "chunk": " Hopper"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "B"}
+
+data: {"type": "text", "chunk": "PH"}
+
+data: {"type": "text", "chunk": ")"}
+
+data: {"type": "text", "chunk": " &"}
+
+data: {"type": "text", "chunk": " Other"}
+
+data: {"type": "text", "chunk": " S"}
+
+data: {"type": "text", "chunk": "ucking"}
+
+data: {"type": "text", "chunk": " P"}
+
+data: {"type": "text", "chunk": "ests"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "White"}
+
+data: {"type": "text", "chunk": "flies"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " J"}
+
+data: {"type": "text", "chunk": "ass"}
+
+data: {"type": "text", "chunk": "ids"}
+
+data: {"type": "text", "chunk": ","}
+
+100  9414   0  8996 100   418   360    16   0:00:26  0:00:24  0:00:02   975data: {"type": "text", "chunk": " Th"}
+
+data: {"type": "text", "chunk": "rips"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " M"}
+
+data: {"type": "text", "chunk": "ites"}
+
+data: {"type": "text", "chunk": "):"}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "\n"}
+
+data: {"type": "text", "chunk": "    "}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Ne"}
+
+data: {"type": "text", "chunk": "onic"}
+
+data: {"type": "text", "chunk": "otin"}
+
+data: {"type": "text", "chunk": "oids"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": " Several"}
+
+data: {"type": "text", "chunk": " options"}
+
+data: {"type": "text", "chunk": " are"}
+
+data: {"type": "text", "chunk": " available"}
+
+data: {"type": "text", "chunk": " \u2013"}
+
+data: {"type": "text", "chunk": " Conf"}
+
+data: {"type": "text", "chunk": "idor"}
+
+data: {"type": "text", "chunk": " "}
+
+100 10433   0 10015 100   418   385    16   0:00:26  0:00:25  0:00:01   984data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "7"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "8"}
+
+data: {"type": "text", "chunk": " SL"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " Tat"}
+
+data: {"type": "text", "chunk": "am"}
+
+data: {"type": "text", "chunk": "ida"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "7"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "8"}
+
+data: {"type": "text", "chunk": " SL"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " Im"}
+
+data: {"type": "text", "chunk": "id"}
+
+data: {"type": "text", "chunk": "ag"}
+
+data: {"type": "text", "chunk": "old"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "7"}
+
+data: {"type": "text", "chunk": "."}
+
+100 11361   0 10943 100   418   405    15   0:00:27  0:00:26  0:00:01   979data: {"type": "text", "chunk": "8"}
+
+data: {"type": "text", "chunk": " SL"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " Media"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "7"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "8"}
+
+data: {"type": "text", "chunk": " SL"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": " Use"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "3"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "ml"}
+
+data: {"type": "text", "chunk": " or"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "ml"}
+
+data: {"type": "text", "chunk": " per"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "3"}
+
+100 12330   0 11912 100   418   425    14   0:00:29  0:00:27  0:00:02   970data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "ha"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "\n"}
+
+data: {"type": "text", "chunk": "    "}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Th"}
+
+data: {"type": "text", "chunk": "iam"}
+
+data: {"type": "text", "chunk": "eth"}
+
+data: {"type": "text", "chunk": "ox"}
+
+data: {"type": "text", "chunk": "am"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": " Act"}
+
+data: {"type": "text", "chunk": "ara"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": " W"}
+
+data: {"type": "text", "chunk": "DG"}
+
+data: {"type": "text", "chunk": ":"}
+
+data: {"type": "text", "chunk": " "}
+
+100 13228   0 12810 100   418   442    14   0:00:29  0:00:28  0:00:01   963data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "g"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": " Very"}
+
+data: {"type": "text", "chunk": " effective"}
+
+data: {"type": "text", "chunk": " against"}
+
+data: {"type": "text", "chunk": " B"}
+
+data: {"type": "text", "chunk": "PH"}
+
+data: {"type": "text", "chunk": " and"}
+
+data: {"type": "text", "chunk": " safe"}
+
+100 14131   0 13713 100   418   457    13   0:00:32  0:00:29  0:00:03   937data: {"type": "text", "chunk": " for"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " B"}
+
+data: {"type": "text", "chunk": "PH"}
+
+data: {"type": "text", "chunk": " predator"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "green"}
+
+data: {"type": "text", "chunk": " mir"}
+
+data: {"type": "text", "chunk": "id"}
+
+data: {"type": "text", "chunk": " bug"}
+
+data: {"type": "text", "chunk": ")."}
+
+data: {"type": "text", "chunk": "\n"}
+
+data: {"type": "text", "chunk": "    "}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Acet"}
+
+data: {"type": "text", "chunk": "am"}
+
+data: {"type": "text", "chunk": "ip"}
+
+data: {"type": "text", "chunk": "rid"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": " Manik"}
+
+100 15017   0 14599 100   418   471    13   0:00:32  0:00:30  0:00:02   914data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "%"}
+
+data: {"type": "text", "chunk": " SP"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " Pride"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "%"}
+
+data: {"type": "text", "chunk": " SP"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " Rek"}
+
+data: {"type": "text", "chunk": "ord"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "%"}
+
+data: {"type": "text", "chunk": " SP"}
+
+data: {"type": "text", "chunk": ":"}
+
+data: {"type": "text", "chunk": " "}
+
+100 15869   0 15451 100   418   483    13   0:00:32  0:00:31  0:00:01   902data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": " Use"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "3"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "ml"}
+
+data: {"type": "text", "chunk": " or"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": "ml"}
+
+data: {"type": "text", "chunk": " per"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "3"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": " ha"}
+
+100 16755   0 16337 100   418   495    12   0:00:34  0:00:32  0:00:02   889data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "\n\n"}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Nut"}
+
+data: {"type": "text", "chunk": "rient"}
+
+data: {"type": "text", "chunk": " Supplement"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "Important"}
+
+data: {"type": "text", "chunk": " for"}
+
+data: {"type": "text", "chunk": " Overall"}
+
+data: {"type": "text", "chunk": " Health"}
+
+data: {"type": "text", "chunk": "):"}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "\n\n"}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Banana"}
+
+data: {"type": "text", "chunk": " Micro"}
+
+data: {"type": "text", "chunk": " Mix"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": "  "}
+
+data: {"type": "text", "chunk": "This"}
+
+data: {"type": "text", "chunk": " is"}
+
+data: {"type": "text", "chunk": " crucial"}
+
+100 17786   0 17368 100   418   511    12   0:00:34  0:00:33  0:00:01   906data: {"type": "text", "chunk": " for"}
+
+data: {"type": "text", "chunk": " overall"}
+
+data: {"type": "text", "chunk": " plant"}
+
+data: {"type": "text", "chunk": " health"}
+
+data: {"type": "text", "chunk": " and"}
+
+data: {"type": "text", "chunk": " resilience"}
+
+data: {"type": "text", "chunk": " to"}
+
+data: {"type": "text", "chunk": " pests"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "\n"}
+
+data: {"type": "text", "chunk": "    "}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Composition"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": " Fe"}
+
+data: {"type": "text", "chunk": "SO"}
+
+data: {"type": "text", "chunk": "\u2084"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": " kg"}
+
+100 18769   0 18351 100   418   524    11   0:00:38  0:00:34  0:00:04   934data: {"type": "text", "chunk": "),"}
+
+data: {"type": "text", "chunk": " Mn"}
+
+data: {"type": "text", "chunk": "SO"}
+
+data: {"type": "text", "chunk": "\u2084"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": " kg"}
+
+data: {"type": "text", "chunk": "),"}
+
+data: {"type": "text", "chunk": " Zn"}
+
+data: {"type": "text", "chunk": "SO"}
+
+data: {"type": "text", "chunk": "\u2084"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": " kg"}
+
+data: {"type": "text", "chunk": "),"}
+
+data: {"type": "text", "chunk": " Bor"}
+
+data: {"type": "text", "chunk": "ax"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "7"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": " kg"}
+
+data: {"type": "text", "chunk": "),"}
+
+data: {"type": "text", "chunk": " Cu"}
+
+data: {"type": "text", "chunk": " Sulph"}
+
+100 19759   0 19341 100   418   537    11   0:00:38  0:00:35  0:00:03   948data: {"type": "text", "chunk": "ate"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "5"}
+
+data: {"type": "text", "chunk": " kg"}
+
+data: {"type": "text", "chunk": ")"}
+
+data: {"type": "text", "chunk": " per"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "kg"}
+
+data: {"type": "text", "chunk": " ha"}
+
+data: {"type": "text", "chunk": "\u207b"}
+
+data: {"type": "text", "chunk": "\u00b9."}
+
+data: {"type": "text", "chunk": "\n"}
+
+data: {"type": "text", "chunk": "    "}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Application"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": "  "}
+
+data: {"type": "text", "chunk": "Mix"}
+
+100 20715   0 20297 100   418   549    11   0:00:38  0:00:36  0:00:02   966data: {"type": "text", "chunk": " with"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "nd"}
+
+data: {"type": "text", "chunk": " split"}
+
+data: {"type": "text", "chunk": " dose"}
+
+data: {"type": "text", "chunk": " of"}
+
+data: {"type": "text", "chunk": " N"}
+
+data: {"type": "text", "chunk": "PK"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " or"}
+
+data: {"type": "text", "chunk": " apply"}
+
+data: {"type": "text", "chunk": " as"}
+
+data: {"type": "text", "chunk": " a"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "%"}
+
+data: {"type": "text", "chunk": " fol"}
+
+data: {"type": "text", "chunk": "iar"}
+
+data: {"type": "text", "chunk": " spray"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "4"}
+
+100 21631   0 21213 100   418   558    11   0:00:38  0:00:37  0:00:01   975data: {"type": "text", "chunk": "g"}
+
+data: {"type": "text", "chunk": " mixture"}
+
+data: {"type": "text", "chunk": " in"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "4"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": "0"}
+
+data: {"type": "text", "chunk": " ml"}
+
+data: {"type": "text", "chunk": " water"}
+
+data: {"type": "text", "chunk": "/"}
+
+data: {"type": "text", "chunk": "plant"}
+
+data: {"type": "text", "chunk": ")"}
+
+data: {"type": "text", "chunk": " "}
+
+data: {"type": "text", "chunk": "3"}
+
+data: {"type": "text", "chunk": " months"}
+
+data: {"type": "text", "chunk": " after"}
+
+data: {"type": "text", "chunk": " planting"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "\n"}
+
+data: {"type": "text", "chunk": "    "}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Nut"}
+
+data: {"type": "text", "chunk": "rient"}
+
+100 22633   0 22215 100   418   569    10   0:00:41  0:00:38  0:00:03   969data: {"type": "text", "chunk": " Availability"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": "  "}
+
+data: {"type": "text", "chunk": "Fe"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "%),"}
+
+data: {"type": "text", "chunk": " Mn"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "2"}
+
+data: {"type": "text", "chunk": "%),"}
+
+data: {"type": "text", "chunk": " Zn"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "4"}
+
+data: {"type": "text", "chunk": "%),"}
+
+data: {"type": "text", "chunk": " B"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "6"}
+
+data: {"type": "text", "chunk": "%),"}
+
+data: {"type": "text", "chunk": " Cu"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "1"}
+
+data: {"type": "text", "chunk": "%)."}
+
+data: {"type": "text", "chunk": "\n\n"}
+
+100 23586   0 23168 100   418   579    10   0:00:41  0:00:39  0:00:02   960data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Important"}
+
+data: {"type": "text", "chunk": " Notes"}
+
+data: {"type": "text", "chunk": " &"}
+
+data: {"type": "text", "chunk": " Action"}
+
+data: {"type": "text", "chunk": "able"}
+
+data: {"type": "text", "chunk": " Recommendations"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": "\n\n"}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Timing"}
+
+data: {"type": "text", "chunk": " is"}
+
+data: {"type": "text", "chunk": " Key"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": " Start"}
+
+data: {"type": "text", "chunk": " pest"}
+
+data: {"type": "text", "chunk": " control"}
+
+data: {"type": "text", "chunk": " measures"}
+
+data: {"type": "text", "chunk": " as"}
+
+data: {"type": "text", "chunk": " soon"}
+
+data: {"type": "text", "chunk": " as"}
+
+data: {"type": "text", "chunk": " you"}
+
+100 24592   0 24174 100   418   590    10   0:00:41  0:00:40  0:00:01   973data: {"type": "text", "chunk": " notice"}
+
+data: {"type": "text", "chunk": " signs"}
+
+data: {"type": "text", "chunk": " of"}
+
+data: {"type": "text", "chunk": " infestation"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "\n"}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "F"}
+
+data: {"type": "text", "chunk": "oli"}
+
+data: {"type": "text", "chunk": "ar"}
+
+data: {"type": "text", "chunk": " Spray"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": " The"}
+
+data: {"type": "text", "chunk": " banana"}
+
+data: {"type": "text", "chunk": " micro"}
+
+data: {"type": "text", "chunk": " mix"}
+
+data: {"type": "text", "chunk": " ("}
+
+data: {"type": "text", "chunk": "fol"}
+
+data: {"type": "text", "chunk": "iar"}
+
+data: {"type": "text", "chunk": " spray"}
+
+data: {"type": "text", "chunk": ")"}
+
+data: {"type": "text", "chunk": " is"}
+
+data: {"type": "text", "chunk": " highly"}
+
+100 25615   0 25197 100   418   600     9   0:00:46  0:00:41  0:00:05   980data: {"type": "text", "chunk": " recommended"}
+
+data: {"type": "text", "chunk": " and"}
+
+data: {"type": "text", "chunk": " should"}
+
+data: {"type": "text", "chunk": " be"}
+
+data: {"type": "text", "chunk": " applied"}
+
+data: {"type": "text", "chunk": " regularly"}
+
+data: {"type": "text", "chunk": " as"}
+
+data: {"type": "text", "chunk": " per"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " instructions"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "\n"}
+
+data: {"type": "text", "chunk": "*"}
+
+data: {"type": "text", "chunk": "   "}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Soil"}
+
+data: {"type": "text", "chunk": " Application"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": "  "}
+
+data: {"type": "text", "chunk": "Applying"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " micro"}
+
+data: {"type": "text", "chunk": " mix"}
+
+data: {"type": "text", "chunk": " along"}
+
+100 26629   0 26211 100   418   610     9   0:00:46  0:00:42  0:00:04   999data: {"type": "text", "chunk": " with"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " N"}
+
+data: {"type": "text", "chunk": "PK"}
+
+data: {"type": "text", "chunk": " split"}
+
+data: {"type": "text", "chunk": " dose"}
+
+data: {"type": "text", "chunk": " will"}
+
+data: {"type": "text", "chunk": " boost"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " plant"}
+
+data: {"type": "text", "chunk": "\u2019"}
+
+data: {"type": "text", "chunk": "s"}
+
+data: {"type": "text", "chunk": " defenses"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": "\n\n"}
+
+data: {"type": "text", "chunk": "**"}
+
+data: {"type": "text", "chunk": "Disclaimer"}
+
+data: {"type": "text", "chunk": ":**"}
+
+data: {"type": "text", "chunk": " *"}
+
+data: {"type": "text", "chunk": "I"}
+
+data: {"type": "text", "chunk": " am"}
+
+data: {"type": "text", "chunk": " an"}
+
+data: {"type": "text", "chunk": " AI"}
+
+data: {"type": "text", "chunk": " assistant"}
+
+data: {"type": "text", "chunk": " and"}
+
+100 27661   0 27243 100   418   619     9   0:00:46  0:00:43  0:00:03  1005data: {"type": "text", "chunk": " cannot"}
+
+data: {"type": "text", "chunk": " provide"}
+
+data: {"type": "text", "chunk": " definitive"}
+
+data: {"type": "text", "chunk": " agricultural"}
+
+data: {"type": "text", "chunk": " advice"}
+
+data: {"type": "text", "chunk": "."}
+
+data: {"type": "text", "chunk": " Always"}
+
+data: {"type": "text", "chunk": " follow"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " instructions"}
+
+data: {"type": "text", "chunk": " on"}
+
+data: {"type": "text", "chunk": " pesticide"}
+
+data: {"type": "text", "chunk": " labels"}
+
+data: {"type": "text", "chunk": " and"}
+
+data: {"type": "text", "chunk": " consult"}
+
+data: {"type": "text", "chunk": " with"}
+
+data: {"type": "text", "chunk": " a"}
+
+data: {"type": "text", "chunk": " local"}
+
+data: {"type": "text", "chunk": " agricultural"}
+
+data: {"type": "text", "chunk": " extension"}
+
+data: {"type": "text", "chunk": " officer"}
+
+data: {"type": "text", "chunk": " for"}
+
+data: {"type": "text", "chunk": " specific"}
+
+data: {"type": "text", "chunk": " recommendations"}
+
+100 28732   0 28314 100   418   629     9   0:00:46  0:00:44  0:00:02  1029data: {"type": "text", "chunk": " tailored"}
+
+data: {"type": "text", "chunk": " to"}
+
+data: {"type": "text", "chunk": " your"}
+
+data: {"type": "text", "chunk": " region"}
+
+data: {"type": "text", "chunk": " and"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " precise"}
+
+data: {"type": "text", "chunk": " pest"}
+
+data: {"type": "text", "chunk": " pressure"}
+
+data: {"type": "text", "chunk": " you"}
+
+data: {"type": "text", "chunk": "'"}
+
+data: {"type": "text", "chunk": "re"}
+
+data: {"type": "text", "chunk": " facing"}
+
+data: {"type": "text", "chunk": ".*"}
+
+data: {"type": "text", "chunk": "\n\n"}
+
+data: {"type": "text", "chunk": "Do"}
+
+data: {"type": "text", "chunk": " you"}
+
+data: {"type": "text", "chunk": " want"}
+
+data: {"type": "text", "chunk": " me"}
+
+data: {"type": "text", "chunk": " to"}
+
+data: {"type": "text", "chunk": " elaborate"}
+
+data: {"type": "text", "chunk": " on"}
+
+data: {"type": "text", "chunk": " a"}
+
+data: {"type": "text", "chunk": " specific"}
+
+100 29735   0 29317 100   418   637     9   0:00:46  0:00:45  0:00:01  1028data: {"type": "text", "chunk": " aspect"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " like"}
+
+data: {"type": "text", "chunk": " how"}
+
+data: {"type": "text", "chunk": " to"}
+
+data: {"type": "text", "chunk": " identify"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " pests"}
+
+data: {"type": "text", "chunk": ","}
+
+data: {"type": "text", "chunk": " or"}
+
+data: {"type": "text", "chunk": " perhaps"}
+
+data: {"type": "text", "chunk": " discuss"}
+
+data: {"type": "text", "chunk": " organic"}
+
+data: {"type": "text", "chunk": " pest"}
+
+data: {"type": "text", "chunk": " control"}
+
+data: {"type": "text", "chunk": " options"}
+
+data: {"type": "text", "chunk": " based"}
+
+data: {"type": "text", "chunk": " on"}
+
+data: {"type": "text", "chunk": " the"}
+
+data: {"type": "text", "chunk": " micro"}
+
+data: {"type": "text", "chunk": " mix"}
+
+data: {"type": "text", "chunk": "?"}
+
+100 30661   0 30243 100   418   631     8   0:00:52  0:00:47  0:00:05   857100 30661   0 30243 100   418   619     8   0:00:52  0:00:48  0:00:04   684100 30661   0 30243 100   418   606     8   0:00:52  0:00:49  0:00:03   510100 30661   0 30243 100   418   594     8   0:00:52  0:00:50  0:00:02   327100 30661   0 30243 100   418   583     8   0:00:52  0:00:51  0:00:01   156100 30661   0 30243 100   418   572     7   0:00:59  0:00:52  0:00:07     0100 30661   0 30243 100   418   561     7   0:00:59  0:00:53  0:00:06     0100 30661   0 30243 100   418   551     7   0:00:59  0:00:54  0:00:05     0100 30661   0 30243 100   418   541     7   0:00:59  0:00:55  0:00:04     0100 30661   0 30243 100   418   531     7   0:00:59  0:00:56  0:00:03     0100 30661   0 30243 100   418   522     7   0:00:59  0:00:57  0:00:02     0100 30661   0 30243 100   418   513     7   0:00:59  0:00:58  0:00:01     0100 30661   0 30243 100   418   505     6   0:01:09  0:00:59  0:00:10     0100 30661   0 30243 100   418   496     6   0:01:09  0:01:00  0:00:09     0100 30661   0 30243 100   418   488     6   0:01:09  0:01:01  0:00:08     0100 30661   0 30243 100   418   481     6   0:01:09  0:01:02  0:00:07     0100 30661   0 30243 100   418   473     6   0:01:09  0:01:03  0:00:06     0100 30661   0 30243 100   418   466     6   0:01:09  0:01:04  0:00:05     0100 30661   0 30243 100   418   459     6   0:01:09  0:01:05  0:00:04     0100 30661   0 30243 100   418   452     6   0:01:09  0:01:06  0:00:03     0100 30661   0 30243 100   418   445     6   0:01:09  0:01:07  0:00:02     0100 30661   0 30243 100   418   439     6   0:01:09  0:01:08  0:00:01     0100 30661   0 30243 100   418   432     5   0:01:23  0:01:09  0:00:14     0100 30661   0 30243 100   418   426     5   0:01:23  0:01:10  0:00:13     0100 30661   0 30243 100   418   420     5   0:01:23  0:01:11  0:00:12     0100 30661   0 30243 100   418   414     5   0:01:23  0:01:12  0:00:11     0100 30661   0 30243 100   418   409     5   0:01:23  0:01:13  0:00:10     0100 30661   0 30243 100   418   403     5   0:01:23  0:01:14  0:00:09     0100 30661   0 30243 100   418   398     5   0:01:23  0:01:15  0:00:08     0100 30661   0 30243 100   418   393     5   0:01:23  0:01:16  0:00:07     0100 30661   0 30243 100   418   388     5   0:01:23  0:01:17  0:00:06     0100 30661   0 30243 100   418   383     5   0:01:23  0:01:18  0:00:05     0100 30661   0 30243 100   418   378     5   0:01:23  0:01:19  0:00:04     0100 30661   0 30243 100   418   373     5   0:01:23  0:01:20  0:00:03     0100 30661   0 30243 100   418   369     5   0:01:23  0:01:21  0:00:02     0100 30661   0 30243 100   418   364     5   0:01:23  0:01:22  0:00:01     0100 30661   0 30243 100   418   360     4   0:01:44  0:01:23  0:00:21     0100 30661   0 30243 100   418   356     4   0:01:44  0:01:24  0:00:20     0100 30661   0 30243 100   418   352     4   0:01:44  0:01:25  0:00:19     0100 30661   0 30243 100   418   348     4   0:01:44  0:01:26  0:00:18     0100 30661   0 30243 100   418   344     4   0:01:44  0:01:27  0:00:17     0100 30661   0 30243 100   418   340     4   0:01:44  0:01:28  0:00:16     0100 30661   0 30243 100   418   336     4   0:01:44  0:01:29  0:00:15     0100 30661   0 30243 100   418   332     4   0:01:44  0:01:30  0:00:14     0100 30661   0 30243 100   418   329     4   0:01:44  0:01:31  0:00:13     0100 30661   0 30243 100   418   325     4   0:01:44  0:01:32  0:00:12     0100 30661   0 30243 100   418   322     4   0:01:44  0:01:33  0:00:11     0100 30661   0 30243 100   418   318     4   0:01:44  0:01:34  0:00:10     0100 30661   0 30243 100   418   315     4   0:01:44  0:01:35  0:00:09     0100 30661   0 30243 100   418   312     4   0:01:44  0:01:36  0:00:08     0100 30661   0 30243 100   418   308     4   0:01:44  0:01:37  0:00:07     0100 30661   0 30243 100   418   305     4   0:01:44  0:01:38  0:00:06     0100 30661   0 30243 100   418   302     4   0:01:44  0:01:39  0:00:05     0100 30661   0 30243 100   418   299     4   0:01:44  0:01:40  0:00:04     0100 30661   0 30243 100   418   296     4   0:01:44  0:01:41  0:00:03     0100 30661   0 30243 100   418   293     4   0:01:44  0:01:42  0:00:02     0100 30661   0 30243 100   418   291     4   0:01:44  0:01:43  0:00:01     0100 30661   0 30243 100   418   288     3   0:02:19  0:01:44  0:00:35     0100 30661   0 30243 100   418   285     3   0:02:19  0:01:45  0:00:34     0100 30661   0 30243 100   418   282     3   0:02:19  0:01:46  0:00:33     0100 30661   0 30243 100   418   280     3   0:02:19  0:01:47  0:00:32     0100 30661   0 30243 100   418   277     3   0:02:19  0:01:48  0:00:31     0100 30661   0 30243 100   418   275     3   0:02:19  0:01:49  0:00:30     0100 30661   0 30243 100   418   272     3   0:02:19  0:01:50  0:00:29     0100 30661   0 30243 100   418   270     3   0:02:19  0:01:51  0:00:28     0100 30661   0 30243 100   418   267     3   0:02:19  0:01:52  0:00:27     0100 30661   0 30243 100   418   265     3   0:02:19  0:01:53  0:00:26     0100 30661   0 30243 100   418   263     3   0:02:19  0:01:54  0:00:25     0100 30661   0 30243 100   418   260     3   0:02:19  0:01:55  0:00:24     0100 30661   0 30243 100   418   258     3   0:02:19  0:01:56  0:00:23     0100 30661   0 30243 100   418   256     3   0:02:19  0:01:57  0:00:22     0100 30661   0 30243 100   418   254     3   0:02:19  0:01:58  0:00:21     0100 30661   0 30243 100   418   252     3   0:02:19  0:01:59  0:00:20     0100 30661   0 30243 100   418   250     3   0:02:19  0:02:00  0:00:19     0100 30661   0 30243 100   418   248     3   0:02:19  0:02:01  0:00:18     0100 30661   0 30243 100   418   246     3   0:02:19  0:02:02  0:00:17     0100 30661   0 30243 100   418   244     3   0:02:19  0:02:03  0:00:16     0100 30661   0 30243 100   418   242     3   0:02:19  0:02:04  0:00:15     0100 30661   0 30243 100   418   240     3   0:02:19  0:02:05  0:00:14     0100 30661   0 30243 100   418   238     3   0:02:19  0:02:06  0:00:13     0100 30661   0 30243 100   418   236     3   0:02:19  0:02:07  0:00:12     0100 30661   0 30243 100   418   234     3   0:02:19  0:02:08  0:00:11     0100 30661   0 30243 100   418   232     3   0:02:19  0:02:09  0:00:10     0100 30661   0 30243 100   418   230     3   0:02:19  0:02:10  0:00:09     0100 30661   0 30243 100   418   229     3   0:02:19  0:02:11  0:00:08     0100 30661   0 30243 100   418   227     3   0:02:19  0:02:12  0:00:07     0100 30661   0 30243 100   418   225     3   0:02:19  0:02:13  0:00:06     0100 30661   0 30243 100   418   224     3   0:02:19  0:02:14  0:00:05     0100 30661   0 30243 100   418   222     3   0:02:19  0:02:15  0:00:04     0100 30661   0 30243 100   418   220     3   0:02:19  0:02:16  0:00:03     0100 30661   0 30243 100   418   219     3   0:02:19  0:02:17  0:00:02     0100 30661   0 30243 100   418   217     3   0:02:19  0:02:18  0:00:01     0100 30661   0 30243 100   418   216     2   0:03:29  0:02:19  0:01:10     0100 30661   0 30243 100   418   214     2   0:03:29  0:02:20  0:01:09     0100 30661   0 30243 100   418   213     2   0:03:29  0:02:21  0:01:08     0100 30661   0 30243 100   418   211     2   0:03:29  0:02:22  0:01:07     0100 30661   0 30243 100   418   210     2   0:03:29  0:02:23  0:01:06     0100 30661   0 30243 100   418   208     2   0:03:29  0:02:24  0:01:05     0100 30661   0 30243 100   418   207     2   0:03:29  0:02:25  0:01:04     0100 30661   0 30243 100   418   205     2   0:03:29  0:02:26  0:01:03     0100 30661   0 30243 100   418   204     2   0:03:29  0:02:27  0:01:02     0100 30661   0 30243 100   418   203     2   0:03:29  0:02:28  0:01:01     0100 30661   0 30243 100   418   201     2   0:03:29  0:02:29  0:01:00     0100 30661   0 30243 100   418   200     2   0:03:29  0:02:30  0:00:59     0100 30661   0 30243 100   418   199     2   0:03:29  0:02:31  0:00:58     0100 30661   0 30243 100   418   197     2   0:03:29  0:02:32  0:00:57     0100 30661   0 30243 100   418   196     2   0:03:29  0:02:33  0:00:56     0100 30661   0 30243 100   418   195     2   0:03:29  0:02:34  0:00:55     0100 30661   0 30243 100   418   193     2   0:03:29  0:02:35  0:00:54     0100 30661   0 30243 100   418   192     2   0:03:29  0:02:36  0:00:53     0100 30661   0 30243 100   418   191     2   0:03:29  0:02:37  0:00:52     0100 30661   0 30243 100   418   190     2   0:03:29  0:02:38  0:00:51     0100 30661   0 30243 100   418   189     2   0:03:29  0:02:39  0:00:50     0100 30661   0 30243 100   418   187     2   0:03:29  0:02:40  0:00:49     0100 30661   0 30243 100   418   186     2   0:03:29  0:02:41  0:00:48     0100 30661   0 30243 100   418   185     2   0:03:29  0:02:42  0:00:47     0100 30661   0 30243 100   418   184     2   0:03:29  0:02:43  0:00:46     0100 30661   0 30243 100   418   183     2   0:03:29  0:02:44  0:00:45     0100 30661   0 30243 100   418   182     2   0:03:29  0:02:45  0:00:44     0100 30661   0 30243 100   418   181     2   0:03:29  0:02:46  0:00:43     0100 30661   0 30243 100   418   180     2   0:03:29  0:02:47  0:00:42     0100 30661   0 30243 100   418   178     2   0:03:29  0:02:48  0:00:41     0100 30661   0 30243 100   418   177     2   0:03:29  0:02:49  0:00:40     0100 30661   0 30243 100   418   176     2   0:03:29  0:02:50  0:00:39     0100 30661   0 30243 100   418   175     2   0:03:29  0:02:51  0:00:38     0100 30661   0 30243 100   418   174     2   0:03:29  0:02:52  0:00:37     0100 30661   0 30243 100   418   173     2   0:03:29  0:02:53  0:00:36     0100 30661   0 30243 100   418   172     2   0:03:29  0:02:54  0:00:35     0100 30661   0 30243 100   418   171     2   0:03:29  0:02:55  0:00:34     0100 30661   0 30243 100   418   170     2   0:03:29  0:02:56  0:00:33     0100 30661   0 30243 100   418   169     2   0:03:29  0:02:57  0:00:32     0100 30661   0 30243 100   418   168     2   0:03:29  0:02:58  0:00:31     0100 30661   0 30243 100   418   168     2   0:03:29  0:02:59  0:00:30     0100 30661   0 30243 100   418   167     2   0:03:29  0:03:00  0:00:29     0100 30661   0 30243 100   418   166     2   0:03:29  0:03:01  0:00:28     0100 30661   0 30243 100   418   165     2   0:03:29  0:03:02  0:00:27     0100 30661   0 30243 100   418   164     2   0:03:29  0:03:03  0:00:26     0100 30661   0 30243 100   418   163     2   0:03:29  0:03:05  0:00:24     0100 30661   0 30243 100   418   162     2   0:03:29  0:03:06  0:00:23     0100 30661   0 30243 100   418   161     2   0:03:29  0:03:07  0:00:22     0100 30661   0 30243 100   418   160     2   0:03:29  0:03:08  0:00:21     0100 30661   0 30243 100   418   160     2   0:03:29  0:03:09  0:00:20     0100 30661   0 30243 100   418   159     2   0:03:29  0:03:10  0:00:19     0100 30661   0 30243 100   418   158     2   0:03:29  0:03:11  0:00:18     0100 30661   0 30243 100   418   157     2   0:03:29  0:03:12  0:00:17     0100 30661   0 30243 100   418   156     2   0:03:29  0:03:13  0:00:16     0100 30661   0 30243 100   418   155     2   0:03:29  0:03:14  0:00:15     0100 30661   0 30243 100   418   155     2   0:03:29  0:03:15  0:00:14     0100 30661   0 30243 100   418   154     2   0:03:29  0:03:16  0:00:13     0100 30661   0 30243 100   418   153     2   0:03:29  0:03:17  0:00:12     0100 30661   0 30243 100   418   152     2   0:03:29  0:03:18  0:00:11     0100 30661   0 30243 100   418   151     2   0:03:29  0:03:19  0:00:10     0100 30661   0 30243 100   418   151     2   0:03:29  0:03:20  0:00:09     0100 30661   0 30243 100   418   150     2   0:03:29  0:03:21  0:00:08     0100 30661   0 30243 100   418   149     2   0:03:29  0:03:22  0:00:07     0100 30661   0 30243 100   418   148     2   0:03:29  0:03:23  0:00:06     0100 30661   0 30243 100   418   148     2   0:03:29  0:03:24  0:00:05     0100 30661   0 30243 100   418   147     2   0:03:29  0:03:25  0:00:04     0100 30661   0 30243 100   418   146     2   0:03:29  0:03:26  0:00:03     0100 30661   0 30243 100   418   146     2   0:03:29  0:03:27  0:00:02     0100 30661   0 30243 100   418   145     2   0:03:29  0:03:28  0:00:01     0100 30661   0 30243 100   418   144     1   0:06:58  0:03:29  0:03:29     0100 30661   0 30243 100   418   143     1   0:06:58  0:03:30  0:03:28     0100 30661   0 30243 100   418   143     1   0:06:58  0:03:31  0:03:27     0100 30661   0 30243 100   418   142     1   0:06:58  0:03:32  0:03:26     0100 30661   0 30243 100   418   141     1   0:06:58  0:03:33  0:03:25     0100 30661   0 30243 100   418   141     1   0:06:58  0:03:34  0:03:24     0100 30661   0 30243 100   418   140     1   0:06:58  0:03:35  0:03:23     0100 30661   0 30243 100   418   139     1   0:06:58  0:03:36  0:03:22     0100 30661   0 30243 100   418   139     1   0:06:58  0:03:37  0:03:21     0100 30661   0 30243 100   418   138     1   0:06:58  0:03:38  0:03:20     0100 30661   0 30243 100   418   138     1   0:06:58  0:03:39  0:03:19     0100 30661   0 30243 100   418   137     1   0:06:58  0:03:40  0:03:18     0100 30661   0 30243 100   418   136     1   0:06:58  0:03:41  0:03:17     0100 30661   0 30243 100   418   136     1   0:06:58  0:03:42  0:03:16     0100 30661   0 30243 100   418   135     1   0:06:58  0:03:43  0:03:15     0100 30661   0 30243 100   418   134     1   0:06:58  0:03:44  0:03:14     0100 30661   0 30243 100   418   134     1   0:06:58  0:03:45  0:03:13     0100 30661   0 30243 100   418   133     1   0:06:58  0:03:46  0:03:12     0100 30661   0 30243 100   418   133     1   0:06:58  0:03:47  0:03:11     0100 30661   0 30243 100   418   132     1   0:06:58  0:03:48  0:03:10     0100 30661   0 30243 100   418   132     1   0:06:58  0:03:49  0:03:09     0100 30661   0 30243 100   418   131     1   0:06:58  0:03:50  0:03:08     0100 30661   0 30243 100   418   130     1   0:06:58  0:03:51  0:03:07     0100 30661   0 30243 100   418   130     1   0:06:58  0:03:52  0:03:06     0100 30661   0 30243 100   418   129     1   0:06:58  0:03:53  0:03:05     0100 30661   0 30243 100   418   129     1   0:06:58  0:03:54  0:03:04     0100 30661   0 30243 100   418   128     1   0:06:58  0:03:55  0:03:03     0100 30661   0 30243 100   418   128     1   0:06:58  0:03:56  0:03:02     0100 30661   0 30243 100   418   127     1   0:06:58  0:03:57  0:03:01     0100 30661   0 30243 100   418   127     1   0:06:58  0:03:58  0:03:00     0100 30661   0 30243 100   418   126     1   0:06:58  0:03:59  0:02:59     0100 30661   0 30243 100   418   125     1   0:06:58  0:04:00  0:02:58     0100 30661   0 30243 100   418   125     1   0:06:58  0:04:01  0:02:57     0100 30661   0 30243 100   418   124     1   0:06:58  0:04:02  0:02:56     0100 30661   0 30243 100   418   124     1   0:06:58  0:04:03  0:02:55     0100 30661   0 30243 100   418   123     1   0:06:58  0:04:04  0:02:54     0100 30661   0 30243 100   418   123     1   0:06:58  0:04:05  0:02:53     0100 30661   0 30243 100   418   122     1   0:06:58  0:04:06  0:02:52     0100 30661   0 30243 100   418   122     1   0:06:58  0:04:07  0:02:51     0100 30661   0 30243 100   418   121     1   0:06:58  0:04:08  0:02:50     0100 30661   0 30243 100   418   121     1   0:06:58  0:04:09  0:02:49     0100 30661   0 30243 100   418   120     1   0:06:58  0:04:10  0:02:48     0100 30661   0 30243 100   418   120     1   0:06:58  0:04:11  0:02:47     0100 30661   0 30243 100   418   119     1   0:06:58  0:04:12  0:02:46     0100 30661   0 30243 100   418   119     1   0:06:58  0:04:13  0:02:45     0100 30661   0 30243 100   418   119     1   0:06:58  0:04:14  0:02:44     0100 30661   0 30243 100   418   118     1   0:06:58  0:04:15  0:02:43     0100 30661   0 30243 100   418   118     1   0:06:58  0:04:16  0:02:42     0100 30661   0 30243 100   418   117     1   0:06:58  0:04:17  0:02:41   118100 30661   0 30243 100   418   117     1   0:06:58  0:04:18  0:02:40     0100 30661   0 30243 100   418   116     1   0:06:58  0:04:19  0:02:39     0100 30661   0 30243 100   418   116     1   0:06:58  0:04:20  0:02:38     0100 30661   0 30243 100   418   115     1   0:06:58  0:04:21  0:02:37     0100 30661   0 30243 100   418   115     1   0:06:58  0:04:22  0:02:36     0100 30661   0 30243 100   418   114     1   0:06:58  0:04:23  0:02:35     0100 30661   0 30243 100   418   114     1   0:06:58  0:04:24  0:02:34     0100 30661   0 30243 100   418   114     1   0:06:58  0:04:25  0:02:33     0100 30661   0 30243 100   418   113     1   0:06:58  0:04:26  0:02:32     0100 30661   0 30243 100   418   113     1   0:06:58  0:04:27  0:02:31     0100 30661   0 30243 100   418   112     1   0:06:58  0:04:28  0:02:30     0100 30661   0 30243 100   418   112     1   0:06:58  0:04:29  0:02:29     0100 30661   0 30243 100   418   111     1   0:06:58  0:04:30  0:02:28     0100 30661   0 30243 100   418   111     1   0:06:58  0:04:31  0:02:27     0100 30661   0 30243 100   418   111     1   0:06:58  0:04:32  0:02:26     0100 30661   0 30243 100   418   110     1   0:06:58  0:04:33  0:02:25     0100 30661   0 30243 100   418   110     1   0:06:58  0:04:34  0:02:24     0100 30661   0 30243 100   418   109     1   0:06:58  0:04:35  0:02:23     0100 30661   0 30243 100   418   109     1   0:06:58  0:04:36  0:02:22     0100 30661   0 30243 100   418   109     1   0:06:58  0:04:37  0:02:21     0100 30661   0 30243 100   418   108     1   0:06:58  0:04:38  0:02:20     0100 30661   0 30243 100   418   108     1   0:06:58  0:04:39  0:02:19     0100 30661   0 30243 100   418   107     1   0:06:58  0:04:40  0:02:18     0100 30661   0 30243 100   418   107     1   0:06:58  0:04:41  0:02:17     0100 30661   0 30243 100   418   107     1   0:06:58  0:04:42  0:02:16     0100 30661   0 30243 100   418   106     1   0:06:58  0:04:43  0:02:15     0100 30661   0 30243 100   418   106     1   0:06:58  0:04:44  0:02:14     0100 30661   0 30243 100   418   106     1   0:06:58  0:04:45  0:02:13     0100 30661   0 30243 100   418   105     1   0:06:58  0:04:46  0:02:12     0100 30661   0 30243 100   418   105     1   0:06:58  0:04:47  0:02:11     0100 30661   0 30243 100   418   104     1   0:06:58  0:04:48  0:02:10     0data: {"type": "youtube", "results": [{"title": "How to Treatment CMV Virus in Banana plant | केले की खेती में cmv virus 🦠 कंट्रोल !", "video_id": "7ZRv210jPaA", "url": "https://www.youtube.com/watch?v=7ZRv210jPaA", "thumbnail": "https://i.ytimg.com/vi/7ZRv210jPaA/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC1afpoRDOIvbPEJqucMChLlLiMQA", "channel": "Agri Duniya", "channel_url": "https://www.youtube.com/@AgriDuniya", "duration": "4:44", "views": "2,685 views", "published": "1 year ago"}, {"title": "BVLOG7: PROTECT YOUR BANANAS FROM VIRUS CARRYING INSECTS - STEM & MAT INSECTICIDE SPRAYING", "video_id": "O3xCxPaUAaQ", "url": "https://www.youtube.com/watch?v=O3xCxPaUAaQ", "thumbnail": "https://i.ytimg.com/vi/O3xCxPaUAaQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD-CrO6owLZDpPFAmFeltUjdqIX9g", "channel": "Pinoy Plant Charmer", "channel_url": "https://www.youtube.com/@pinoyplantcharmer", "duration": "7:49", "views": "31,425 views", "published": "5 years ago"}, {"title": "How to control pests on Banana tree", "video_id": "YoVjXIJxb3A", "url": "https://www.youtube.com/watch?v=YoVjXIJxb3A", "thumbnail": "https://i.ytimg.com/vi/YoVjXIJxb3A/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAHK3ASxhC9UU_too9pKjkPhVYVBg", "channel": "Greenyscope ", "channel_url": "https://www.youtube.com/@Greenyscope", "duration": "1:30", "views": "11,197 views", "published": "8 years ago"}, {"title": "how to control stemborrer in banana tree", "video_id": "sLC0d6All_4", "url": "https://www.youtube.com/watch?v=sLC0d6All_4", "thumbnail": "https://i.ytimg.com/vi/sLC0d6All_4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAFD9yEyTEsAaqnvxLSZ0t7m3hJ5A", "channel": "INDIAN AGRO TECH", "channel_url": "https://www.youtube.com/@indianagrotech3408", "duration": "3:10", "views": "2,684 views", "published": "3 years ago"}, {"title": "Pests of Banana - 3.2022", "video_id": "VX1lWgaRZo8", "url": "https://www.youtube.com/watch?v=VX1lWgaRZo8", "thumbnail": "https://i.ytimg.com/vi/VX1lWgaRZo8/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARg-IGUoFjAP&rs=AOn4CLATqDyKjrfeXmd0_IgE0MRMu_oiEA", "channel": "HIsustainAg", "channel_url": "https://www.youtube.com/@HIsustainAg", "duration": "23:36", "views": "232 views", "published": "3 years ago"}]}
+
+data: {"type": "complete"}
+
+100 33111   0 32693 100   418   113     1   0:06:58  0:04:48  0:02:10   542
