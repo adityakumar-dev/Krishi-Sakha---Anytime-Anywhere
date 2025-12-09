@@ -1264,11 +1264,41 @@ abstract class AppLocalizations {
   /// **'Community Posts'**
   String get communityPosts;
 
+  /// No description provided for @expertPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'Expert Posts'**
+  String get expertPosts;
+
   /// No description provided for @expertAdvice.
   ///
   /// In en, this message translates to:
   /// **'Expert Advice'**
   String get expertAdvice;
+
+  /// No description provided for @successStories.
+  ///
+  /// In en, this message translates to:
+  /// **'Success Stories'**
+  String get successStories;
+
+  /// No description provided for @bulletins.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulletins'**
+  String get bulletins;
+
+  /// No description provided for @successStory.
+  ///
+  /// In en, this message translates to:
+  /// **'Success Story'**
+  String get successStory;
+
+  /// No description provided for @bulletin.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulletin'**
+  String get bulletin;
 
   /// No description provided for @all.
   ///

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:krishi_sakha/apis/app_global.dart';
 import 'package:krishi_sakha/screens/chat/server/select_chat.dart';
+import 'package:krishi_sakha/screens/expert_role/create_expert_post_screen.dart';
+import 'package:krishi_sakha/screens/expert_role/expert_posts_screen.dart';
+import 'package:krishi_sakha/screens/expert_role/verify_post_screen.dart';
 import 'package:krishi_sakha/screens/home/home_screen.dart';
 import 'package:krishi_sakha/screens/imd/imd_weather_screen.dart';
 import 'package:krishi_sakha/screens/imd/state_list_screen.dart';
@@ -17,7 +20,6 @@ import 'package:krishi_sakha/screens/onboarding/profile_onboard_screen.dart';
 import 'package:krishi_sakha/screens/permission/permission_screen.dart';
 import 'package:krishi_sakha/screens/plant_disease/plant_disease_screen.dart';
 import 'package:krishi_sakha/screens/posts/create_post_screen.dart';
-import 'package:krishi_sakha/screens/posts/exper_post_scree.dart';
 import 'package:krishi_sakha/screens/posts/posts_screen.dart';
 import 'package:krishi_sakha/screens/posts/saved_posts_screen.dart';
 import 'package:krishi_sakha/screens/profile/language_screen.dart';
@@ -70,6 +72,8 @@ class AppRoutes {
   static const String locationOnBoard = "/location-onboard";
   static const String languageOnBoard = "/language-onboard";
   static const String languageScreen = "/language-screen";
+  static const String createExpertPosts = "/create-expert-post";
+  static const String verifyPostsScreen = "/verify-posts";
 }
 
 // GoRouter configuration
@@ -78,6 +82,11 @@ final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.splash,
   navigatorKey:  AppGlobal.navigatorKey,
   routes: [
+    // GoRoute(path: AppRoutes.expertPosts, name: 'expertPosts', builder: (context, state) => const ExpertPostsScreen()),
+
+    GoRoute(path: AppRoutes.createExpertPosts, name: 'createExpertPosts', builder: (context, state) => const CreateExpertPostScreen()),
+    GoRoute(path: AppRoutes.verifyPostsScreen, name: 'verifyPostsScreen', builder: (context, state) => const VerifyPostScreen()),
+    
     GoRoute(path: AppRoutes.languageOnBoard, name: 'languageOnBoard', builder: (context, state) => const LanguageOnboardScreen()),
     GoRoute(path: AppRoutes.locationOnBoard, name: 'locationOnBoard', builder: (context, state) => const LocationOnboardScreen()),
     GoRoute(path: AppRoutes.imdStationList, name: 'imdStationList', builder: (context, state){

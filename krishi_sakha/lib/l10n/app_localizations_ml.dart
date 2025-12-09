@@ -603,7 +603,22 @@ class AppLocalizationsMl extends AppLocalizations {
   String get communityPosts => 'കമ്മ്യൂണിറ്റി പോസ്റ്റുകൾ';
 
   @override
+  String get expertPosts => 'വിദഗ്ധ പോസ്റ്റുകൾ';
+
+  @override
   String get expertAdvice => 'വിദഗ്ധ ഉപദേശം';
+
+  @override
+  String get successStories => 'വിജയ കഥകൾ';
+
+  @override
+  String get bulletins => 'ബുള്ളറ്റിനുകൾ';
+
+  @override
+  String get successStory => 'വിജയ കഥ';
+
+  @override
+  String get bulletin => 'ബുള്ളറ്റിൻ';
 
   @override
   String get all => 'എല്ലാം';

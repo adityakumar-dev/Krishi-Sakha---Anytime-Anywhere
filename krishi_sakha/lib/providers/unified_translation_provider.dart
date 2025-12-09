@@ -382,17 +382,17 @@ class UnifiedTranslationProvider extends ChangeNotifier {
                                         ? Colors.orange
                                         : Colors.blue,
                                   ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    result.usedOffline ? 'Offline' : 'Online',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: result.usedOffline
-                                          ? Colors.orange
-                                          : Colors.blue,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                                  // const SizedBox(width: 4),
+                                  // Text(
+                                  //   result.usedOffline ? 'Offline' : 'Online',
+                                  //   style: TextStyle(
+                                  //     fontSize: 12,
+                                  //     color: result.usedOffline
+                                  //         ? Colors.orange
+                                  //         : Colors.blue,
+                                  //     fontWeight: FontWeight.w600,
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ],
@@ -535,7 +535,7 @@ class UnifiedTranslationProvider extends ChangeNotifier {
                               Navigator.pop(dialogContext);
                             }
                           },
-                          icon: const Icon(Icons.check, size: 18),
+                          // icon: const Icon(Icons.check, size: 18),
                           label: Text(l10n?.close ?? 'Close'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryGreen,

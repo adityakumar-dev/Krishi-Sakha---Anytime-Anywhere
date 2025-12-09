@@ -597,7 +597,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get communityPosts => 'Community Posts';
 
   @override
+  String get expertPosts => 'Expert Posts';
+
+  @override
   String get expertAdvice => 'Expert Advice';
+
+  @override
+  String get successStories => 'Success Stories';
+
+  @override
+  String get bulletins => 'Bulletins';
+
+  @override
+  String get successStory => 'Success Story';
+
+  @override
+  String get bulletin => 'Bulletin';
 
   @override
   String get all => 'All';

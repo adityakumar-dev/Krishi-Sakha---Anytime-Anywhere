@@ -99,9 +99,16 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
 
       if (result.success && mounted) {
         chatProvider.setTranslatedMessage(messageId, result.translation);
+      } else {
+        // Clear translating state if translation failed
+        chatProvider.setTranslatedMessage(messageId, messageText);
       }
     } catch (e) {
       print('Translation error: $e');
+      // Clear translating state on error
+      if (mounted) {
+        chatProvider.setTranslatedMessage(messageId, messageText);
+      }
     }
   }
 
@@ -135,9 +142,16 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
 
           if (result.success && mounted) {
             chatProvider.setTranslatedMessage(message.id, result.translation);
+          } else {
+            // Clear translating state if translation failed
+            chatProvider.setTranslatedMessage(message.id, message.message);
           }
         } catch (e) {
           print('Translation error: $e');
+          // Clear translating state on error
+          if (mounted) {
+            chatProvider.setTranslatedMessage(message.id, message.message);
+          }
         }
       }
     }

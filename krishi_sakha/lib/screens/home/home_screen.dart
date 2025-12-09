@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                    
                     
                     // Main Features
-                    _buildMainFeatures(),
+                    _buildMainFeatures(profileProvider.userProfile?.role ?? 'normal'),
                     
                     // Quick Stats
                     // _buildQuickStats(),
@@ -232,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
  
-  Widget _buildMainFeatures() {
+  Widget _buildMainFeatures(String role) {
     return Container(
       margin: const EdgeInsets.fromLTRB(24, 0, 24, 32),
       child: Column(
@@ -273,12 +273,37 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () => context.push(AppRoutes.weather),
               ),
               // /card for create post scree
-               _buildFeatureCard(
+
+             ...(role != 'normal' ? [
+                _buildFeatureCard(
+                title: AppLocalizations.of(context)!.sharePost,
+                subtitle: AppLocalizations.of(context)!.addYourPost,
+                icon: Icons.post_add,
+                color: const Color(0xFFD4A259),
+                onTap: () => context.push(AppRoutes.createExpertPosts),
+              ),
+              _buildFeatureCard(
+                title: AppLocalizations.of(context)!.sharePost,
+                subtitle: AppLocalizations.of(context)!.addYourPost,
+                icon: Icons.domain_verification,
+                color: const Color(0xFFD4A259),
+                onTap: () => context.push(AppRoutes.verifyPostsScreen),
+              ),
+              ] : [_buildFeatureCard(
                 title: AppLocalizations.of(context)!.sharePost,
                 subtitle: AppLocalizations.of(context)!.addYourPost,
                 icon: Icons.post_add,
                 color: const Color(0xFFD4A259),
                 onTap: () => context.push(AppRoutes.createPost),
+              ) , _buildFeatureCard(
+                title: AppLocalizations.of(context)!.sharePost,
+                subtitle: AppLocalizations.of(context)!.addYourPost,
+                icon: Icons.podcasts_sharp,
+                color: const Color(0xFFD4A259),
+                onTap: () => context.push(AppRoutes.expertPosts),
+              ) , ]
+              
+              
               ),
               _buildFeatureCard(
                 title: AppLocalizations.of(context)!.posts,

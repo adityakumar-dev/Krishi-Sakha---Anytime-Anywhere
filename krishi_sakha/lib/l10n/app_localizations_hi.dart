@@ -597,7 +597,22 @@ class AppLocalizationsHi extends AppLocalizations {
   String get communityPosts => 'सामुदायिक पोस्ट';
 
   @override
+  String get expertPosts => 'विशेषज्ञ पोस्ट';
+
+  @override
   String get expertAdvice => 'विशेषज्ञ सलाह';
+
+  @override
+  String get successStories => 'सफलता की कहानियां';
+
+  @override
+  String get bulletins => 'बुलेटिन';
+
+  @override
+  String get successStory => 'सफलता की कहानी';
+
+  @override
+  String get bulletin => 'बुलेटिन';
 
   @override
   String get all => 'सभी';
