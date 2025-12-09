@@ -154,4 +154,23 @@ async def fetch_user_posts(
         return {"success": False, "message": str(e)}
 
 
-# async def 
+# allow the other that the normal user can post the expert post 
+
+@router.post("/post/expert")
+async def create_expert_post(
+    type: str = Form("expert"),
+    title: str = Form(...),
+    content: str = Form(...),
+    user=Depends(supabase_jwt_middleware)
+):
+    user_id = user["sub"]
+    try:
+        SUPABASE.table("posts").insert({
+            "type": type,
+            "title": title,
+            "content": content,
+            "user_id": user_id
+        }).execute()
+        return {"success": True, "message": "Post created"}
+    except Exception as e:
+        return {"success": False, "message": str(e)}
