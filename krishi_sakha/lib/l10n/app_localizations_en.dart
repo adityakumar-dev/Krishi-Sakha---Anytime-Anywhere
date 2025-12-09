@@ -164,6 +164,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get response => 'Response:';
 
   @override
+  String get pleaseWait => 'Please wait';
+
+  @override
   String get weather => 'Weather';
 
   @override
@@ -848,6 +851,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get step3 => '3. View results and recommendations';
 
   @override
+  String get translating => 'Translating...';
+
+  @override
+  String get translated => 'Translated';
+
+  @override
   String get yourFarmTools => 'Your Farm Tools';
 
   @override
@@ -982,9 +991,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkYourConnection => 'Please check your internet connection';
 
   @override
-  String get translating => 'Translating...';
-
-  @override
   String get translateTo => 'Translate to';
 
   @override
@@ -998,4 +1004,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loadingWeatherFor => 'Loading weather for';
+
+  @override
+  String get onlineFeatures => 'Online Features';
+
+  @override
+  String get offlineFeatures => 'Offline Features';
+
+  @override
+  String get speakToAI => 'Speak to AI';
+
+  @override
+  String get community => 'Community';
+
+  @override
+  String get advice => 'Advice';
+
+  @override
+  String get govtSchemes => 'Govt schemes';
+
+  @override
+  String get liveRates => 'Live rates';
+
+  @override
+  String get requiresInternet => 'Requires Internet Connection';
+
+  @override
+  String get cached => 'Cached';
+
+  @override
+  String get offlineMode => 'Offline';
+
+  @override
+  String get ready => 'READY';
+
+  @override
+  String get listeningState => 'LISTENING';
+
+  @override
+  String get processingState => 'PROCESSING';
+
+  @override
+  String get streamingState => 'STREAMING';
+
+  @override
+  String get speakingState => 'SPEAKING';
+
+  @override
+  String get errorState => 'ERROR';
+
+  @override
+  String get oopsSomethingWrong => 'Oops! Something went wrong';
 }

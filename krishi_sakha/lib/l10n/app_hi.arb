@@ -54,6 +54,7 @@
   "initializingSpeechRecognition": "वाक् पहचान प्रारंभ हो रही है...",
   "holdAndSpeakToStart": "शुरू करने के लिए पकड़ें और बोलें",
   "response": "उत्तर:",
+  "pleaseWait": "कृपया प्रतीक्षा करें",
   
   "weather": "मौसम",
   "weatherForecast": "मौसम पूर्वानुमान",
@@ -315,6 +316,8 @@
   "step1": "1. फोटो लें या गैलरी से चुनें",
   "step2": "2. छवि का विश्लेषण करने के लिए पहचानें टैप करें",
   "step3": "3. परिणाम और सिफारिशें देखें",
+  "translating": "अनुवाद हो रहा है...",
+  "translated": "अनुवादित",
   
   "yourFarmTools": "आपके खेती के उपकरण",
   "aiPoweredInsights": "आपके दैनिक निर्णयों के लिए AI-संचालित जानकारी",
@@ -385,5 +388,24 @@
   "addCity": "शहर जोड़ें",
   "loadingWeatherFor": "मौसम लोड हो रहा है",
   "addCityToViewWeather": "मौसम की जानकारी देखने के लिए एक शहर जोड़ें",
-  "unknownError": "अज्ञात त्रुटि हुई"
+  "unknownError": "अज्ञात त्रुटि हुई",
+  
+  "onlineFeatures": "ऑनलाइन सुविधाएं",
+  "offlineFeatures": "ऑफ़लाइन सुविधाएं",
+  "speakToAI": "AI से बात करें",
+  "community": "समुदाय",
+  "advice": "सलाह",
+  "govtSchemes": "सरकारी योजनाएं",
+  "liveRates": "लाइव दरें",
+  "requiresInternet": "इंटरनेट कनेक्शन की आवश्यकता है",
+  "cached": "कैश्ड",
+  "offlineMode": "ऑफ़लाइन",
+  
+  "ready": "तैयार",
+  "listeningState": "सुन रहा है",
+  "processingState": "प्रोसेस हो रहा है",
+  "streamingState": "स्ट्रीमिंग",
+  "speakingState": "बोल रहा है",
+  "errorState": "त्रुटि",
+  "oopsSomethingWrong": "उफ़! कुछ गलत हो गया"
 }

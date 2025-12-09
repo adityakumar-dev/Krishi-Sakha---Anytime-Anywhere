@@ -5,17 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:krishi_sakha/apis/app_global.dart';
+import 'package:krishi_sakha/providers/profile_provider.dart';
+import 'package:krishi_sakha/providers/unified_translation_provider.dart';
 import 'package:krishi_sakha/services/tflite_service.dart';
 import 'package:krishi_sakha/services/app_logger.dart';
+import 'package:provider/provider.dart';
 
 class GeminiResponse{
   final String possibleCauses;
   final String solutions;
   final String prevention;
+  
+  // Translated versions
+  final String? translatedCauses;
+  final String? translatedSolutions;
+  final String? translatedPrevention;
+  
   GeminiResponse({
     required this.possibleCauses,
     required this.solutions,
     required this.prevention,
+    this.translatedCauses,
+    this.translatedSolutions,
+    this.translatedPrevention,
   });
 
   factory GeminiResponse.fromJson(Map<String, dynamic> json) {
@@ -23,6 +35,24 @@ class GeminiResponse{
       possibleCauses: json['possible_causes'] ?? '',
       solutions: json['solutions'] ?? '',
       prevention: json['prevention'] ?? '',
+    );
+  }
+  
+  GeminiResponse copyWith({
+    String? possibleCauses,
+    String? solutions,
+    String? prevention,
+    String? translatedCauses,
+    String? translatedSolutions,
+    String? translatedPrevention,
+  }) {
+    return GeminiResponse(
+      possibleCauses: possibleCauses ?? this.possibleCauses,
+      solutions: solutions ?? this.solutions,
+      prevention: prevention ?? this.prevention,
+      translatedCauses: translatedCauses ?? this.translatedCauses,
+      translatedSolutions: translatedSolutions ?? this.translatedSolutions,
+      translatedPrevention: translatedPrevention ?? this.translatedPrevention,
     );
   }
 }
@@ -71,6 +101,10 @@ class PlantDiseaseProvider extends ChangeNotifier {
   // Gemini error tracking (separate from detection error)
   String? _geminiError;
   String? get geminiError => _geminiError;
+  
+  // Translation tracking
+  bool _isTranslatingGemini = false;
+  bool get isTranslatingGemini => _isTranslatingGemini;
 
   // Gatekeeper model (always loaded first)
   static const String gatekeeperModelPath = 'assets/model/gatekeeper/gatekeeper.tflite';
@@ -293,7 +327,7 @@ class PlantDiseaseProvider extends ChangeNotifier {
   }
 
   /// Continue disease detection (called after user confirms medium confidence)
-  Future<void> continueDetectionAfterConfirmation() async {
+  Future<void> continueDetectionAfterConfirmation(BuildContext context) async {
     if (!_modelLoaded || _classesMap == null || _imageFile == null) {
       _detectionError = 'Model not loaded or no image selected';
       notifyListeners();
@@ -318,7 +352,7 @@ class PlantDiseaseProvider extends ChangeNotifier {
       }
 
       // Run disease detection
-      await _runDiseaseDetection();
+      await _runDiseaseDetection(context);
     } catch (e) {
       _detectionError = 'Error detecting disease: $e';
       _detectionResult = null;
@@ -331,7 +365,7 @@ class PlantDiseaseProvider extends ChangeNotifier {
   }
 
   /// Internal method to run disease detection
-  Future<void> _runDiseaseDetection() async {
+  Future<void> _runDiseaseDetection(BuildContext context) async {
     // Step 3: Get main detection result
     AppLogger.info('Running disease detection...');
     final detectionResponse = await _tfliteService.detectDiseaseFromImage(
@@ -363,7 +397,7 @@ class PlantDiseaseProvider extends ChangeNotifier {
       // Get Gemini advice
       String plantName = "Tomato"; // Assuming tomato model
       String diseaseName = _detectionResult!.className;
-      await getGeminiAdvice(plantName, diseaseName);
+      await getGeminiAdvice(plantName, diseaseName, context);
     } else {
       _detectionError = detectionResponse.message;
       _detectionResult = null;
@@ -374,7 +408,7 @@ class PlantDiseaseProvider extends ChangeNotifier {
   }
 
   /// Detect disease in selected image
-  Future<void> detectDisease() async {
+  Future<void> detectDisease(BuildContext context) async {
     if (!_modelLoaded || _classesMap == null || _imageFile == null) {
       _detectionError = 'Model not loaded or no image selected';
       notifyListeners();
@@ -427,7 +461,7 @@ class PlantDiseaseProvider extends ChangeNotifier {
       }
 
       // Step 3: Run disease detection
-      await _runDiseaseDetection();
+      await _runDiseaseDetection(context);
     } catch (e) {
       _detectionError = 'Error detecting disease: $e';
       _detectionResult = null;
@@ -499,10 +533,30 @@ class PlantDiseaseProvider extends ChangeNotifier {
   }
 
   /// Get Gemini advice for detected disease
-  Future<void> getGeminiAdvice(String plantName, String diseaseName) async {
+  Future<void> getGeminiAdvice(
+    String plantName,
+    String diseaseName,
+    BuildContext context,
+  ) async {
     try {
-      String userPrompt = "Plant name: $plantName\nDisease name: $diseaseName";
-      var url = Uri.parse('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${AppGlobal.GeminiApiKey}');
+      // Get location from profile
+      final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+      final cityName = profileProvider.userProfile?.cityName ?? '';
+      final stateName = profileProvider.userProfile?.stateName ?? '';
+      
+      String locationInfo = '';
+      if (cityName.isNotEmpty && stateName.isNotEmpty) {
+        locationInfo = "\nFarmer's Location: $cityName, $stateName";
+      } else if (stateName.isNotEmpty) {
+        locationInfo = "\nFarmer's State: $stateName";
+      }
+      
+      String userPrompt = """Plant name: $plantName
+Disease name: $diseaseName$locationInfo
+
+Provide practical advice in simple language for an Indian farmer. Consider local conditions and suggest affordable, locally available solutions.""";
+      
+      var url = Uri.parse('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${AppGlobal.GeminiApiKey}');
       var response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -523,6 +577,17 @@ class PlantDiseaseProvider extends ChangeNotifier {
         _geminiResponse = GeminiResponse.fromJson(jsonResponse);
         _geminiError = null; // Clear error on success
         AppLogger.info('Gemini response parsed successfully');
+        
+        // Notify listeners before translation
+        notifyListeners();
+        
+        // Auto-translate if user has a preferred language other than English
+        final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+        final preferredLanguage = profileProvider.userProfile?.prefered_language ?? 'en';
+        
+        if (preferredLanguage != 'en' && preferredLanguage.isNotEmpty) {
+          await _translateGeminiResponse(context, preferredLanguage);
+        }
       } else {
         _geminiError = 'Gemini API error: ${response.statusCode}';
         _geminiResponse = null;
@@ -534,6 +599,55 @@ class PlantDiseaseProvider extends ChangeNotifier {
       AppLogger.error('Error calling Gemini: $e');
     } finally {
       // Always notify listeners after Gemini API call completes
+      notifyListeners();
+    }
+  }
+  
+  /// Translate Gemini response to user's preferred language
+  Future<void> _translateGeminiResponse(BuildContext context, String targetLanguage) async {
+    if (_geminiResponse == null) return;
+    
+    try {
+      _isTranslatingGemini = true;
+      notifyListeners();
+      
+      final translationProvider = Provider.of<UnifiedTranslationProvider>(
+        context,
+        listen: false,
+      );
+      
+      // Translate all three fields
+      final causesResult = await translationProvider.translateText(
+        _geminiResponse!.possibleCauses,
+        targetLanguage: targetLanguage,
+        addDelay: false,
+      );
+      
+      final solutionsResult = await translationProvider.translateText(
+        _geminiResponse!.solutions,
+        targetLanguage: targetLanguage,
+        addDelay: false,
+      );
+      
+      final preventionResult = await translationProvider.translateText(
+        _geminiResponse!.prevention,
+        targetLanguage: targetLanguage,
+        addDelay: false,
+      );
+      
+      // Update with translated versions
+      if (causesResult.success || solutionsResult.success || preventionResult.success) {
+        _geminiResponse = _geminiResponse!.copyWith(
+          translatedCauses: causesResult.success ? causesResult.translation : null,
+          translatedSolutions: solutionsResult.success ? solutionsResult.translation : null,
+          translatedPrevention: preventionResult.success ? preventionResult.translation : null,
+        );
+        AppLogger.info('Gemini response translated successfully');
+      }
+    } catch (e) {
+      AppLogger.error('Error translating Gemini response: $e');
+    } finally {
+      _isTranslatingGemini = false;
       notifyListeners();
     }
   }

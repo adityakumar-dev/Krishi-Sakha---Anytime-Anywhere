@@ -366,7 +366,7 @@ if(result.isSuccess){
           // Check if language is set, then location, then go to home
           if (profileProvider.userProfile?.prefered_language == null) {
             context.go(AppRoutes.languageOnBoard);
-          } else if (profileProvider.userProfile?.preferedStateName == null) {
+          } else if (profileProvider.userProfile?.preferredWeatherStationId == null) {
             context.go(AppRoutes.locationOnBoard);
           } else {
             context.go(AppRoutes.home);

@@ -406,6 +406,12 @@ abstract class AppLocalizations {
   /// **'Response:'**
   String get response;
 
+  /// No description provided for @pleaseWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait'**
+  String get pleaseWait;
+
   /// No description provided for @weather.
   ///
   /// In en, this message translates to:
@@ -1756,6 +1762,18 @@ abstract class AppLocalizations {
   /// **'3. View results and recommendations'**
   String get step3;
 
+  /// No description provided for @translating.
+  ///
+  /// In en, this message translates to:
+  /// **'Translating...'**
+  String get translating;
+
+  /// No description provided for @translated.
+  ///
+  /// In en, this message translates to:
+  /// **'Translated'**
+  String get translated;
+
   /// No description provided for @yourFarmTools.
   ///
   /// In en, this message translates to:
@@ -2020,12 +2038,6 @@ abstract class AppLocalizations {
   /// **'Please check your internet connection'**
   String get checkYourConnection;
 
-  /// No description provided for @translating.
-  ///
-  /// In en, this message translates to:
-  /// **'Translating...'**
-  String get translating;
-
   /// No description provided for @translateTo.
   ///
   /// In en, this message translates to:
@@ -2055,6 +2067,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading weather for'**
   String get loadingWeatherFor;
+
+  /// No description provided for @onlineFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Online Features'**
+  String get onlineFeatures;
+
+  /// No description provided for @offlineFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Features'**
+  String get offlineFeatures;
+
+  /// No description provided for @speakToAI.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak to AI'**
+  String get speakToAI;
+
+  /// No description provided for @community.
+  ///
+  /// In en, this message translates to:
+  /// **'Community'**
+  String get community;
+
+  /// No description provided for @advice.
+  ///
+  /// In en, this message translates to:
+  /// **'Advice'**
+  String get advice;
+
+  /// No description provided for @govtSchemes.
+  ///
+  /// In en, this message translates to:
+  /// **'Govt schemes'**
+  String get govtSchemes;
+
+  /// No description provided for @liveRates.
+  ///
+  /// In en, this message translates to:
+  /// **'Live rates'**
+  String get liveRates;
+
+  /// No description provided for @requiresInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'Requires Internet Connection'**
+  String get requiresInternet;
+
+  /// No description provided for @cached.
+  ///
+  /// In en, this message translates to:
+  /// **'Cached'**
+  String get cached;
+
+  /// No description provided for @offlineMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get offlineMode;
+
+  /// No description provided for @ready.
+  ///
+  /// In en, this message translates to:
+  /// **'READY'**
+  String get ready;
+
+  /// No description provided for @listeningState.
+  ///
+  /// In en, this message translates to:
+  /// **'LISTENING'**
+  String get listeningState;
+
+  /// No description provided for @processingState.
+  ///
+  /// In en, this message translates to:
+  /// **'PROCESSING'**
+  String get processingState;
+
+  /// No description provided for @streamingState.
+  ///
+  /// In en, this message translates to:
+  /// **'STREAMING'**
+  String get streamingState;
+
+  /// No description provided for @speakingState.
+  ///
+  /// In en, this message translates to:
+  /// **'SPEAKING'**
+  String get speakingState;
+
+  /// No description provided for @errorState.
+  ///
+  /// In en, this message translates to:
+  /// **'ERROR'**
+  String get errorState;
+
+  /// No description provided for @oopsSomethingWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Oops! Something went wrong'**
+  String get oopsSomethingWrong;
 }
 
 class _AppLocalizationsDelegate

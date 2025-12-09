@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:krishi_sakha/services/notification_handler.dart';
 
 /// Background message handler - must be a top-level function
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("🔔 Background message received: ${message.messageId}");
+  print("🔔 Background message data: ${message.data}");
   // Don't show local notification here - FCM automatically shows it when app is in background/terminated
   // This handler is only for processing data (e.g., saving to local storage)
 }
@@ -34,8 +36,10 @@ class NotificationManager {
   /// Initialize the notification service
   static Future<void> init({
     void Function(Map<String, dynamic> data)? onTap,
+    bool enableUserSpecificNotifications = true,
   }) async {
-    onNotificationTap = onTap;
+    // Use NotificationHandler if no custom onTap provided
+    onNotificationTap = onTap ?? NotificationHandler.handleNotificationTap;
 
     // Request permission
     await _requestPermission();
@@ -65,10 +69,15 @@ class NotificationManager {
     // Handle notification tap when app was terminated
     await _handleInitialMessage();
 
-    // Subscribe to default topics
+    // Subscribe to default topics for general notifications
     await subscribeToTopic('global_updates');
-    await subscribeToTopic('weather_alerts');
-    await subscribeToTopic('crop_tips');
+    
+    // User-specific notifications are enabled by default
+    // These will be sent to individual users via their FCM tokens stored in Supabase
+    if (enableUserSpecificNotifications) {
+      print("✅ User-specific notifications enabled");
+      print("📌 Send notifications to users via their stored FCM tokens in Supabase");
+    }
 
     // Get and print FCM token (useful for testing)
     final token = await getToken();
@@ -121,14 +130,26 @@ class NotificationManager {
 
   /// Handle notification response (tap)
   static void _onNotificationResponse(NotificationResponse response) {
+    print("📬 Local notification tapped");
+    print("📬 Notification ID: ${response.id}");
+    print("📬 Action ID: ${response.actionId}");
+    
     if (response.payload != null) {
       try {
         final data = jsonDecode(response.payload!) as Map<String, dynamic>;
-        print("📬 Notification tapped with data: $data");
-        onNotificationTap?.call(data);
+        print("📬 Parsed notification data: $data");
+        
+        if (data.isNotEmpty) {
+          onNotificationTap?.call(data);
+        } else {
+          print("⚠️ Empty data payload");
+        }
       } catch (e) {
-        print("Error parsing notification payload: $e");
+        print("❌ Error parsing notification payload: $e");
+        print("❌ Raw payload: ${response.payload}");
       }
+    } else {
+      print("⚠️ No payload in notification response");
     }
   }
 
@@ -140,19 +161,38 @@ class NotificationManager {
 
   /// Handle notification tap (background state)
   static void _handleNotificationTap(RemoteMessage message) {
-    print("📬 Message opened from background: ${message.data}");
-    onNotificationTap?.call(message.data);
+    print("📬 Message opened from background");
+    print("📬 Notification title: ${message.notification?.title}");
+    print("📬 Notification body: ${message.notification?.body}");
+    print("📬 Data payload: ${message.data}");
+    
+    if (message.data.isNotEmpty) {
+      onNotificationTap?.call(message.data);
+    } else {
+      print("⚠️ No data payload in notification");
+    }
   }
 
   /// Handle initial message (app opened from terminated state)
   static Future<void> _handleInitialMessage() async {
     final message = await _messaging.getInitialMessage();
     if (message != null) {
-      print("🚀 Opened from terminated state: ${message.data}");
-      // Delay to ensure app is fully initialized
-      Future.delayed(const Duration(seconds: 1), () {
-        onNotificationTap?.call(message.data);
+      print("🚀 App opened from terminated state via notification");
+      print("🚀 Notification title: ${message.notification?.title}");
+      print("🚀 Notification body: ${message.notification?.body}");
+      print("🚀 Data payload: ${message.data}");
+      
+      // Longer delay to ensure app is fully initialized
+      Future.delayed(const Duration(milliseconds: 2000), () {
+        if (message.data.isNotEmpty) {
+          print("🚀 Triggering navigation with data: ${message.data}");
+          onNotificationTap?.call(message.data);
+        } else {
+          print("⚠️ No data payload in notification");
+        }
       });
+    } else {
+      print("ℹ️ App started normally (not from notification)");
     }
   }
 

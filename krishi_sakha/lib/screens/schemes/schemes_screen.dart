@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:krishi_sakha/providers/scheme_provider.dart';
+import 'package:krishi_sakha/providers/profile_provider.dart';
 import 'package:krishi_sakha/screens/schemes/scheme_detail_screen.dart';
 import 'package:krishi_sakha/screens/schemes/widgets/scheme_card.dart';
 import 'package:krishi_sakha/screens/schemes/widgets/scheme_filter_sheet.dart';
@@ -23,9 +24,17 @@ class _SchemesScreenState extends State<SchemesScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final provider = context.read<SchemeProvider>();
-      if (provider.state == SchemeLoadingState.initial) {
-        provider.init();
+      final schemeProvider = context.read<SchemeProvider>();
+      final profileProvider = context.read<ProfileProvider>();
+      
+      if (schemeProvider.state == SchemeLoadingState.initial) {
+        schemeProvider.init();
+      }
+      
+      // Automatically filter by user's state if available
+      final userState = profileProvider.userProfile?.preferedStateName;
+      if (userState != null && userState.isNotEmpty) {
+        schemeProvider.setStatesFilter([userState]);
       }
     });
 

@@ -550,7 +550,7 @@ class _PlantDiseaseScreenState extends State<PlantDiseaseScreen> {
               onTap: provider.isDetecting
                   ? null
                   : () async {
-                      await provider.detectDisease();
+                      await provider.detectDisease(context);
                       // Check if we need to show confirmation dialog
                       if (provider.detectionError != null &&
                           provider.detectionError!.contains('not sure')) {
@@ -650,7 +650,7 @@ class _PlantDiseaseScreenState extends State<PlantDiseaseScreen> {
               onPressed: () async {
                 Navigator.of(dialogContext).pop();
                 // Continue with detection
-                await provider.continueDetectionAfterConfirmation();
+                await provider.continueDetectionAfterConfirmation(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryGreen,
@@ -870,6 +870,66 @@ class _PlantDiseaseScreenState extends State<PlantDiseaseScreen> {
           ),
           const SizedBox(height: 20),
 
+          // Translation indicator
+          if (provider.isTranslatingGemini)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: AppColors.primaryGreen.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 14,
+                    height: 14,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.primaryGreen,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    AppLocalizations.of(context)!.translating,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.primaryGreen,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          if (geminiResponse.translatedCauses != null && !provider.isTranslatingGemini)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppColors.primaryGreen.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.translate,
+                    size: 14,
+                    color: AppColors.primaryGreen,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    AppLocalizations.of(context)!.translated,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: AppColors.primaryGreen,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          const SizedBox(height: 16),
+
           // Possible Causes
           if (geminiResponse.possibleCauses.isNotEmpty) ...[
             Text(
@@ -896,11 +956,11 @@ class _PlantDiseaseScreenState extends State<PlantDiseaseScreen> {
                 children: [
                   buildMarkdownText(
                     _expandGeminiCauses
-                        ? geminiResponse.possibleCauses
-                        : geminiResponse.possibleCauses.length >
+                        ? (geminiResponse.translatedCauses ?? geminiResponse.possibleCauses)
+                        : (geminiResponse.translatedCauses ?? geminiResponse.possibleCauses).length >
                               maxPreviewLength
-                        ? '${geminiResponse.possibleCauses.substring(0, maxPreviewLength)}...'
-                        : geminiResponse.possibleCauses,
+                        ? '${(geminiResponse.translatedCauses ?? geminiResponse.possibleCauses).substring(0, maxPreviewLength)}...'
+                        : (geminiResponse.translatedCauses ?? geminiResponse.possibleCauses),
                   ),
                   if (geminiResponse.possibleCauses.length >
                       maxPreviewLength) ...[
@@ -955,12 +1015,12 @@ class _PlantDiseaseScreenState extends State<PlantDiseaseScreen> {
                 children: [
                   buildMarkdownText(
                     _expandGeminiSolutions
-                        ? geminiResponse.solutions
-                        : geminiResponse.solutions.length > maxPreviewLength
-                        ? '${geminiResponse.solutions.substring(0, maxPreviewLength)}...'
-                        : geminiResponse.solutions,
+                        ? (geminiResponse.translatedSolutions ?? geminiResponse.solutions)
+                        : (geminiResponse.translatedSolutions ?? geminiResponse.solutions).length > maxPreviewLength
+                        ? '${(geminiResponse.translatedSolutions ?? geminiResponse.solutions).substring(0, maxPreviewLength)}...'
+                        : (geminiResponse.translatedSolutions ?? geminiResponse.solutions),
                   ),
-                  if (geminiResponse.solutions.length > maxPreviewLength) ...[
+                  if ((geminiResponse.translatedSolutions ?? geminiResponse.solutions).length > maxPreviewLength) ...[
                     const SizedBox(height: 8),
                     GestureDetector(
                       onTap: () {
@@ -1012,12 +1072,12 @@ class _PlantDiseaseScreenState extends State<PlantDiseaseScreen> {
                 children: [
                   buildMarkdownText(
                     _expandGeminiPrevention
-                        ? geminiResponse.prevention
-                        : geminiResponse.prevention.length > maxPreviewLength
-                        ? '${geminiResponse.prevention.substring(0, maxPreviewLength)}...'
-                        : geminiResponse.prevention,
+                        ? (geminiResponse.translatedPrevention ?? geminiResponse.prevention)
+                        : (geminiResponse.translatedPrevention ?? geminiResponse.prevention).length > maxPreviewLength
+                        ? '${(geminiResponse.translatedPrevention ?? geminiResponse.prevention).substring(0, maxPreviewLength)}...'
+                        : (geminiResponse.translatedPrevention ?? geminiResponse.prevention),
                   ),
-                  if (geminiResponse.prevention.length > maxPreviewLength) ...[
+                  if ((geminiResponse.translatedPrevention ?? geminiResponse.prevention).length > maxPreviewLength) ...[
                     const SizedBox(height: 8),
                     GestureDetector(
                       onTap: () {

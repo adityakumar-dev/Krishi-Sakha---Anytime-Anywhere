@@ -164,6 +164,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get response => 'उत्तर:';
 
   @override
+  String get pleaseWait => 'कृपया प्रतीक्षा करें';
+
+  @override
   String get weather => 'मौसम';
 
   @override
@@ -848,6 +851,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get step3 => '3. परिणाम और सिफारिशें देखें';
 
   @override
+  String get translating => 'अनुवाद हो रहा है...';
+
+  @override
+  String get translated => 'अनुवादित';
+
+  @override
   String get yourFarmTools => 'आपके खेती के उपकरण';
 
   @override
@@ -982,9 +991,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get checkYourConnection => 'कृपया अपना इंटरनेट कनेक्शन जांचें';
 
   @override
-  String get translating => 'अनुवाद हो रहा है...';
-
-  @override
   String get translateTo => 'में अनुवाद करें';
 
   @override
@@ -998,4 +1004,55 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get loadingWeatherFor => 'मौसम लोड हो रहा है';
+
+  @override
+  String get onlineFeatures => 'ऑनलाइन सुविधाएं';
+
+  @override
+  String get offlineFeatures => 'ऑफ़लाइन सुविधाएं';
+
+  @override
+  String get speakToAI => 'AI से बात करें';
+
+  @override
+  String get community => 'समुदाय';
+
+  @override
+  String get advice => 'सलाह';
+
+  @override
+  String get govtSchemes => 'सरकारी योजनाएं';
+
+  @override
+  String get liveRates => 'लाइव दरें';
+
+  @override
+  String get requiresInternet => 'इंटरनेट कनेक्शन की आवश्यकता है';
+
+  @override
+  String get cached => 'कैश्ड';
+
+  @override
+  String get offlineMode => 'ऑफ़लाइन';
+
+  @override
+  String get ready => 'तैयार';
+
+  @override
+  String get listeningState => 'सुन रहा है';
+
+  @override
+  String get processingState => 'प्रोसेस हो रहा है';
+
+  @override
+  String get streamingState => 'स्ट्रीमिंग';
+
+  @override
+  String get speakingState => 'बोल रहा है';
+
+  @override
+  String get errorState => 'त्रुटि';
+
+  @override
+  String get oopsSomethingWrong => 'उफ़! कुछ गलत हो गया';
 }

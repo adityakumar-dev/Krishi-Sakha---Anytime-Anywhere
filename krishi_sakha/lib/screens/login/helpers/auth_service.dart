@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:lottie/lottie.dart'; // Add this dependency
 import 'package:krishi_sakha/utils/routes/routes.dart';
+import 'package:krishi_sakha/services/fcm_token_service.dart';
 
 class AuthService {
   static final SupabaseClient _supabase = Supabase.instance.client;
@@ -51,7 +52,9 @@ class AuthService {
           );
           return AuthResult.success('Email confirmation required');
         } else {
-          // Account created and confirmed
+          // Account created and confirmed - save FCM token
+          await FcmTokenService.saveFcmToken();
+          
           await _showSuccessDialog(
             context,
             'Welcome!',
@@ -95,6 +98,9 @@ class AuthService {
       if (context.mounted) Navigator.of(context).pop();
 
       if (response.user != null) {
+        // Save FCM token on successful login
+        await FcmTokenService.saveFcmToken();
+        
         await _showSuccessDialog(
           context,
           'Welcome Back!',
@@ -122,6 +128,9 @@ class AuthService {
   static Future<AuthResult> signOut({required BuildContext context}) async {
     try {
       _showLoadingDialog(context, 'Signing out...');
+      
+      // Delete FCM token before signing out
+      await FcmTokenService.deleteFcmToken();
       
       await _supabase.auth.signOut();
       

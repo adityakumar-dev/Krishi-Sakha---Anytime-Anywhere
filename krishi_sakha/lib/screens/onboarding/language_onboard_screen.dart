@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:krishi_sakha/apis/app_global.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
+import 'package:krishi_sakha/providers/language_provider.dart';
 import 'package:krishi_sakha/utils/routes/routes.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,18 @@ class _LanguageOnboardScreenState extends State<LanguageOnboardScreen> {
       context,
       listen: false,
     );
+    final languageProvider = Provider.of<LanguageProvider>(
+      context,
+      listen: false,
+    );
+    
     await profileProvider.setLanguagePreference(_selectedLanguage!);
+    
+    // Update LanguageProvider for localization (only for en, hi, ml)
+    final langCode = _selectedLanguage!.split('-').first;
+    if (langCode == 'en' || langCode == 'hi' || langCode == 'ml') {
+      await languageProvider.setLocaleFromCode(_selectedLanguage!);
+    }
 
     setState(() {
       _isLoading = false;
@@ -76,9 +88,14 @@ class _LanguageOnboardScreenState extends State<LanguageOnboardScreen> {
     } else {
       // Navigate to location onboard or home based on whether location is set
       if (mounted) {
-        profileProvider.userProfile?.cityName == null && profileProvider.userProfile?.preferedStateName == null
-            ? context.go(AppRoutes.profileOnboard)
+
+        if(profileProvider.userProfile?.name == null){
+          context.go(AppRoutes.profileOnboard);
+        }else{
+          profileProvider.userProfile?.preferredWeatherStationId == null? context.go(AppRoutes.locationOnBoard)
             : context.go(AppRoutes.home);
+     
+        }
       }
     }
   }

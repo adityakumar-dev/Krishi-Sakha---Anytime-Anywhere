@@ -1,0 +1,82 @@
+Crop Name,Land Required (per acre),Avg Yield (per acre),Cost of Cultivation (₹),Selling Price (₹/quintal or per kg),Avg Profit Margin,Market Demand,Suitability (Weather/Soil),Risk Factors,Recommended For
+Wheat,1 acre,20–25 quintals,26662,"₹2,000–₹2,800/quintal",~41%,High (staple),"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Smallholders
+Maize (Corn),1 acre,15–25 quintals,62186,"₹1,600–₹2,200/quintal",~33%,High (staple),"Alluvial/loam soils, region-specific seasonality",Pest risk,Smallholders
+Barley,1 acre,8–30 quintals,86985,"₹1,500–₹6,000/quintal",~75%,Growing,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Beginners
+Finger Millet (Ragi),1 acre,8–30 quintals,32479,"₹1,500–₹6,000/quintal",~51%,Moderate,"Alluvial/loam soils, region-specific seasonality",Low rainfall risk,Large-scale farms
+Pearl Millet (Bajra),1 acre,6–12 tons,72512,"₹1,500–₹6,000/quintal",~42%,Stable,"Alluvial/loam soils, region-specific seasonality",Pest risk,Investors
+Sorghum (Jowar),1 acre,8–30 quintals,51541,"₹1,500–₹6,000/quintal",~79%,Growing,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Medium-scale farmers
+Lentils (Masoor),1 acre,8–15 quintals,39834,"₹1,500–₹6,000/quintal",~31%,Moderate,"Alluvial/loam soils, region-specific seasonality",Pest risk,Investors
+Chickpea (Gram),1 acre,8–15 quintals,36045,"₹1,500–₹6,000/quintal",~82%,Growing,"Alluvial/loam soils, region-specific seasonality",Pest risk,Medium-scale farmers
+Green Gram (Moong),1 acre,8–15 quintals,50469,"₹1,500–₹6,000/quintal",~88%,Moderate,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Large-scale farms
+Black Gram (Urad),1 acre,8–30 quintals,39107,"₹1,500–₹6,000/quintal",~59%,Local demand,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Medium-scale farmers
+Peas (Garden Pea),p,8–30 quintals,65212,"₹1,500–₹6,000/quintal",~78%,Stable,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Large-scale farms
+Cowpea (Lobia),1 acre,8–30 quintals,30583,"₹1,500–₹6,000/quintal",~68%,Local demand,"Alluvial/loam soils, region-specific seasonality",Low rainfall risk,Smallholders
+Mustard (Rapeseed),1 acre,8–30 quintals,89438,"₹1,500–₹6,000/quintal",~88%,Stable,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Beginners
+Groundnut,1 acre,8–30 quintals,22083,"₹1,500–₹6,000/quintal",~65%,Growing,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Medium-scale farmers
+Sesame (Til),1 acre,8–30 quintals,89973,"₹1,500–₹6,000/quintal",~47%,Moderate,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Smallholders
+Sunflower,1 acre,8–30 quintals,47354,"₹1,500–₹6,000/quintal",~53%,Growing,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Beginners
+Brinjal (Eggplant),1 acre,8–30 quintals,22239,"₹1,500–₹6,000/quintal",~87%,Stable,"Alluvial/loam soils, region-specific seasonality",Pest risk,Large-scale farms
+Cabbage,1 acre,8–30 quintals,86445,"₹1,500–₹6,000/quintal",~80%,Moderate,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Beginners
+Cauliflower,1 acre,8–30 quintals,37069,"₹1,500–₹6,000/quintal",~26%,Local demand,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Smallholders
+Capsicum (Bell Pepper),1 acre,8–30 quintals,89619,"₹1,500–₹6,000/quintal",~90%,Moderate,"Alluvial/loam soils, region-specific seasonality",Pest risk,Beginners
+Bottle Gourd,1 acre,8–30 quintals,49012,"₹1,500–₹6,000/quintal",~37%,Growing,"Alluvial/loam soils, region-specific seasonality",Pest risk,Investors
+Bitter Gourd,1 acre,8–30 quintals,83452,"₹1,500–₹6,000/quintal",~71%,Moderate,"Alluvial/loam soils, region-specific seasonality",Pest risk,Medium-scale farmers
+Okra (Bhindi),1 acre,8–30 quintals,37299,"₹1,500–₹6,000/quintal",~86%,Growing,"Alluvial/loam soils, region-specific seasonality",Pest risk,Investors
+Cucumber,1 acre,8–30 quintals,59829,"₹1,500–₹6,000/quintal",~73%,Growing,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Medium-scale farmers
+Spinach,1 acre,8–30 quintals,25877,"₹1,500–₹6,000/quintal",~80%,Stable,"Alluvial/loam soils, region-specific seasonality",Pest risk,Large-scale farms
+Fenugreek (Methi),1 acre,8–30 quintals,37081,"₹1,500–₹6,000/quintal",~60%,Moderate,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Smallholders
+Carrot,1 acre,8–30 quintals,74284,"₹1,500–₹6,000/quintal",~30%,Moderate,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Investors
+Radish,1 acre,8–30 quintals,46663,"₹1,500–₹6,000/quintal",~57%,Moderate,"Alluvial/loam soils, region-specific seasonality",Pest risk,Investors
+Apple (Hill),1 acre,6–12 tons,134490,₹40–₹90/kg,~54%,Premium / Urban demand,"Cool/hill climate, well-drained soil",High climate sensitivity / infrastructure cost,Experienced/high-investment growers
+Guava,1 acre,8–30 quintals,71309,"₹1,500–₹6,000/quintal",~44%,Moderate,"Alluvial/loam soils, region-specific seasonality",Low rainfall risk,Medium-scale farmers
+Papaya,1 acre,8–30 quintals,32649,"₹1,500–₹6,000/quintal",~87%,Local demand,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Beginners
+Pomegranate,1 acre,8–30 quintals,88773,"₹1,500–₹6,000/quintal",~43%,Growing,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Smallholders
+Pear,1 acre,6–12 tons,88885,"₹1,500–₹6,000/quintal",~90%,Local demand,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Smallholders
+Peach,1 acre,6–12 tons,58118,"₹1,500–₹6,000/quintal",~86%,Moderate,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Smallholders
+Apricot,1 acre,6–12 tons,84080,"₹1,500–₹6,000/quintal",~32%,Growing,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Medium-scale farmers
+Litchi,1 acre,8–30 quintals,60983,"₹1,500–₹6,000/quintal",~63%,Stable,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Beginners
+Cotton,1 acre,8–30 quintals,54137,"₹1,500–₹6,000/quintal",~65%,Moderate,"Alluvial/loam soils, region-specific seasonality",Pest risk,Medium-scale farmers
+Lemongrass (Citronella),1 acre,2–4 tons (oil feedstock),53934,"₹900–₹1,500/kg (oil feedstock)",~104%,Export / Niche,"All-weather tolerant, well-drained",Storage/transport risk,Small to medium farms / cash crop seekers
+Aloe Vera,1 acre,10–20 tons (leaf weight),49223,"₹1,500–₹6,000/quintal",~41%,Stable,"Alluvial/loam soils, region-specific seasonality",Pest risk,Large-scale farms
+Bamboo (commercial),1 acre,20–40 tons (biomass over years),35940,"₹1,500–₹6,000/quintal",~28%,Growing,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Smallholders
+Tobacco (small scale),1 acre,8–30 quintals,63636,"₹1,500–₹6,000/quintal",~53%,Local demand,"Alluvial/loam soils, region-specific seasonality",Low rainfall risk,Large-scale farms
+Cardamom (hill),1 acre,8–30 quintals,52413,"₹1,500–₹6,000/quintal",~44%,Growing,"Cool/hill climate, well-drained soil",Low rainfall risk,Investors
+Coriander (dhania),1 acre,8–30 quintals,60509,"₹1,500–₹6,000/quintal",~81%,Growing,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Large-scale farms
+Fennel,1 acre,8–30 quintals,85838,"₹1,500–₹6,000/quintal",~85%,Growing,"Alluvial/loam soils, region-specific seasonality",Pest risk,Beginners
+Ashwagandha,1 acre,8–30 quintals,55522,"₹1,500–₹6,000/quintal",~86%,Moderate,"Alluvial/loam soils, region-specific seasonality",Pest risk,Medium-scale farmers
+Brahmi,1 acre,8–30 quintals,84362,"₹1,500–₹6,000/quintal",~73%,Stable,"Alluvial/loam soils, region-specific seasonality",Pest risk,Medium-scale farmers
+Chamomile (herbal),1 acre,8–30 quintals,61506,"₹1,500–₹6,000/quintal",~39%,Growing,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Smallholders
+Tulsi (Holy Basil),1 acre,8–30 quintals,81578,"₹1,500–₹6,000/quintal",~38%,Local demand,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Beginners
+Walnut (hill),1 acre,2–4 tons,123655,"₹1,500–₹6,000/quintal",~105%,Growing,"Cool/hill climate, well-drained soil",Market price fluctuation,Beginners
+Almond (hill),1 acre,2–4 tons,155588,"₹1,500–₹6,000/quintal",~93%,Stable,"Cool/hill climate, well-drained soil",Low rainfall risk,Large-scale farms
+Cashew (lowland pockets),1 acre,8–30 quintals,40467,"₹1,500–₹6,000/quintal",~44%,Growing,"Alluvial/loam soils, region-specific seasonality",Low rainfall risk,Beginners
+Marigold,1 acre,3–8 tons (flowers),67062,₹30–₹80/kg (flowers),~61%,Stable,"Moderate climate, protected beds for cut flowers",Storage/transport risk,Beginners
+Rose (cut flower),1 acre,3–8 tons (flowers),34015,₹30–₹80/kg (flowers),~63%,Stable,"Moderate climate, protected beds for cut flowers",Market price fluctuation,Medium-scale farmers
+Chrysanthemum,1 acre,3–8 tons (flowers),47108,"₹1,500–₹6,000/quintal",~83%,Moderate,"Alluvial/loam soils, region-specific seasonality",Low rainfall risk,Beginners
+Gerbera (polyhouse),1 acre,8–30 quintals,82415,"₹1,500–₹6,000/quintal",~90%,Local demand,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Modern tech farms / investors
+Stevia (sweetener),1 acre,8–30 quintals,87760,"₹1,500–₹6,000/quintal",~79%,Moderate,"Alluvial/loam soils, region-specific seasonality",Pest risk,Large-scale farms
+Moringa (drumstick tree),1 acre,8–30 quintals,51579,"₹1,500–₹6,000/quintal",~36%,Growing,"Alluvial/loam soils, region-specific seasonality",Pest risk,Smallholders
+Hemp (industrial," legal compliance)",1 acre,8–30 quintals,34432,"₹1,500–₹6,000/quintal",~68%,Local demand,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Smallholders
+Olive (experimental orchards),1 acre,8–30 quintals,58722,"₹1,500–₹6,000/quintal",~56%,Stable,"Alluvial/loam soils, region-specific seasonality",Pest risk,Beginners
+Lucerne (Alfalfa),1 acre,8–30 quintals,57411,"₹1,500–₹6,000/quintal",~36%,Local demand,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Medium-scale farmers
+Sorghum (for fodder),1 acre,8–30 quintals,87167,"₹1,500–₹6,000/quintal",~79%,Growing,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Large-scale farms
+Napier Grass (fodder),1 acre,8–30 quintals,67295,"₹1,500–₹6,000/quintal",~80%,Growing,"Alluvial/loam soils, region-specific seasonality",Pest risk,Medium-scale farmers
+Buckwheat (Kuttu),1 acre,20–25 quintals,34547,"₹2,000–₹2,800/quintal",~22%,High (staple),"Alluvial/loam soils, region-specific seasonality",Low rainfall risk,Medium-scale farmers
+Jasmine (floriculture),1 acre,8–30 quintals,73758,"₹1,500–₹6,000/quintal",~38%,Growing,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Beginners
+Toria (mustard family),1 acre,8–30 quintals,34665,"₹1,500–₹6,000/quintal",~29%,Local demand,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Investors
+Kaffir Lime (small orchards),1 acre,8–30 quintals,56040,"₹1,500–₹6,000/quintal",~71%,Moderate,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Investors
+,,,,,,,,,
+Bottle Gourd (again),1 acre,8–30 quintals,36756,"₹1,500–₹6,000/quintal",~32%,Growing,"Alluvial/loam soils, region-specific seasonality",Low rainfall risk,Large-scale farms
+Sweet Corn,1 acre,15–25 quintals,87532,"₹1,600–₹2,200/quintal",~66%,Moderate,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Large-scale farms
+Millet Mix (small farms),1 acre,8–30 quintals,66503,"₹1,500–₹6,000/quintal",~72%,Stable,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Smallholders
+Bitter Gourd (again),1 acre,8–30 quintals,52234,"₹1,500–₹6,000/quintal",~54%,Moderate,"Alluvial/loam soils, region-specific seasonality",Low rainfall risk,Large-scale farms
+Spinach (again),1 acre,8–30 quintals,80749,"₹1,500–₹6,000/quintal",~69%,Local demand,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Investors
+Kale (experimental),1 acre,8–30 quintals,84655,"₹1,500–₹6,000/quintal",~73%,Stable,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Large-scale farms
+Okra (hybrid),1 acre,8–30 quintals,29736,"₹1,500–₹6,000/quintal",~77%,Stable,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Large-scale farms
+Broad Bean (fava),1 acre,8–30 quintals,83019,"₹1,500–₹6,000/quintal",~46%,Local demand,"Alluvial/loam soils, region-specific seasonality",Pest risk,Large-scale farms
+Turnip,1 acre,8–30 quintals,86396,"₹1,500–₹6,000/quintal",~80%,Moderate,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Large-scale farms
+Beetroot,1 acre,8–30 quintals,29534,"₹1,500–₹6,000/quintal",~82%,Stable,"Alluvial/loam soils, region-specific seasonality",Pest risk,Medium-scale farmers
+Mango (Alphonso pockets),1 acre,8–30 quintals,58431,"₹1,500–₹6,000/quintal",~69%,Stable,"Alluvial/loam soils, region-specific seasonality",Pest risk,Smallholders
+Curry Leaf (nursery),1 acre,8–30 quintals,70713,"₹1,500–₹6,000/quintal",~58%,Local demand,"Alluvial/loam soils, region-specific seasonality",Low rainfall risk,Medium-scale farmers
+Neem (commercial saplings),1 acre,8–30 quintals,45397,"₹1,500–₹6,000/quintal",~63%,Local demand,"Alluvial/loam soils, region-specific seasonality",Market price fluctuation,Beginners
+Grasspea (for trials),1 acre,8–30 quintals,49857,"₹1,500–₹6,000/quintal",~50%,Stable,"Alluvial/loam soils, region-specific seasonality",Storage/transport risk,Investors

@@ -263,17 +263,17 @@ class _VoiceScreenState extends State<VoiceScreen> {
   String _getStateLabel(VoiceState state) {
     switch (state) {
       case VoiceState.idle:
-        return "READY";
+        return AppLocalizations.of(context)!.ready;
       case VoiceState.listening:
-        return "LISTENING";
+        return AppLocalizations.of(context)!.listeningState;
       case VoiceState.processing:
-        return "PROCESSING";
+        return AppLocalizations.of(context)!.processingState;
       case VoiceState.streaming:
-        return "STREAMING";
+        return AppLocalizations.of(context)!.streamingState;
       case VoiceState.speaking:
-        return "SPEAKING";
+        return AppLocalizations.of(context)!.speakingState;
       case VoiceState.error:
-        return "ERROR";
+        return AppLocalizations.of(context)!.errorState;
     }
   }
 
@@ -296,9 +296,9 @@ class _VoiceScreenState extends State<VoiceScreen> {
                 size: 56,
               ),
               const SizedBox(height: 16),
-              const Text(
-                "Oops! Something went wrong",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.oopsSomethingWrong,
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -320,7 +320,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
                       provider.clearError();
                     },
                     icon: const Icon(Icons.refresh),
-                    label: const Text("Try Again"),
+                    label: Text(AppLocalizations.of(context)!.tryAgain),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                       foregroundColor: Colors.black,
@@ -337,27 +337,27 @@ class _VoiceScreenState extends State<VoiceScreen> {
 
   // Initializing widget
   Widget _buildInitializingWidget() {
-    return const Column(
+    return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           width: 60,
           height: 60,
           child: CircularProgressIndicator(color: Colors.black, strokeWidth: 3),
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         Text(
-          "Initializing speech recognition...",
-          style: TextStyle(
+          AppLocalizations.of(context)!.initializingSpeechRecognition,
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.w500,
           ),
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
-          "Please wait",
-          style: TextStyle(color: Colors.black, fontSize: 14),
+          AppLocalizations.of(context)!.pleaseWait,
+          style: const TextStyle(color: Colors.black, fontSize: 14),
         ),
       ],
     );
@@ -544,7 +544,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
                 provider.clearError();
               },
               icon: const Icon(Icons.refresh),
-              label: const Text("Retry"),
+              label: Text(AppLocalizations.of(context)!.retry),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
                 padding: const EdgeInsets.symmetric(
@@ -562,9 +562,9 @@ class _VoiceScreenState extends State<VoiceScreen> {
               child: TextButton.icon(
                 onPressed: provider.cancelSpeaking,
                 icon: const Icon(Icons.stop_circle, color: Colors.red),
-                label: const Text(
-                  "Cancel",
-                  style: TextStyle(color: Colors.red),
+                label: Text(
+                  AppLocalizations.of(context)!.cancel,
+                  style: const TextStyle(color: Colors.red),
                 ),
               ),
             ),

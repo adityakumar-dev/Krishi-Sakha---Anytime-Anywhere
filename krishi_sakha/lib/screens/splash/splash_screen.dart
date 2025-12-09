@@ -5,7 +5,6 @@ import 'package:krishi_sakha/providers/profile_provider.dart';
 import 'package:krishi_sakha/utils/routes/routes.dart';
 import 'package:krishi_sakha/utils/theme/colors.dart';
 import 'package:krishi_sakha/utils/ui/set_system_ui_overlay.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -68,31 +67,34 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _navigateAfterDelay() async {
     await Future.delayed(const Duration(seconds: 3));
     if (mounted) {
+      final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+      
+      // Load saved locale first
+      await languageProvider.loadSavedLocale();
+      
       final user = Supabase.instance.client.auth.currentUser;
       if (user != null) {
+        // FCM token is automatically saved by token refresh listener in main.dart
+        // No need to save it here to avoid duplicates
+        
         final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
-        final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
         
         await profileProvider.initProfile();
         
-        // Set locale based on user's preferred language
+        // Set locale based on user's preferred language from profile
         if (profileProvider.userProfile != null) {
           final preferredLanguage = profileProvider.userProfile!.prefered_language;
           
-          // Default to English if no preference or invalid value
+          // Only update if there's a preference and it's different from current
           if (preferredLanguage != null && preferredLanguage.isNotEmpty) {
+            final langCode = preferredLanguage.split('-').first;
             // Support 'en', 'hi', 'ml' language codes
-            if (preferredLanguage == 'hi' || preferredLanguage == 'hindi') {
-              languageProvider.setLocale(const Locale('hi'));
-            } else if (preferredLanguage == 'ml' || preferredLanguage == 'malayalam') {
-              languageProvider.setLocale(const Locale('ml'));
-            } else {
-              // Default to English for any other value
-              languageProvider.setLocale(const Locale('en'));
+            if (langCode == 'en' || langCode == 'hi' || langCode == 'ml') {
+              final newLocale = Locale(langCode);
+              if (languageProvider.currentLocale.languageCode != langCode) {
+                await languageProvider.setLocale(newLocale);
+              }
             }
-          } else {
-            // No preference set, use English as default
-            languageProvider.setLocale(const Locale('en'));
           }
           
           context.go(AppRoutes.home);

@@ -315,6 +315,7 @@ class _LocationOnboardScreenState extends State<LocationOnboardScreen> {
 
       // Navigate to home
       if (mounted) {
+        
         context.go(AppRoutes.home);
       }
 

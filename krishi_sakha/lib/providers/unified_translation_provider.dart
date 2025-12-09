@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:krishi_sakha/services/app_logger.dart';
 import 'package:krishi_sakha/services/OpusOnnxTranslater.dart';
+import 'package:krishi_sakha/services/google_translation_service.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:krishi_sakha/apis/app_global.dart';
 import 'package:krishi_sakha/utils/theme/colors.dart';
 import 'package:krishi_sakha/l10n/app_localizations.dart';
@@ -42,9 +44,10 @@ class UnifiedTranslationProvider extends ChangeNotifier {
   TranslationResult? _lastTranslationResult;
   String _selectedLanguageCode = 'hi'; // Default to Hindi
 
-  // Offline translation service
-  OpusOnnxTranslator? _offlineTranslator;
+  // Offline translation services
+  OpusOnnxTranslator? _offlineTranslator; // ONNX for Malayalam
   bool _isOfflineInitialized = false;
+  final GoogleTranslationService _mlkitService = GoogleTranslationService(); // MLKit for other languages
 
   bool get isTranslating => _isTranslating;
   TranslationResult? get lastTranslationResult => _lastTranslationResult;
@@ -53,19 +56,16 @@ class UnifiedTranslationProvider extends ChangeNotifier {
 
   // Supported languages with offline model availability
   final Map<String, Map<String, dynamic>> _supportedLanguages = {
-    'hi': {'name': 'हिंदी (Hindi)', 'hasOffline': false},
-    'ml': {
-      'name': 'മലയാളം (Malayalam)',
-      'hasOffline': true,
-    }, // Offline model available
-    'bn': {'name': 'বাংলা (Bengali)', 'hasOffline': false},
-    'ta': {'name': 'தமிழ் (Tamil)', 'hasOffline': false},
-    'te': {'name': 'తెలుగు (Telugu)', 'hasOffline': false},
-    'mr': {'name': 'मराठी (Marathi)', 'hasOffline': false},
-    'gu': {'name': 'ગુજરાતી (Gujarati)', 'hasOffline': false},
-    'kn': {'name': 'ಕನ್ನಡ (Kannada)', 'hasOffline': false},
-    'pa': {'name': 'ਪੰਜਾਬੀ (Punjabi)', 'hasOffline': false},
-    'ur': {'name': 'اردو (Urdu)', 'hasOffline': false},
+    'hi': {'name': 'हिंदी (Hindi)', 'hasONNX': false, 'mlkitLang': TranslateLanguage.hindi},
+    'ml': {'name': 'മലയാളം (Malayalam)', 'hasONNX': true, 'mlkitLang': null}, // ONNX only
+    'bn': {'name': 'বাংলা (Bengali)', 'hasONNX': false, 'mlkitLang': TranslateLanguage.bengali},
+    'ta': {'name': 'தமிழ் (Tamil)', 'hasONNX': false, 'mlkitLang': TranslateLanguage.tamil},
+    'te': {'name': 'తెలుగు (Telugu)', 'hasONNX': false, 'mlkitLang': TranslateLanguage.telugu},
+    'mr': {'name': 'मराठी (Marathi)', 'hasONNX': false, 'mlkitLang': TranslateLanguage.marathi},
+    'gu': {'name': 'ગુજરાતી (Gujarati)', 'hasONNX': false, 'mlkitLang': TranslateLanguage.gujarati},
+    'kn': {'name': 'ಕನ್ನಡ (Kannada)', 'hasONNX': false, 'mlkitLang': TranslateLanguage.kannada},
+    'pa': {'name': 'ਪੰਜਾਬੀ (Punjabi)', 'hasONNX': false, 'mlkitLang': null},
+    'ur': {'name': 'اردو (Urdu)', 'hasONNX': false, 'mlkitLang': TranslateLanguage.urdu},
   };
 
   // Get language name from code
@@ -73,9 +73,35 @@ class UnifiedTranslationProvider extends ChangeNotifier {
     return _supportedLanguages[languageCode]?['name'] ?? 'Unknown';
   }
 
-  // Check if offline model is available for language
-  bool hasOfflineModel(String languageCode) {
-    return _supportedLanguages[languageCode]?['hasOffline'] ?? false;
+  // Check if any offline model is available for language (ONNX or MLKit)
+  Future<bool> hasOfflineModel(String languageCode) async {
+    final langInfo = _supportedLanguages[languageCode];
+    if (langInfo == null) {
+      AppLogger.debug('UnifiedTranslationProvider: Language $languageCode not supported');
+      return false;
+    }
+    
+    // Check ONNX model (Malayalam)
+    if (langInfo['hasONNX'] == true) {
+      AppLogger.debug('UnifiedTranslationProvider: Checking ONNX model for $languageCode: $_isOfflineInitialized');
+      return _isOfflineInitialized;
+    }
+    
+    // Check MLKit model
+    final mlkitLang = langInfo['mlkitLang'] as TranslateLanguage?;
+    if (mlkitLang != null) {
+      try {
+        final isDownloaded = await _mlkitService.isModelDownloaded(mlkitLang);
+        AppLogger.debug('UnifiedTranslationProvider: MLKit model for $languageCode (${mlkitLang.bcpCode}): $isDownloaded');
+        return isDownloaded;
+      } catch (e) {
+        AppLogger.error('UnifiedTranslationProvider: Error checking MLKit model: $e');
+        return false;
+      }
+    }
+    
+    AppLogger.debug('UnifiedTranslationProvider: No offline support configured for $languageCode');
+    return false;
   }
 
   // Initialize offline translator (for Malayalam)
@@ -170,47 +196,91 @@ class UnifiedTranslationProvider extends ChangeNotifier {
             onlineError.toString().contains('TimeoutException') ||
             onlineError.toString().contains('Failed host lookup');
 
-        // If network error and offline available, try offline
-        if (isNetworkError && hasOfflineModel(language)) {
-          AppLogger.info(
-            'UnifiedTranslationProvider: Network error, trying offline translation',
-          );
+        // If network error, try offline models
+        if (isNetworkError) {
+          final hasOffline = await hasOfflineModel(language);
+          if (hasOffline) {
+            AppLogger.info(
+              'UnifiedTranslationProvider: Network error, trying offline translation for $language',
+            );
 
-          if (!_isOfflineInitialized) {
-            await initializeOfflineTranslation();
-          }
+            // Try ONNX model for Malayalam
+            if (language == 'ml') {
+              if (!_isOfflineInitialized) {
+                await initializeOfflineTranslation();
+              }
 
-          if (_isOfflineInitialized && _offlineTranslator != null) {
-            try {
-              final translatedText = await _offlineTranslator!.translate(
-                cleanText,
-              );
-              _isTranslating = false;
+              if (_isOfflineInitialized && _offlineTranslator != null) {
+                try {
+                  final translatedText = await _offlineTranslator!.translate(
+                    cleanText,
+                  );
+                  _isTranslating = false;
 
-              _lastTranslationResult = TranslationResult(
-                success: true,
-                translation: translatedText,
-                language: language,
-                languageName: getLanguageName(language),
-                usedOffline: true,
-              );
+                  _lastTranslationResult = TranslationResult(
+                    success: true,
+                    translation: translatedText,
+                    language: language,
+                    languageName: getLanguageName(language),
+                    usedOffline: true,
+                  );
 
+                  AppLogger.info(
+                    'UnifiedTranslationProvider: ONNX offline translation successful',
+                  );
+                  notifyListeners();
+                  return _lastTranslationResult!;
+                } catch (offlineError) {
+                  AppLogger.error(
+                    'UnifiedTranslationProvider: ONNX offline failed: $offlineError',
+                  );
+                  throw Exception('Both online and offline translation failed');
+                }
+              }
+            } else {
+              // Try MLKit model for other languages
+              final mlkitLang = _supportedLanguages[language]?['mlkitLang'] as TranslateLanguage?;
               AppLogger.info(
-                'UnifiedTranslationProvider: Offline translation successful',
+                'UnifiedTranslationProvider: Attempting MLKit translation for $language (${mlkitLang?.bcpCode})',
               );
-              notifyListeners();
-              return _lastTranslationResult!;
-            } catch (offlineError) {
-              AppLogger.error(
-                'UnifiedTranslationProvider: Offline also failed: $offlineError',
-              );
-              throw Exception('Both online and offline translation failed');
+              if (mlkitLang != null) {
+                try {
+                  AppLogger.debug('UnifiedTranslationProvider: Calling MLKit translate...');
+                  final translatedText = await _mlkitService.translate(
+                    cleanText,
+                    source: TranslateLanguage.english,
+                    target: mlkitLang,
+                  );
+                  _isTranslating = false;
+
+                  _lastTranslationResult = TranslationResult(
+                    success: true,
+                    translation: translatedText,
+                    language: language,
+                    languageName: getLanguageName(language),
+                    usedOffline: true,
+                  );
+
+                  AppLogger.info(
+                    'UnifiedTranslationProvider: MLKit offline translation successful: "$translatedText"',
+                  );
+                  notifyListeners();
+                  return _lastTranslationResult!;
+                } catch (offlineError) {
+                  AppLogger.error(
+                    'UnifiedTranslationProvider: MLKit offline failed: $offlineError',
+                  );
+                  throw Exception('Both online and offline translation failed: $offlineError');
+                }
+              } else {
+                AppLogger.error('UnifiedTranslationProvider: No MLKit language mapping for $language');
+              }
             }
-          } else {
-            throw Exception('Network error and offline model not initialized');
           }
+          // No offline model available or failed
+          throw onlineError;
         } else {
-          // Not a network error or no offline model available
+          // Not a network error
           throw onlineError;
         }
       }
@@ -224,12 +294,17 @@ class UnifiedTranslationProvider extends ChangeNotifier {
           e.toString().contains('Failed host lookup');
 
       String errorMessage;
-      if (isNetworkError && hasOfflineModel(language)) {
-        errorMessage =
-            'Translation failed: Please download offline ${getLanguageName(language)} language model';
-      } else if (isNetworkError) {
-        errorMessage =
-            'Translation failed: No internet connection and no offline model available for ${getLanguageName(language)}';
+      if (isNetworkError) {
+        final hasOffline = await hasOfflineModel(language);
+        if (hasOffline) {
+          // Has offline model but failed to use it
+          errorMessage =
+              'Translation failed: Please download offline ${getLanguageName(language)} model from settings';
+        } else {
+          // No offline model available for this language
+          errorMessage =
+              'Translation unavailable: No internet connection. Please download offline ${getLanguageName(language)} model from settings.';
+        }
       } else {
         errorMessage = 'Translation error: $e';
       }
@@ -658,7 +733,7 @@ class UnifiedTranslationProvider extends ChangeNotifier {
                               final code = entry.key;
                               final info = entry.value;
                               final isSelected = selectedLanguage == code;
-                              final hasOffline = info['hasOffline'] as bool;
+                              final hasOffline = (info['hasONNX'] == true) || (info['mlkitLang'] != null);
 
                               return Container(
                                 margin: const EdgeInsets.only(bottom: 12),

@@ -48,6 +48,7 @@ dependencies:
   tflite_flutter: ^0.12.1
   image: ^4.2.1
   webview_flutter: ^4.13.0
+  video_player: ^2.9.2
   rename_app: ^1.6.5
   animate_do: ^3.3.4
   shimmer: ^3.0.0
@@ -57,6 +58,7 @@ dependencies:
   firebase_messaging: ^16.0.4
   onnx_translation: ^0.1.2
   google_mlkit_translation: ^0.13.0
+  connectivity_plus: ^7.0.0
 
 
 dev_dependencies:
@@ -80,4 +82,5 @@ flutter:
     - assets/model/tea_leaf/
     - assets/model/en_ml/
     - assets/model/gatekeeper/
+    - assets/onboarding/
     - .env

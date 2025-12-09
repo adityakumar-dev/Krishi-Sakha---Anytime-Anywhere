@@ -169,6 +169,9 @@ class AppLocalizationsMl extends AppLocalizations {
   String get response => 'മറുപടി:';
 
   @override
+  String get pleaseWait => 'ദയവായി കാത്തിരിക്കുക';
+
+  @override
   String get weather => 'കാലാവസ്ഥ';
 
   @override
@@ -857,6 +860,12 @@ class AppLocalizationsMl extends AppLocalizations {
   String get step3 => '3. ഫലങ്ങളും ശുപാർശകളും കാണുക';
 
   @override
+  String get translating => 'പരിഭാഷപ്പെടുത്തുന്നു...';
+
+  @override
+  String get translated => 'വിവർത്തനം ചെയ്തു';
+
+  @override
   String get yourFarmTools => 'നിങ്ങളുടെ കൃഷി ഉപകരണങ്ങൾ';
 
   @override
@@ -992,9 +1001,6 @@ class AppLocalizationsMl extends AppLocalizations {
       'ദയവായി നിങ്ങളുടെ ഇന്റർനെറ്റ് കണക്ഷൻ പരിശോധിക്കുക';
 
   @override
-  String get translating => 'പരിഭാഷപ്പെടുത്തുന്നു...';
-
-  @override
   String get translateTo => 'പരിഭാഷപ്പെടുത്തുക';
 
   @override
@@ -1008,4 +1014,55 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get loadingWeatherFor => 'കാലാവസ്ഥ ലോഡ് ചെയ്യുന്നു';
+
+  @override
+  String get onlineFeatures => 'ഓൺലൈൻ സവിശേഷതകൾ';
+
+  @override
+  String get offlineFeatures => 'ഓഫ്‌ലൈൻ സവിശേഷതകൾ';
+
+  @override
+  String get speakToAI => 'AI യോട് സംസാരിക്കുക';
+
+  @override
+  String get community => 'സമൂഹം';
+
+  @override
+  String get advice => 'ഉപദേശം';
+
+  @override
+  String get govtSchemes => 'സർക്കാർ പദ്ധതികൾ';
+
+  @override
+  String get liveRates => 'തത്സമയ നിരക്കുകൾ';
+
+  @override
+  String get requiresInternet => 'ഇന്റർനെറ്റ് കണക്ഷൻ ആവശ്യമാണ്';
+
+  @override
+  String get cached => 'കാഷ് ചെയ്തത്';
+
+  @override
+  String get offlineMode => 'ഓഫ്‌ലൈൻ';
+
+  @override
+  String get ready => 'തയ്യാറാണ്';
+
+  @override
+  String get listeningState => 'കേൾക്കുന്നു';
+
+  @override
+  String get processingState => 'പ്രോസസ്സ് ചെയ്യുന്നു';
+
+  @override
+  String get streamingState => 'സ്ട്രീമിംഗ്';
+
+  @override
+  String get speakingState => 'സംസാരിക്കുന്നു';
+
+  @override
+  String get errorState => 'പിശക്';
+
+  @override
+  String get oopsSomethingWrong => 'ക്ഷമിക്കണം! എന്തോ തെറ്റ് സംഭവിച്ചു';
 }

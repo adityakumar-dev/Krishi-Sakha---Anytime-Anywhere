@@ -58,6 +58,7 @@
   "initializingSpeechRecognition": "Initializing speech recognition...",
   "holdAndSpeakToStart": "Hold and speak to start",
   "response": "Response:",
+  "pleaseWait": "Please wait",
   
   "weather": "Weather",
   "weatherForecast": "Weather Forecast",
@@ -326,6 +327,8 @@
   "step1": "1. Take a photo or select from gallery",
   "step2": "2. Tap Detect to analyze the image",
   "step3": "3. View results and recommendations",
+  "translating": "Translating...",
+  "translated": "Translated",
   
   "yourFarmTools": "Your Farm Tools",
   "aiPoweredInsights": "Ai-powered insights for your daily decisions",
@@ -396,5 +399,24 @@
   "addCity": "Add City",
   "loadingWeatherFor": "Loading weather for",
   "addCityToViewWeather": "Add a city to view weather information",
-  "unknownError": "Unknown error occurred"
+  "unknownError": "Unknown error occurred",
+  
+  "onlineFeatures": "Online Features",
+  "offlineFeatures": "Offline Features",
+  "speakToAI": "Speak to AI",
+  "community": "Community",
+  "advice": "Advice",
+  "govtSchemes": "Govt schemes",
+  "liveRates": "Live rates",
+  "requiresInternet": "Requires Internet Connection",
+  "cached": "Cached",
+  "offlineMode": "Offline",
+  
+  "ready": "READY",
+  "listeningState": "LISTENING",
+  "processingState": "PROCESSING",
+  "streamingState": "STREAMING",
+  "speakingState": "SPEAKING",
+  "errorState": "ERROR",
+  "oopsSomethingWrong": "Oops! Something went wrong"
 }

@@ -20,8 +20,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController _phoneController;
   late TextEditingController _cityController;
   late TextEditingController _stateController;
-  late TextEditingController _languageController;
-  bool _isEditing = false;
 
   @override
   void initState() {
@@ -36,10 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _cityController =
         TextEditingController(text: profileProvider.userProfile?.cityName ?? '');
     _stateController =
-        TextEditingController(text: profileProvider.userProfile?.preferedStateName ?? '');    
-    _languageController = TextEditingController(
-        text: profileProvider.userProfile?.prefered_language ?? '');
-    
+        TextEditingController(text: profileProvider.userProfile?.preferedStateName ?? '');
   }
 
   @override
@@ -51,43 +46,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.dispose();
   }
 
-  void _toggleEditMode() {
-    setState(() {
-      _isEditing = !_isEditing;
-    });
-  }
-
-  void _saveProfile() {
-    final profileProvider =
-        Provider.of<ProfileProvider>(context, listen: false);
-    final updatedProfile = profileProvider.userProfile!.copyWith(
-      name: _nameController.text,
-      phone: _phoneController.text,
-      cityName: _cityController.text,
-      stateName: _stateController.text,
-    );
-
-    profileProvider.setProfile(updatedProfile);
-    setState(() {
-      _isEditing = false;
-    });
-
-    final l10n = AppLocalizations.of(context)!;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(l10n.profileUpdated)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: const Color(0xFFF7F5E8),
       appBar: AppBar(
-        title: Text(l10n.myProfile, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(l10n.myProfile, style: const TextStyle(fontWeight: FontWeight.w600)),
         elevation: 0,
-        backgroundColor: const Color(0xFF2D5016),
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.primaryWhite,
+        foregroundColor: AppColors.primaryBlack,
       ),
       body: Consumer<ProfileProvider>(
         builder: (context, profileProvider, child) {
@@ -96,6 +64,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const Icon(Icons.person_off, size: 64, color: Colors.grey),
+                  const SizedBox(height: 16),
                   Text(l10n.noProfileFound),
                   const SizedBox(height: 16),
                   ElevatedButton(
@@ -112,43 +82,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
           final user = profileProvider.userProfile!;
 
           return SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                // Profile header with avatar
+                // Profile Card
                 Container(
-                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        const Color(0xFF2D5016),
-                        const Color(0xFF3D6B1F),
-                      ],
-                    ),
+                    color: AppColors.primaryWhite,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
                   child: Column(
                     children: [
-                      const SizedBox(height: 24),
                       // Avatar
                       Container(
-                        width: 110,
-                        height: 110,
+                        width: 70,
+                        height: 70,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                            colors: [Colors.green[300]!, Colors.green[600]!],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                          color: AppColors.haraColor.withOpacity(0.15),
+                          border: Border.all(
+                            color: AppColors.haraColor.withOpacity(0.3),
+                            width: 2.5,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 15,
-                              offset: const Offset(0, 5),
-                            ),
-                          ],
-                          border: Border.all(color: Colors.white, width: 4),
                         ),
                         child: Center(
                           child: Text(
@@ -156,34 +119,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ? user.name![0].toUpperCase()
                                 : 'U',
                             style: const TextStyle(
-                              fontSize: 52,
+                              fontSize: 32,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: AppColors.haraColor,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 12),
                       // Name
                       Text(
                         user.name ?? 'User',
                         style: const TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: AppColors.primaryBlack,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 6),
                       // Role badge
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
+                          horizontal: 10,
+                          vertical: 5,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: Colors.white.withOpacity(0.5), width: 1.5),
+                          color: AppColors.haraColor.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: AppColors.haraColor.withOpacity(0.3),
+                          ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -192,159 +157,121 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               user.role == 'asha' || user.role == 'panchayat' || user.role == 'gov'
                                   ? Icons.verified_rounded
                                   : Icons.agriculture_rounded,
-                              size: 18,
-                              color: Colors.white,
+                              size: 16,
+                              color: AppColors.haraColor,
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 6),
                             Text(
                               user.role == null || user.role == 'normal' ? 'Farmer' : user.role!.toUpperCase(),
                               style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
+                                color: AppColors.haraColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      if (user.createdAt != null) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          '${l10n.memberSince} ${_formatDate(user.createdAt!)}',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
+                const SizedBox(height: 20),
 
                 // Profile details section
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Personal Information Card
-                      _buildSectionCard(
-                        title: l10n.personalInformation,
-                        icon: Icons.person_outline,
+                      // Info Grid
+                      GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: 1.5,
                         children: [
-                          _buildProfileField(
-                            label: l10n.name,
-                            controller: _nameController,
-                            isEditing: _isEditing,
-                            icon: Icons.person,
-                          ),
-                          const SizedBox(height: 16),
-                          _buildProfileField(
-                            label: l10n.phone,
-                            controller: _phoneController,
-                            isEditing: _isEditing,
+                          _buildInfoCard(
                             icon: Icons.phone,
+                            label: l10n.phone,
+                            value: user.phone ?? 'Not set',
+                            color: const Color(0xFF2196F3),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Location Information Card
-                      _buildSectionCard(
-                        title: l10n.yourChoice,
-                        icon: Icons.location_on_outlined,
-                        children: [
-                          _buildProfileField(
+                          _buildInfoCard(
+                            icon: Icons.location_city,
                             label: l10n.city,
-                            controller: _cityController,
-                            isEditing: _isEditing,
-                            icon: Icons.location_city,
+                            value: user.cityName ?? 'Not set',
+                            color: const Color(0xFF4CAF50),
                           ),
-
-                          _buildProfileField(
-
-                            label: l10n.language,
-                            controller: _languageController,
-                            isEditing: _isEditing,
-                            icon: Icons.location_city,
-                            onTap: (){
-                              context.push(AppRoutes.languageScreen);
-                            }
-                          ),
-                          
-                          const SizedBox(height: 16),
-                          _buildProfileField(
-                            label: l10n.state,
-                            controller: _stateController,
-                            isEditing: _isEditing,
+                          _buildInfoCard(
                             icon: Icons.map,
+                            label: l10n.state,
+                            value: user.preferedStateName ?? 'Not set',
+                            color: const Color(0xFFFF9800),
+                          ),
+                          _buildInfoCard(
+                            icon: Icons.language,
+                            label: l10n.language,
+                            value: user.prefered_language ?? 'Not set',
+                            color: const Color(0xFF9C27B0),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 20),
 
-                      // Account details section
-                      _buildSectionCard(
-                        title: l10n.accountInformation,
-                        icon: Icons.info_outline,
-                        children: [
-                          _buildReadOnlyField(
-                            label: l10n.memberSince,
-                            value: user.createdAt != null
-                                ? _formatDate(user.createdAt!)
-                                : 'N/A',
-                            icon: Icons.calendar_today,
-                          ),
-                        ],
+                      // Settings Options
+                      _buildOptionTile(
+                        icon: Icons.translate,
+                        title: l10n.translationModels,
+                        subtitle: l10n.downloadLanguages,
+                        color: const Color(0xFF00BCD4),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ModelDownloadScreen(),
+                            ),
+                          );
+                        },
                       ),
-                      const SizedBox(height: 16),
-
-                      // Settings section
-                      _buildSectionCard(
-                        title: l10n.settings,
-                        icon: Icons.settings_outlined,
-                        children: [
-                          _buildSettingsTile(
-                            title: l10n.translationModels,
-                            subtitle: l10n.downloadLanguages,
-                            icon: Icons.translate,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ModelDownloadScreen(),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                      const SizedBox(height: 12),
+                      _buildOptionTile(
+                        icon: Icons.language_rounded,
+                        title: 'Change Language',
+                        subtitle: 'Update app language',
+                        color: const Color(0xFF9C27B0),
+                        onTap: () {
+                          context.push(AppRoutes.languageScreen);
+                        },
                       ),
                       const SizedBox(height: 24),
 
-                      // Action buttons
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: ElevatedButton.icon(
-                      //         onPressed: () {
-                      //           // TODO: Implement profile picture change
-                      //         },
-                      //         icon: const Icon(Icons.camera_alt),
-                      //         label: const Text('Change Picture'),
-                      //       ),
-                      //     ),
-                      //     const SizedBox(width: 12),
-                      //     Expanded(
-                      //       child: ElevatedButton.icon(
-                      //         onPressed: () {
-                      //           // TODO: Implement auto-fill location
-                      //         },
-                      //         icon: const Icon(Icons.gps_fixed),
-                      //         label: const Text('Auto-fill Location'),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      const SizedBox(height: 12),
                       // Logout button
                       Container(
                         width: double.infinity,
-                        height: 56,
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: Colors.red[300]!, width: 2),
+                          color: AppColors.primaryWhite,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.red.withOpacity(0.3), width: 2),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.red.withOpacity(0.1),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
                         child: Material(
                           color: Colors.transparent,
@@ -356,13 +283,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.logout_rounded, color: Colors.red[600]),
+                                Icon(Icons.logout_rounded, color: Colors.red[600], size: 22),
                                 const SizedBox(width: 12),
                                 Text(
                                   l10n.logout,
                                   style: TextStyle(
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w600,
                                     color: Colors.red[600],
                                   ),
                                 ),
@@ -382,243 +309,143 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildSectionCard({
-    required String title,
+  Widget _buildInfoCard({
     required IconData icon,
-    required List<Widget> children,
+    required String label,
+    required String value,
+    required Color color,
   }) {
     return Container(
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: AppColors.primaryWhite,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.grey.withOpacity(0.1),
+          width: 1,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [const Color(0xFF2D5016), const Color(0xFF3D6B1F)],
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(icon, size: 20, color: Colors.white),
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF2D5016),
-                  ),
-                ),
-              ],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(8),
             ),
-            const SizedBox(height: 20),
-            ...children,
-          ],
-        ),
+            child: Icon(
+              icon,
+              color: color,
+              size: 18,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: AppColors.primaryBlack,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildProfileField({
-    required String label,
-    required TextEditingController controller,
-    required bool isEditing,
+  Widget _buildOptionTile({
     required IconData icon,
-    VoidCallback? onTap,
+    required String title,
+    required String subtitle,
+    required Color color,
+    required VoidCallback onTap,
   }) {
     return GestureDetector(
       onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(icon, size: 18, color: const Color(0xFF2D5016)),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.primaryWhite,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: Colors.grey.withOpacity(0.1),
+            width: 1,
           ),
-          const SizedBox(height: 10),
-          if (isEditing)
-            TextField(
-              controller: controller,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[300]!),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[300]!),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF2D5016), width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 14,
-                ),
-              ),
-            )
-          else
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 14,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.grey[50],
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey[200]!),
-              ),
-              child: Text(
-                controller.text.isEmpty ? 'Not provided' : controller.text,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: controller.text.isEmpty ? Colors.grey[400] : Colors.black87,
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildReadOnlyField({
-    required String label,
-    required String value,
-    required IconData icon,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(icon, size: 18, color: const Color(0xFF2D5016)),
-            const SizedBox(width: 8),
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey,
-              ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
-        const SizedBox(height: 10),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.grey[50],
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey[200]!),
-          ),
-          child: Text(
-            value.isEmpty ? 'N/A' : value,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: value.isEmpty ? Colors.grey[400] : Colors.black87,
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                icon,
+                color: color,
+                size: 24,
+              ),
             ),
-          ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryBlack,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 16),
+          ],
         ),
-      ],
+      ),
     );
   }
 
   String _formatDate(DateTime date) {
     return '${date.day}/${date.month}/${date.year}';
-  }
-
-  Widget _buildSettingsTile({
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          decoration: BoxDecoration(
-            color: Colors.grey[50],
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey[200]!),
-          ),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF2D5016).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(icon, color: const Color(0xFF2D5016), size: 22),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Icon(Icons.chevron_right, color: Colors.grey[400]),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
 
@@ -627,21 +454,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.grey[900],
-          title: const Text(
-            'Logout',
-            style: TextStyle(color: AppColors.primaryWhite),
+          backgroundColor: AppColors.primaryWhite,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Row(
+            children: [
+              Icon(Icons.logout_rounded, color: Colors.red[600]),
+              const SizedBox(width: 12),
+              const Text(
+                'Logout',
+                style: TextStyle(
+                  color: AppColors.primaryBlack,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
           content: const Text(
             'Are you sure you want to logout?',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(
+              color: AppColors.primaryBlack,
+              fontSize: 14,
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
+              child: Text(
                 'Cancel',
-                style: TextStyle(color: Colors.grey),
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             TextButton(
@@ -649,7 +497,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 try {
                   // Clear profile provider state
                   final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
-                await  profileProvider.logout();
+                  await profileProvider.logout();
                   
                   // Sign out from Supabase
                   await AuthService.signOut(context: context);
@@ -668,9 +516,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Navigator.of(context).pop();
                 }
               },
-              child: const Text(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.red.withOpacity(0.1),
+              ),
+              child: Text(
                 'Logout',
-                style: TextStyle(color: AppColors.primaryGreen),
+                style: TextStyle(
+                  color: Colors.red[600],
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],

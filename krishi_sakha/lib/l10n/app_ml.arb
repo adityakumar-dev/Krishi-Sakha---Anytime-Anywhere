@@ -54,6 +54,7 @@
   "initializingSpeechRecognition": "വോയ്‌സ് തിരിച്ചറിയൽ ആരംഭിക്കുന്നു...",
   "holdAndSpeakToStart": "ആരംഭിക്കാൻ പിടിച്ച് സംസാരിക്കുക",
   "response": "മറുപടി:",
+  "pleaseWait": "ദയവായി കാത്തിരിക്കുക",
   
   "weather": "കാലാവസ്ഥ",
   "weatherForecast": "കാലാവസ്ഥ പ്രവചനം",
@@ -315,6 +316,8 @@
   "step1": "1. ഫോട്ടോയെടുക്കുക അല്ലെങ്കിൽ ഗാലറിയിൽ നിന്ന് തിരഞ്ഞെടുക്കുക",
   "step2": "2. ചിത്രം വിശകലനം ചെയ്യാൻ കണ്ടെത്തുക ടാപ്പ് ചെയ്യുക",
   "step3": "3. ഫലങ്ങളും ശുപാർശകളും കാണുക",
+  "translating": "വിവർത്തനം ചെയ്യുന്നു...",
+  "translated": "വിവർത്തനം ചെയ്തു",
   
   "yourFarmTools": "നിങ്ങളുടെ കൃഷി ഉപകരണങ്ങൾ",
   "aiPoweredInsights": "നിങ്ങളുടെ ദൈനംദിന തീരുമാനങ്ങൾക്കായി AI-പവർഡ് ഇൻസൈറ്റുകൾ",
@@ -385,5 +388,24 @@
   "addCity": "നഗരം ചേർക്കുക",
   "loadingWeatherFor": "കാലാവസ്ഥ ലോഡ് ചെയ്യുന്നു",
   "addCityToViewWeather": "കാലാവസ്ഥാ വിവരങ്ങൾ കാണാൻ ഒരു നഗരം ചേർക്കുക",
-  "unknownError": "അജ്ഞാത പിശക് സംഭവിച്ചു"
+  "unknownError": "അജ്ഞാത പിശക് സംഭവിച്ചു",
+  
+  "onlineFeatures": "ഓൺലൈൻ സവിശേഷതകൾ",
+  "offlineFeatures": "ഓഫ്‌ലൈൻ സവിശേഷതകൾ",
+  "speakToAI": "AI യോട് സംസാരിക്കുക",
+  "community": "സമൂഹം",
+  "advice": "ഉപദേശം",
+  "govtSchemes": "സർക്കാർ പദ്ധതികൾ",
+  "liveRates": "തത്സമയ നിരക്കുകൾ",
+  "requiresInternet": "ഇന്റർനെറ്റ് കണക്ഷൻ ആവശ്യമാണ്",
+  "cached": "കാഷ് ചെയ്തത്",
+  "offlineMode": "ഓഫ്‌ലൈൻ",
+  
+  "ready": "തയ്യാറാണ്",
+  "listeningState": "കേൾക്കുന്നു",
+  "processingState": "പ്രോസസ്സ് ചെയ്യുന്നു",
+  "streamingState": "സ്ട്രീമിംഗ്",
+  "speakingState": "സംസാരിക്കുന്നു",
+  "errorState": "പിശക്",
+  "oopsSomethingWrong": "ക്ഷമിക്കണം! എന്തോ തെറ്റ് സംഭവിച്ചു"
 }
