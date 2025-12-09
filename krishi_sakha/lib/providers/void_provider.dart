@@ -6,7 +6,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:http/http.dart' as http;
 import 'package:krishi_sakha/apis/api_manager.dart';
-import 'package:krishi_sakha/services/OpusOnnxTranslater.dart';
+import 'package:krishi_sakha/providers/unified_translation_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 enum VoiceState {
@@ -63,8 +63,8 @@ class VoiceProvider extends ChangeNotifier {
   String? _userStationId;
   String? _userPreferredLanguage; // Language code like 'en-US', 'ml-IN', etc.
 
-  // Translation service (currently only for Malayalam, will expand)
-  OpusOnnxTranslator? _translator;
+  // Translation service - unified online/offline translation
+  UnifiedTranslationProvider? _translator;
   bool _isTranslatorInitialized = false;
 
   // Improved response handling with translation
@@ -141,9 +141,9 @@ class VoiceProvider extends ChangeNotifier {
     if (_isTranslatorInitialized) return;
 
     try {
-      debugPrint('🔄 [VoiceProvider] Initializing Malayalam translator...');
-      _translator = OpusOnnxTranslator();
-      await _translator!.init();
+      debugPrint('🔄 [VoiceProvider] Initializing unified translator...');
+      _translator = UnifiedTranslationProvider();
+      await _translator!.initializeOfflineTranslation();
       _isTranslatorInitialized = true;
       debugPrint('✅ [VoiceProvider] Translator initialized successfully');
     } catch (e) {
@@ -886,13 +886,40 @@ class VoiceProvider extends ChangeNotifier {
     try {
       final targetLang = _getLanguageCode(_userPreferredLanguage ?? 'en');
 
-      // Use Google Translate API for all languages (including Malayalam)
-      final translatedText = await _translateViaGoogle(
-        englishSentence,
-        targetLang,
-      );
+      // Use unified translation provider with delay to prevent crashes
+      if (_translator == null) {
+        await _initializeTranslator();
+      }
 
-      debugPrint('✅ [TRANSLATE] $targetLang: "$translatedText"');
+      String translatedText;
+      if (_translator != null) {
+        // Add delay between translations to prevent overwhelming ONNX model
+        final result = await _translator!.translateText(
+          englishSentence,
+          targetLanguage: targetLang,
+          addDelay: true, // Prevent rapid consecutive translations
+        );
+
+        if (result.success) {
+          translatedText = result.translation;
+          debugPrint(
+            '✅ [TRANSLATE] $targetLang (${result.usedOffline ? "offline" : "online"}): "$translatedText"',
+          );
+        } else {
+          // If translation fails, use original English
+          debugPrint(
+            '⚠️ [TRANSLATE] Failed: ${result.error}, using original text',
+          );
+          translatedText = englishSentence;
+        }
+      } else {
+        // Fallback to Google Translate if unified translator not available
+        debugPrint(
+          '⚠️ [TRANSLATE] Unified translator not available, using Google Translate',
+        );
+        translatedText = await _translateViaGoogle(englishSentence, targetLang);
+      }
+
       lastResponse += translatedText + ' ';
       lastTranslatedResponse += translatedText + ' ';
       _pendingTranslatedSentences.add(translatedText);

@@ -5,13 +5,13 @@
 // }
 
 
-  import 'package:flutter/material.dart';
-import 'package:krishi_sakha/providers/translation_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:krishi_sakha/providers/unified_translation_provider.dart';
 import 'package:krishi_sakha/utils/theme/colors.dart';
 import 'package:provider/provider.dart';
 
 Widget buildTranslationButton(String messageContent) {
-    return Consumer<TranslationProvider>(
+    return Consumer<UnifiedTranslationProvider>(
       builder: (context, translationProvider, child) {
         return SizedBox(
           height: 36,
@@ -55,13 +55,8 @@ Widget buildTranslationButton(String messageContent) {
     );
   }
 
-  void _handleTranslation(String content, TranslationProvider provider) {
-
-
-    // Translate and show dialog
-    provider.translateAndShowDialog(
-      content,
-      targetLanguage: 'hi',
-    );
+  void _handleTranslation(String content, UnifiedTranslationProvider provider) {
+    // Translate and show dialog using unified provider
+    provider.translateAndShowDialog(content);
   }
 

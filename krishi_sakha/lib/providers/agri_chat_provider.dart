@@ -124,6 +124,14 @@ class AgriChatProvider extends ChangeNotifier {
   Map<String, dynamic> _currentMetadata = {};
   String? _error;
 
+  // Auto-translation state
+  bool _autoTranslateEnabled = false;
+  String _autoTranslateLanguage = 'hi'; // Default to Hindi
+  Map<String, String> _translatedMessages = {}; // messageId -> translated text
+  Set<String> _translatingMessages =
+      {}; // messageIds currently being translated
+  String? _streamingTranslation; // Translation for current streaming message
+
   // Smart scrolling state
   bool _userManuallyScrolled = false;
   bool _isAtBottom = true;
@@ -210,10 +218,55 @@ class AgriChatProvider extends ChangeNotifier {
   bool get showScrollToBottom => _userManuallyScrolled && _isSending;
   bool get isAtBottom => _isAtBottom;
 
+  // Auto-translation getters
+  bool get autoTranslateEnabled => _autoTranslateEnabled;
+  String get autoTranslateLanguage => _autoTranslateLanguage;
+  String? get streamingTranslation => _streamingTranslation;
+
+  // Get translated text for a message
+  String? getTranslatedMessage(String messageId) =>
+      _translatedMessages[messageId];
+  bool isTranslating(String messageId) =>
+      _translatingMessages.contains(messageId);
+
   // Set user preferences for pipeline context
   void setUserPreferences({String? state, String? stationId}) {
     _userState = state;
     _userStationId = stationId;
+    notifyListeners();
+  }
+
+  // Toggle auto-translation
+  void toggleAutoTranslate(bool enabled, {String? languageCode}) {
+    _autoTranslateEnabled = enabled;
+    if (languageCode != null) {
+      _autoTranslateLanguage = languageCode;
+    }
+    notifyListeners();
+  }
+
+  // Set auto-translation language
+  void setAutoTranslateLanguage(String languageCode) {
+    _autoTranslateLanguage = languageCode;
+    notifyListeners();
+  }
+
+  // Store translated message
+  void setTranslatedMessage(String messageId, String translatedText) {
+    _translatedMessages[messageId] = translatedText;
+    _translatingMessages.remove(messageId);
+    notifyListeners();
+  }
+
+  // Mark message as being translated
+  void markAsTranslating(String messageId) {
+    _translatingMessages.add(messageId);
+    notifyListeners();
+  }
+
+  // Set streaming translation
+  void setStreamingTranslation(String? translation) {
+    _streamingTranslation = translation;
     notifyListeners();
   }
 
@@ -279,6 +332,9 @@ class AgriChatProvider extends ChangeNotifier {
     _messageController.clear();
     _currentImage = null;
     _incompleteJsonBuffer = '';
+    _translatedMessages.clear();
+    _translatingMessages.clear();
+    _streamingTranslation = null;
   }
 
   void _setError(String errorMessage) {
@@ -653,6 +709,11 @@ class AgriChatProvider extends ChangeNotifier {
 
         _messages.add(assistantMessage);
         notifyListeners();
+
+        // Trigger auto-translation if enabled
+        if (_autoTranslateEnabled) {
+          _autoTranslateMessage(assistantMessage.id, assistantMessage.message);
+        }
       }
     } catch (e) {
       debugPrint('❌ Error in _completeStreaming: $e');
@@ -665,6 +726,16 @@ class AgriChatProvider extends ChangeNotifier {
       notifyListeners();
       scrollToBottom();
     }
+  }
+
+  // Auto-translate a message (called after streaming completes)
+  Future<void> _autoTranslateMessage(
+    String messageId,
+    String messageText,
+  ) async {
+    // This will be called from UI context where provider is available
+    // Mark as translating immediately
+    markAsTranslating(messageId);
   }
 
   void _handleStreamError(dynamic error) {

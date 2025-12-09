@@ -173,7 +173,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noWeatherData => 'कोई मौसम डेटा नहीं';
 
   @override
-  String get addCityToViewWeather => 'मौसम की जानकारी देखने के लिए शहर जोड़ें';
+  String get addCityToViewWeather =>
+      'मौसम की जानकारी देखने के लिए एक शहर जोड़ें';
 
   @override
   String get addCity => 'शहर जोड़ें';
@@ -969,11 +970,17 @@ class AppLocalizationsHi extends AppLocalizations {
   String get translating => 'अनुवाद हो रहा है...';
 
   @override
-  String get translateTo => 'अनुवाद करें';
+  String get translateTo => 'में अनुवाद करें';
 
   @override
   String get translatedText => 'अनुवादित पाठ';
 
   @override
   String get originalText => 'मूल पाठ';
+
+  @override
+  String get weatherError => 'मौसम त्रुटि';
+
+  @override
+  String get loadingWeatherFor => 'मौसम लोड हो रहा है';
 }

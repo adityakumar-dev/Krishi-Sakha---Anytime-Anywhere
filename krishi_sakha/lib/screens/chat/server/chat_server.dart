@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,14 +7,13 @@ import 'package:krishi_sakha/l10n/app_localizations.dart';
 import 'package:krishi_sakha/models/mandi_price_model.dart';
 import 'package:krishi_sakha/providers/agri_chat_provider.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
+import 'package:krishi_sakha/providers/unified_translation_provider.dart';
 import 'package:krishi_sakha/utils/ui/markdown_helper.dart';
 import 'package:krishi_sakha/widgets/translater_widgets.dart';
 import 'package:krishi_sakha/widgets/url_modal.dart';
 import 'package:krishi_sakha/widgets/youtube_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:krishi_sakha/utils/theme/colors.dart';
-import 'package:krishi_sakha/widgets/youtube_player_dialog.dart';
 
 class ChatServerScreen extends StatefulWidget {
   const ChatServerScreen({super.key});
@@ -24,13 +24,136 @@ class ChatServerScreen extends StatefulWidget {
 
 class _ChatServerScreenState extends State<ChatServerScreen> {
   int? _lastLoadedConversationId;
+  Timer? _scrollIdleTimer;
+  final Map<String, GlobalKey> _messageKeys = {};
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _initializeChat();
+      _setupScrollListener();
     });
+  }
+
+  void _setupScrollListener() {
+    final provider = Provider.of<AgriChatProvider>(context, listen: false);
+    provider.scrollController.addListener(_onScroll);
+
+    // Listen for new messages to trigger auto-translation
+    provider.addListener(_onProviderUpdate);
+  }
+
+  void _onProviderUpdate() {
+    final chatProvider = Provider.of<AgriChatProvider>(context, listen: false);
+
+    // Check if a new assistant message was just added
+    if (chatProvider.autoTranslateEnabled &&
+        chatProvider.messages.isNotEmpty &&
+        !chatProvider.isSending) {
+      final lastMessage = chatProvider.messages.last;
+
+      // If it's an assistant message and not yet translated, translate it
+      if (lastMessage.sender == 'assistant' &&
+          chatProvider.getTranslatedMessage(lastMessage.id) == null &&
+          !chatProvider.isTranslating(lastMessage.id)) {
+        _translateMessage(lastMessage.id, lastMessage.message);
+      }
+    }
+  }
+
+  void _onScroll() {
+    // Reset timer on every scroll
+    _scrollIdleTimer?.cancel();
+
+    // Start timer to detect when scrolling stops
+    _scrollIdleTimer = Timer(const Duration(milliseconds: 500), () {
+      _onScrollStopped();
+    });
+  }
+
+  void _onScrollStopped() {
+    // Check if auto-translation is enabled
+    final chatProvider = Provider.of<AgriChatProvider>(context, listen: false);
+    if (!chatProvider.autoTranslateEnabled) return;
+
+    // Find visible assistant messages and translate them
+    _translateVisibleMessages();
+  }
+
+  Future<void> _translateMessage(String messageId, String messageText) async {
+    final chatProvider = Provider.of<AgriChatProvider>(context, listen: false);
+    final translationProvider = Provider.of<UnifiedTranslationProvider>(
+      context,
+      listen: false,
+    );
+
+    chatProvider.markAsTranslating(messageId);
+
+    try {
+      final result = await translationProvider.translateText(
+        messageText,
+        targetLanguage: chatProvider.autoTranslateLanguage,
+        addDelay: false, // No delay for immediate translation
+      );
+
+      if (result.success && mounted) {
+        chatProvider.setTranslatedMessage(messageId, result.translation);
+      }
+    } catch (e) {
+      print('Translation error: $e');
+    }
+  }
+
+  void _translateVisibleMessages() async {
+    final chatProvider = Provider.of<AgriChatProvider>(context, listen: false);
+    final translationProvider = Provider.of<UnifiedTranslationProvider>(
+      context,
+      listen: false,
+    );
+
+    if (!chatProvider.scrollController.hasClients) return;
+
+    // Get visible messages
+    for (final message in chatProvider.messages) {
+      if (message.sender != 'assistant') continue;
+      if (chatProvider.getTranslatedMessage(message.id) != null) continue;
+      if (chatProvider.isTranslating(message.id)) continue;
+
+      // Check if message is visible
+      final key = _messageKeys[message.id];
+      if (key != null && _isWidgetVisible(key)) {
+        // Translate this message
+        chatProvider.markAsTranslating(message.id);
+
+        try {
+          final result = await translationProvider.translateText(
+            message.message,
+            targetLanguage: chatProvider.autoTranslateLanguage,
+            addDelay: true,
+          );
+
+          if (result.success && mounted) {
+            chatProvider.setTranslatedMessage(message.id, result.translation);
+          }
+        } catch (e) {
+          print('Translation error: $e');
+        }
+      }
+    }
+  }
+
+  bool _isWidgetVisible(GlobalKey key) {
+    final RenderBox? renderBox =
+        key.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox == null) return false;
+
+    final position = renderBox.localToGlobal(Offset.zero);
+    final size = renderBox.size;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    // Check if widget is in viewport
+    return position.dy + size.height > 0 && position.dy < screenHeight;
   }
 
   @override
@@ -116,7 +239,10 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
 
   @override
   void dispose() {
-    // Do not dispose provider-owned controllers here
+    _scrollIdleTimer?.cancel();
+    final provider = Provider.of<AgriChatProvider>(context, listen: false);
+    provider.scrollController.removeListener(_onScroll);
+    provider.removeListener(_onProviderUpdate);
     super.dispose();
   }
 
@@ -169,6 +295,23 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
           ],
         ),
         actions: [
+          // Auto-translate toggle
+          Consumer<AgriChatProvider>(
+            builder: (context, chatProvider, child) {
+              return IconButton(
+                icon: Icon(
+                  chatProvider.autoTranslateEnabled
+                      ? Icons.translate
+                      : Icons.translate_outlined,
+                  color: chatProvider.autoTranslateEnabled
+                      ? AppColors.primaryGreen
+                      : AppColors.primaryBlack,
+                ),
+                tooltip: 'Auto Translate',
+                onPressed: () => _showTranslationSettings(context),
+              );
+            },
+          ),
           IconButton(
             onPressed: () async {
               // Use FilePicker for desktop (Linux/Windows/macOS) compatibility.
@@ -235,6 +378,94 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
           }
           return const SizedBox.shrink();
         },
+      ),
+    );
+  }
+
+  void _showTranslationSettings(BuildContext context) {
+    final chatProvider = Provider.of<AgriChatProvider>(context, listen: false);
+    final translationProvider = Provider.of<UnifiedTranslationProvider>(
+      context,
+      listen: false,
+    );
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.translate, color: AppColors.primaryGreen),
+            SizedBox(width: 8),
+            Text('Auto Translation'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SwitchListTile(
+              title: Text('Enable Auto Translation'),
+              subtitle: Text('Automatically translate assistant messages'),
+              value: chatProvider.autoTranslateEnabled,
+              activeColor: AppColors.primaryGreen,
+              onChanged: (value) {
+                chatProvider.toggleAutoTranslate(value);
+                if (value) {
+                  Fluttertoast.showToast(msg: 'Auto translation enabled');
+                }
+              },
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Target Language',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              value: chatProvider.autoTranslateLanguage,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+              ),
+              items: [
+                DropdownMenuItem(value: 'hi', child: Text('हिंदी (Hindi)')),
+                DropdownMenuItem(
+                  value: 'ml',
+                  child: Text('മലയാളം (Malayalam)'),
+                ),
+                DropdownMenuItem(value: 'bn', child: Text('বাংলা (Bengali)')),
+                DropdownMenuItem(value: 'ta', child: Text('தமிழ் (Tamil)')),
+                DropdownMenuItem(value: 'te', child: Text('తెలుగు (Telugu)')),
+                DropdownMenuItem(value: 'mr', child: Text('मराठी (Marathi)')),
+                DropdownMenuItem(
+                  value: 'gu',
+                  child: Text('ગુજરાતી (Gujarati)'),
+                ),
+                DropdownMenuItem(value: 'kn', child: Text('ಕನ್ನಡ (Kannada)')),
+                DropdownMenuItem(value: 'pa', child: Text('ਪੰਜਾਬੀ (Punjabi)')),
+                DropdownMenuItem(value: 'ur', child: Text('اردو (Urdu)')),
+              ],
+              onChanged: (value) {
+                if (value != null) {
+                  chatProvider.setAutoTranslateLanguage(value);
+                  translationProvider.setSelectedLanguage(value);
+                }
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Done',
+              style: TextStyle(color: AppColors.primaryGreen),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -374,12 +605,13 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                 margin: const EdgeInsets.only(bottom: 4),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.grey.withValues(alpha: 0.2),
+                  color: AppColors.primaryGreen.withOpacity(0.2),
+                  border: Border.all(color: AppColors.primaryGreen, width: 1.5),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.smart_toy,
                   size: 18,
-                  color: Colors.white,
+                  color: AppColors.primaryGreen,
                 ),
               ),
             ],
@@ -396,9 +628,19 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                   ),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.white,
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    border: Border.all(color: Colors.white12),
+                    border: Border.all(
+                      color: AppColors.primaryGreen.withOpacity(0.3),
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primaryGreen.withOpacity(0.1),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -416,23 +658,18 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
                               ),
                             ),
                             const SizedBox(width: 8),
-                            const Text(
+                            Text(
                               'Thinking…',
                               style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 16,
+                                color: Colors.grey[600],
+                                fontSize: 15,
+                                fontStyle: FontStyle.italic,
                               ),
                             ),
                           ],
                         )
                       else
-                        Text(
-                          streamingText,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
+                        buildMarkdownText(streamingText),
                       if (metadata.isNotEmpty)
                         ..._buildMetadataWidgets(metadata),
                     ],
@@ -448,77 +685,187 @@ class _ChatServerScreenState extends State<ChatServerScreen> {
 
   Widget _buildMessageBubble(ChatMessage message) {
     final isUser = message.sender == 'user';
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: Column(
-        crossAxisAlignment: isUser
-            ? CrossAxisAlignment.end
-            : CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: isUser
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
+
+    // Store message key for visibility detection
+    if (!isUser && !_messageKeys.containsKey(message.id)) {
+      _messageKeys[message.id] = GlobalKey();
+    }
+
+    return Consumer<AgriChatProvider>(
+      builder: (context, chatProvider, child) {
+        final translatedText = !isUser
+            ? chatProvider.getTranslatedMessage(message.id)
+            : null;
+        final isTranslating = !isUser
+            ? chatProvider.isTranslating(message.id)
+            : false;
+        final showTranslation =
+            !isUser &&
+            chatProvider.autoTranslateEnabled &&
+            translatedText != null;
+
+        return Container(
+          key: !isUser ? _messageKeys[message.id] : null,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          child: Column(
+            crossAxisAlignment: isUser
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 32,
-                height: 32,
-                margin: const EdgeInsets.only(bottom: 4),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isUser
-                      ? AppColors.primaryGreen
-                      : Colors.grey.withValues(alpha: 0.2),
-                ),
-                child: Icon(
-                  isUser ? Icons.person : Icons.smart_toy,
-                  size: 18,
-                  color: isUser ? AppColors.primaryBlack : Colors.white,
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: isUser
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 32,
+                    height: 32,
+                    margin: const EdgeInsets.only(bottom: 4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: isUser ? AppColors.primaryGreen : Colors.white,
+                      border: isUser
+                          ? null
+                          : Border.all(
+                              color: AppColors.primaryGreen,
+                              width: 1.5,
+                            ),
+                    ),
+                    child: Icon(
+                      isUser ? Icons.person : Icons.smart_toy,
+                      size: 18,
+                      color: isUser
+                          ? AppColors.primaryBlack
+                          : AppColors.primaryGreen,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: isUser
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 8),
-              Flexible(
-                child: Container(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.85,
-                  ),
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: isUser
-                        ? AppColors.primaryGreen
-                        : Colors.grey.withValues(alpha: 0.1),
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    border: isUser ? null : Border.all(color: Colors.white12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildMarkdownText(message.message),
-                      if (!isUser)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                          child: buildTranslationButton(message.message),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: isUser
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
+                children: [
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.85,
+                      ),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isUser ? AppColors.primaryGreen : Colors.white,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(12),
                         ),
-                      if (!isUser && message.metadata.isNotEmpty)
-                        ..._buildMetadataWidgets(message.metadata),
-                    ],
+                        border: isUser
+                            ? null
+                            : Border.all(
+                                color: Colors.grey.withOpacity(0.2),
+                                width: 1,
+                              ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: isUser
+                                ? AppColors.primaryGreen.withOpacity(0.2)
+                                : Colors.grey.withOpacity(0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Show translation indicator
+                          if (showTranslation)
+                            Container(
+                              margin: EdgeInsets.only(bottom: 8),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryGreen.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.translate,
+                                    size: 14,
+                                    color: AppColors.primaryGreen,
+                                  ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    'Translated',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: AppColors.primaryGreen,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          // Show translated text or original text
+                          if (isTranslating)
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 14,
+                                  height: 14,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: AppColors.primaryGreen,
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Translating...',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[600],
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          if (showTranslation)
+                            Text(
+                              translatedText,
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 15,
+                                height: 1.4,
+                              ),
+                            )
+                          else if (!isTranslating)
+                            buildMarkdownText(message.message),
+                          if (!isUser && !showTranslation)
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 8.0,
+                                left: 8.0,
+                              ),
+                              child: buildTranslationButton(message.message),
+                            ),
+                          if (!isUser && message.metadata.isNotEmpty)
+                            ..._buildMetadataWidgets(message.metadata),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 

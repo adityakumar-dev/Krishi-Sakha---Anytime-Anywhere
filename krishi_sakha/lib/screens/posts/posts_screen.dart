@@ -4,6 +4,7 @@ import 'package:krishi_sakha/models/post_model.dart';
 import 'package:krishi_sakha/providers/post_manage_provider.dart';
 import 'package:krishi_sakha/providers/profile_provider.dart';
 import 'package:krishi_sakha/screens/posts/comments_screen.dart';
+import 'package:krishi_sakha/widgets/translater_widgets.dart';
 import 'package:provider/provider.dart';
 
 class PostsScreen extends StatefulWidget {
@@ -482,6 +483,14 @@ class _PostCardState extends State<PostCard> {
                   color: _isSaved ? Colors.blue : Colors.grey[700],
                 ),
               ],
+            ),
+
+            const SizedBox(height: 8),
+
+            // Translate button
+            Align(
+              alignment: Alignment.centerRight,
+              child: buildTranslationButton(widget.post.content),
             ),
           ],
         ),

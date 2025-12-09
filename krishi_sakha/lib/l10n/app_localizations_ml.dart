@@ -178,7 +178,8 @@ class AppLocalizationsMl extends AppLocalizations {
   String get noWeatherData => 'കാലാവസ്ഥ ഡാറ്റ ഇല്ല';
 
   @override
-  String get addCityToViewWeather => 'കാലാവസ്ഥ വിവരങ്ങൾ കാണാൻ നഗരം ചേർക്കുക';
+  String get addCityToViewWeather =>
+      'കാലാവസ്ഥാ വിവരങ്ങൾ കാണാൻ ഒരു നഗരം ചേർക്കുക';
 
   @override
   String get addCity => 'നഗരം ചേർക്കുക';
@@ -986,4 +987,10 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get originalText => 'യഥാർത്ഥ വാചകം';
+
+  @override
+  String get weatherError => 'കാലാവസ്ഥ പിശക്';
+
+  @override
+  String get loadingWeatherFor => 'കാലാവസ്ഥ ലോഡ് ചെയ്യുന്നു';
 }

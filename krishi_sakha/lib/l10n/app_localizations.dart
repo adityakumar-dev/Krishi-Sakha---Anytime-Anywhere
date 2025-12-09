@@ -2013,6 +2013,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Original Text'**
   String get originalText;
+
+  /// No description provided for @weatherError.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather Error'**
+  String get weatherError;
+
+  /// No description provided for @loadingWeatherFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading weather for'**
+  String get loadingWeatherFor;
 }
 
 class _AppLocalizationsDelegate

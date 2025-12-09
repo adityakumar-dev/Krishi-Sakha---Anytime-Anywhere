@@ -372,5 +372,13 @@
   "translation": "പരിഭാഷ",
   "translateTo": "പരിഭാഷപ്പെടുത്തുക",
   "translatedText": "പരിഭാഷപ്പെടുത്തിയ വാചകം",
-  "originalText": "യഥാർത്ഥ വാചകം"
+  "originalText": "യഥാർത്ഥ വാചകം",
+
+  "weatherForecast": "കാലാവസ്ഥ പ്രവചനം",
+  "weatherError": "കാലാവസ്ഥ പിശക്",
+  "noWeatherData": "കാലാവസ്ഥ ഡാറ്റ ഇല്ല",
+  "addCity": "നഗരം ചേർക്കുക",
+  "loadingWeatherFor": "കാലാവസ്ഥ ലോഡ് ചെയ്യുന്നു",
+  "addCityToViewWeather": "കാലാവസ്ഥാ വിവരങ്ങൾ കാണാൻ ഒരു നഗരം ചേർക്കുക",
+  "unknownError": "അജ്ഞാത പിശക് സംഭവിച്ചു"
 }

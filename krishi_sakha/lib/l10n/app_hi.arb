@@ -370,7 +370,15 @@
   
   "translating": "अनुवाद हो रहा है...",
   "translation": "अनुवाद",
-  "translateTo": "अनुवाद करें",
+  "translateTo": "में अनुवाद करें",
   "translatedText": "अनुवादित पाठ",
-  "originalText": "मूल पाठ"
+  "originalText": "मूल पाठ",
+
+  "weatherForecast": "मौसम पूर्वानुमान",
+  "weatherError": "मौसम त्रुटि",
+  "noWeatherData": "कोई मौसम डेटा नहीं",
+  "addCity": "शहर जोड़ें",
+  "loadingWeatherFor": "मौसम लोड हो रहा है",
+  "addCityToViewWeather": "मौसम की जानकारी देखने के लिए एक शहर जोड़ें",
+  "unknownError": "अज्ञात त्रुटि हुई"
 }

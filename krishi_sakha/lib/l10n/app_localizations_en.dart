@@ -977,4 +977,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get originalText => 'Original Text';
+
+  @override
+  String get weatherError => 'Weather Error';
+
+  @override
+  String get loadingWeatherFor => 'Loading weather for';
 }

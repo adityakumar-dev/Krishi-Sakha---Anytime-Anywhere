@@ -27,13 +27,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
   void initState() {
     super.initState();
     _pageController = PageController();
-    
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Color(0xFFF7F5E8),
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Color(0xFFF7F5E8),
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ));
+
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Color(0xFFF7F5E8),
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Color(0xFFF7F5E8),
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _initializeWeather();
@@ -43,16 +45,16 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Future<void> _initializeWeather() async {
     final weatherProvider = context.read<WeatherProvider>();
     weatherProvider.setPageController(_pageController);
-    
+
     // Check permissions first
     final hasPermission = await weatherProvider.checkLocationPermission();
     bool serviceEnabled = await weatherProvider.checkLocationService();
-    if(!serviceEnabled){
+    if (!serviceEnabled) {
       Location location = Location();
-     await location.requestService();
-    serviceEnabled = await location.serviceEnabled();
+      await location.requestService();
+      serviceEnabled = await location.serviceEnabled();
     }
-    if(!serviceEnabled){
+    if (!serviceEnabled) {
       await Geolocator.openLocationSettings();
     }
     if (!hasPermission || !serviceEnabled) {
@@ -85,30 +87,38 @@ class _WeatherScreenState extends State<WeatherScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(l10n.cancel, style: const TextStyle(color: AppColors.primaryGreen)),
+              child: Text(
+                l10n.cancel,
+                style: const TextStyle(color: AppColors.primaryGreen),
+              ),
             ),
             TextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 final weatherProvider = context.read<WeatherProvider>();
-                
+
                 await weatherProvider.requestLocationPermission();
-                
+
                 // Check again
-                final hasPermission = await weatherProvider.checkLocationPermission();
-                final serviceEnabled = await weatherProvider.checkLocationService();
-                
+                final hasPermission = await weatherProvider
+                    .checkLocationPermission();
+                final serviceEnabled = await weatherProvider
+                    .checkLocationService();
+
                 if (hasPermission && serviceEnabled) {
                   await weatherProvider.initializeWithCurrentLocation();
                 } else {
-                // Open settings
-                await weatherProvider.openAppSettings();
-              }
-            },
-            child: Text(l10n.grantLocationPermission, style: const TextStyle(color: AppColors.primaryGreen)),
-          ),
-        ],
-      );
+                  // Open settings
+                  await weatherProvider.openAppSettings();
+                }
+              },
+              child: Text(
+                l10n.grantLocationPermission,
+                style: const TextStyle(color: AppColors.primaryGreen),
+              ),
+            ),
+          ],
+        );
       },
     );
   }
@@ -122,9 +132,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         builder: (context, weatherProvider, child) {
           if (weatherProvider.isLoading) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryGreen,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primaryGreen),
             );
           }
 
@@ -151,9 +159,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
         icon: const Icon(Icons.arrow_back, color: AppColors.primaryBlack),
         onPressed: () => Navigator.of(context).pop(),
       ),
-      title: const Text(
-        'Weather Forecast',
-        style: TextStyle(
+      title: Text(
+        AppLocalizations.of(context)!.weatherForecast,
+        style: const TextStyle(
           color: AppColors.primaryBlack,
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -182,7 +190,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
           // City indicator
           if (weatherProvider.savedCities.length > 1)
             _buildCityIndicator(weatherProvider),
-          
+
           // Weather pages
           Expanded(
             child: PageView.builder(
@@ -194,7 +202,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               itemBuilder: (context, index) {
                 final city = weatherProvider.savedCities[index];
                 final weatherData = weatherProvider.getWeatherForCity(city);
-                
+
                 return _buildWeatherPage(city, weatherData, weatherProvider);
               },
             ),
@@ -227,7 +235,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
     );
   }
 
-  Widget _buildWeatherPage(CityLocation city, WeatherData? weatherData, WeatherProvider weatherProvider) {
+  Widget _buildWeatherPage(
+    CityLocation city,
+    WeatherData? weatherData,
+    WeatherProvider weatherProvider,
+  ) {
     if (weatherData == null) {
       return Center(
         child: Column(
@@ -236,7 +248,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             const CircularProgressIndicator(color: AppColors.primaryGreen),
             const SizedBox(height: 16),
             Text(
-              'Loading weather for ${city.name}...',
+              '${AppLocalizations.of(context)!.loadingWeatherFor} ${city.name}...',
               style: const TextStyle(color: AppColors.primaryWhite),
             ),
           ],
@@ -255,14 +267,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
             weatherData: weatherData,
             isStale: weatherProvider.isWeatherStale(city),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Weather details
           WeatherDetails(current: weatherData.current),
-          
+
           const SizedBox(height: 24),
-          
+
           // Daily forecast
           DailyForecast(dailyForecasts: weatherData.dailyForecasts),
         ],
@@ -284,7 +296,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Weather Error',
+              AppLocalizations.of(context)!.weatherError,
               style: const TextStyle(
                 color: AppColors.primaryBlack,
                 fontSize: 24,
@@ -293,7 +305,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              weatherProvider.error ?? 'Unknown error occurred',
+              weatherProvider.error ??
+                  AppLocalizations.of(context)!.unknownError,
               style: const TextStyle(
                 color: AppColors.primaryBlack,
                 fontSize: 16,
@@ -310,7 +323,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 backgroundColor: AppColors.primaryGreen,
                 foregroundColor: AppColors.primaryBlack,
               ),
-              child: const Text('Retry'),
+              child: Text(AppLocalizations.of(context)!.retry),
             ),
           ],
         ),
@@ -331,18 +344,18 @@ class _WeatherScreenState extends State<WeatherScreen> {
               size: 64,
             ),
             const SizedBox(height: 16),
-            const Text(
-              'No Weather Data',
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.noWeatherData,
+              style: const TextStyle(
                 color: AppColors.primaryBlack,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Add a city to view weather information',
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.addCityToViewWeather,
+              style: const TextStyle(
                 color: AppColors.primaryBlack,
                 fontSize: 16,
               ),
@@ -356,7 +369,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 foregroundColor: AppColors.primaryBlack,
               ),
               icon: const Icon(Icons.add),
-              label: const Text('Add City'),
+              label: Text(AppLocalizations.of(context)!.addCity),
             ),
           ],
         ),

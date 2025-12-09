@@ -383,5 +383,13 @@
   "translation": "Translation",
   "translateTo": "Translate to",
   "translatedText": "Translated Text",
-  "originalText": "Original Text"
+  "originalText": "Original Text",
+
+  "weatherForecast": "Weather Forecast",
+  "weatherError": "Weather Error",
+  "noWeatherData": "No Weather Data",
+  "addCity": "Add City",
+  "loadingWeatherFor": "Loading weather for",
+  "addCityToViewWeather": "Add a city to view weather information",
+  "unknownError": "Unknown error occurred"
 }
