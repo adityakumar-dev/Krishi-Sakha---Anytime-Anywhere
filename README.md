@@ -2,7 +2,7 @@
 
 **AI-Powered Agricultural Assistant for Farmers**
 
-Krishi Sakha is a comprehensive mobile application that leverages AI, IoT sensors, and computer vision to empower farmers with real-time agricultural insights, disease detection, and personalized recommendations.
+Krishi Sakha is a comprehensive mobile application that leverages AI, and computer vision to empower farmers with real-time agricultural insights, disease detection, and personalized recommendations.
 
 ---
 
@@ -120,7 +120,7 @@ An AI-powered mobile assistant that provides:
 2. **Multi-modal Input**: Voice, text, and image-based interactions
 3. **Edge Computing**: TFLite models for real-time disease detection
 4. **RAG System**: Context-aware responses using agricultural knowledge base
-5. **IoT Integration**: Hardware sensors for hyperlocal weather data
+
 
 ### Impact Metrics
 - 🎯 95%+ disease detection accuracy
@@ -192,7 +192,6 @@ Built with ❤️ for farmers by agricultural AI enthusiasts.
 - **Backend**: Python, FastAPI, LangChain, ChromaDB
 - **ML**: TensorFlow, Keras, OpenCV, scikit-learn
 - **Cloud**: Firebase, Google Gemini API
-- **Hardware**: Arduino, ESP32 (IoT sensors)
 
 ---
 
@@ -207,7 +206,6 @@ MIT License - Free for educational and agricultural use.
 We welcome contributions! Please check issues or create PRs for:
 - New language support
 - Additional disease models
-- IoT sensor integrations
 - UI/UX improvements
 
 ---
