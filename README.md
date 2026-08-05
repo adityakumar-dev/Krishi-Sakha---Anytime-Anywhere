@@ -31,14 +31,13 @@ Krishi-Sakha/
 - **Multi-modal AI Chat**: Voice & text interaction in local languages
 - **Disease Detection**: Real-time plant disease identification using camera
 - **Weather Integration**: Live weather data with IoT sensor support
-- **Offline Mode**: LLaMA-based on-device inference
+- **Offline Mode**: on-device inference for llm, offline translation (all languages), storage
 - **Crop Advisory**: Personalized recommendations based on location
-- **Market Prices**: Real-time agricultural commodity prices
+- **Market Prices**: Real-time agricultural commodity prices (enam govt. site reverse engineering)
 
 ### ⚙️ Backend Server (`krishi_sakha_py/`)
 - **RAG System**: Context-aware responses using ChromaDB vector database
 - **LLM Integration**: Ollama + Gemini API for intelligent responses
-- **IoT Gateway**: Serial communication with weather stations
 - **Translation**: Multi-language support (English, Malayalam Hindi, Assamese, Bengali)
 - **Document Processing**: PDF parsing for agricultural knowledge base
 
